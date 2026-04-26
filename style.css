@@ -272,4 +272,6 @@ body{
 #about p{
   line-height:1.7;
   text-align:justify;
+  font-size:14px;
+  opacity:0.9;
 }
