@@ -11,6 +11,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html{
@@ -21,15 +22,7 @@ body{
   font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:var(--text);
-}
-
-/* ================= GLOBAL IMPROVEMENT ================= */
-html{
-  scroll-behavior:smooth;
-}
-
-*{
-  -webkit-tap-highlight-color:transparent;
+  overflow-x:hidden;
 }
 
 /* ================= NAVBAR ================= */
@@ -86,7 +79,6 @@ html{
   display:flex;
   gap:20px;
   list-style:none;
-  transition:0.3s ease;
 }
 
 .nav-links a{
@@ -96,10 +88,7 @@ html{
   transition:0.3s;
 }
 
-.nav-links a:hover{
-  color:var(--accent);
-}
-
+.nav-links a:hover,
 .nav-links a.active{
   color:var(--accent);
 }
@@ -122,7 +111,6 @@ html{
   padding:30px 20px;
 }
 
-/* DESKTOP FIX */
 @media(min-width:1024px){
   .hero-inner{
     min-height:75vh;
@@ -141,7 +129,6 @@ html{
   }
 }
 
-/* TEXT */
 .hero-text h1{
   font-size:30px;
 }
@@ -155,14 +142,13 @@ html{
   opacity:0.8;
 }
 
-/* FOTO (RESPONSIVE FIX) */
+/* FOTO */
 .hero-img img{
   width:clamp(180px, 25vw, 280px);
   border-radius:20px;
   animation:float 3s infinite;
 }
 
-/* ANIMASI FOTO */
 @keyframes float{
   50%{transform:translateY(-10px);}
 }
@@ -198,6 +184,17 @@ html{
 .btn:hover{
   transform:translateY(-2px);
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* WA HERO */
+.wa-btn{
+  background:#25D366;
+  color:#fff;
+}
+
+.wa-btn:hover{
+  background:#1ebe5d;
+  box-shadow:0 5px 20px rgba(37,211,102,0.4);
 }
 
 /* ================= CONTAINER ================= */
@@ -285,41 +282,77 @@ html{
   color:var(--accent);
 }
 
-/* ================= LINK KONTAK ================= */
-.card p{
+/* ================= CONTACT PREMIUM ================= */
+.contact-box{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:15px;
+}
+
+.contact-btn{
   display:flex;
   align-items:center;
-  gap:8px;
-}
-
-.card a{
+  gap:12px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
   color:var(--text);
   text-decoration:none;
-  transition:0.3s;
+  transition:all 0.3s ease;
+  backdrop-filter:blur(8px);
 }
 
-.card a:hover{
+.contact-btn i{
+  font-size:18px;
+  min-width:20px;
+}
+
+.contact-btn:hover{
+  transform:translateY(-3px);
+  background:rgba(56,189,248,0.1);
+  border-color:var(--accent);
   color:var(--accent);
+  box-shadow:0 10px 25px rgba(56,189,248,0.2);
 }
 
-/* ================= WA BUTTON HERO ================= */
-.wa-btn{
+.contact-btn:active{
+  transform:scale(0.96);
+}
+
+/* VARIASI */
+.contact-btn.phone:hover{
+  color:#22c55e;
+  border-color:#22c55e;
+}
+
+.contact-btn.email:hover{
+  color:#ef4444;
+  border-color:#ef4444;
+}
+
+.contact-btn.github:hover{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+.contact-btn.whatsapp{
   background:#25D366;
   color:#fff;
+  border:none;
 }
 
-.wa-btn:hover{
+.contact-btn.whatsapp:hover{
   background:#1ebe5d;
-  color:#fff;
-  box-shadow:0 5px 20px rgba(37,211,102,0.4);
 }
+
 /* ================= MOBILE ================= */
 @media(max-width:768px){
 
   .hero-inner{
     flex-direction:column;
     text-align:center;
-    padding:20px;
   }
 
   .hero-img img{
@@ -344,59 +377,6 @@ html{
   .nav-links.active{
     display:flex;
   }
-
-}
-
-/* ================= HEADER FIX ================= */
-header{
-  display:flex;
-  align-items:center;
-  }
-/* ================= CONTACT PREMIUM ================= */
-.contact-box{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.contact-btn{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 15px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  color:var(--text);
-  text-decoration:none;
-  transition:0.3s ease;
-}
-
-/* ICON */
-.contact-btn i{
-  font-size:16px;
-}
-
-/* HOVER */
-.contact-btn:hover{
-  transform:translateY(-3px);
-  background:rgba(56,189,248,0.1);
-  border-color:var(--accent);
-  color:var(--accent);
-  box-shadow:0 10px 25px rgba(56,189,248,0.2);
-}
-
-/* CLICK */
-.contact-btn:active{
-  transform:scale(0.96);
-}
-
-/* KHUSUS GITHUB */
-.contact-btn.github:hover{
-  background:rgba(255,255,255,0.08);
-  border-color:#fff;
-  color:#fff;
 }
 
 /* ================= SCROLL PREMIUM ================= */
@@ -404,7 +384,6 @@ header{
   opacity:0;
   transform:translateY(50px) scale(0.98);
   transition:all 0.8s cubic-bezier(0.22,1,0.36,1);
-  will-change:transform, opacity;
 }
 
 .reveal.active{
@@ -412,8 +391,8 @@ header{
   transform:translateY(0) scale(1);
 }
 
-/* STAGGER YANG LEBIH AMAN */
-.reveal.delay-1{ transition-delay:0.1s; }
-.reveal.delay-2{ transition-delay:0.2s; }
-.reveal.delay-3{ transition-delay:0.3s; }
-.reveal.delay-4{ transition-delay:0.4s; }
+/* DELAY */
+.delay-1{ transition-delay:0.1s; }
+.delay-2{ transition-delay:0.2s; }
+.delay-3{ transition-delay:0.3s; }
+.delay-4{ transition-delay:0.4s; }
