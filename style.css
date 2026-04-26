@@ -117,3 +117,57 @@ body{
     display:none;
   }
 }
+
+/* SMOOTH SCROLL */
+html{
+  scroll-behavior: smooth;
+}
+
+/* PARALLAX FEEL */
+.hero{
+  transform: translateZ(0);
+}
+
+/* GLASS EFFECT */
+.navbar{
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* HOVER NAV */
+.nav-links a{
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  bottom:-5px;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--accent);
+  transition:0.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+/* BUTTON PREMIUM */
+.btn{
+  transition:0.3s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* FOTO PREMIUM */
+.hero-img img{
+  transition:transform 0.2s ease-out;
+  will-change: transform;
+}
