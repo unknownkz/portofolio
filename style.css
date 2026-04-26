@@ -437,6 +437,20 @@ a:visited{
   z-index:2000;
   position:relative;
 }
+/* tampil di mobile */
+@media(max-width:768px){
+  .menu-toggle{
+    display:block;
+  }
+}
+
+.menu-toggle i{
+  color:#fff;
+}
+
+.menu-toggle.active i{
+  transform:rotate(90deg);
+}
 
 .theme-btn{
   width:52px;
