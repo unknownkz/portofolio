@@ -15,6 +15,7 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
   });
 });
 
+
 // ================= ACTIVE NAV =================
 const sections = document.querySelectorAll("section, header");
 const links = document.querySelectorAll(".nav-links a");
@@ -37,19 +38,44 @@ function activeNav(){
 }
 
 
-// ================= SKILL ANIMATION =================
-const skills = document.querySelectorAll(".bar span");
+// ================= SKILL ANIMATION (PREMIUM) =================
+const skillBars = document.querySelectorAll(".bar span");
 
-function animateSkills(){
-  skills.forEach(skill => {
-    const pos = skill.getBoundingClientRect().top;
-
-    if(pos < window.innerHeight - 100 && !skill.classList.contains("done")){
-      skill.style.width = skill.getAttribute("style").replace("width:", "");
-      skill.classList.add("done"); // biar tidak ulang
+const skillObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const bar = entry.target;
+      bar.style.width = bar.dataset.width;
     }
   });
-}
+},{ threshold:0.3 });
+
+skillBars.forEach(bar=>{
+  bar.dataset.width = bar.style.width;
+  bar.style.width = "0";
+  skillObserver.observe(bar);
+});
+
+
+// ================= SCROLL REVEAL (PREMIUM) =================
+const revealElements = document.querySelectorAll("section, .card");
+
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("active");
+    }
+  });
+},{
+  threshold:0.15
+});
+
+// kasih class awal
+revealElements.forEach(el=>{
+  el.classList.add("reveal");
+  revealObserver.observe(el);
+});
+
 
 // ================= WA BUTTON ANIMATION =================
 const waBtn = document.querySelector(".wa-btn");
@@ -64,27 +90,6 @@ if(waBtn){
 }
 
 
-// ================= SCROLL REVEAL =================
-const cards = document.querySelectorAll(".card");
-
-cards.forEach(c=>{
-  c.style.opacity = 0;
-  c.style.transform = "translateY(40px)";
-  c.style.transition = "0.6s ease";
-});
-
-function revealCards(){
-  cards.forEach(c=>{
-    const pos = c.getBoundingClientRect().top;
-
-    if(pos < window.innerHeight - 100){
-      c.style.opacity = 1;
-      c.style.transform = "translateY(0)";
-    }
-  });
-}
-
-
 // ================= SCROLL OPTIMIZATION =================
 let ticking = false;
 
@@ -92,8 +97,6 @@ window.addEventListener("scroll", () => {
   if(!ticking){
     window.requestAnimationFrame(() => {
       activeNav();
-      animateSkills();
-      revealCards();
       ticking = false;
     });
     ticking = true;
@@ -103,5 +106,3 @@ window.addEventListener("scroll", () => {
 
 // ================= INIT =================
 activeNav();
-animateSkills();
-revealCards();
