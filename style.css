@@ -69,6 +69,7 @@ body.light-mode::before{
 .navbar.scrolled{
   padding:10px 10%;
   background:rgba(15,23,42,0.9);
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
 }
 
 /* ================= LOGO ================= */
@@ -137,11 +138,14 @@ body.light-mode::before{
 }
 
 .hero-text h1{
-  font-size:30px;
+  font-size:34px;
+  font-weight:700;
 }
 
 .hero-text span{
-  color:var(--accent);
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .hero-img img{
@@ -200,6 +204,7 @@ section{
   flex-direction:column;
   gap:var(--space-sm);
   transition:0.3s;
+  border:1px solid rgba(255,255,255,0.05);
   box-shadow:0 10px 30px rgba(0,0,0,0.25);
 }
 
@@ -284,11 +289,16 @@ a:visited{
   transition:0.3s;
 }
 
-.contact-btn:hover{
-  color:var(--accent);
-  box-shadow:0 10px 25px rgba(56,189,248,0.2);
-  transform:translateY(-3px);
-  background:rgba(56,189,248,0.1);
+.contact-btn.phone:hover{
+  color:#22c55e;
+  border-color:#22c55e;
+  box-shadow:0 10px 25px rgba(34,197,94,0.3);
+}
+
+.contact-btn.email:hover{
+  color:#ef4444;
+  border-color:#ef4444;
+  box-shadow:0 10px 25px rgba(239,68,68,0.3);
 }
 
 /* ================= SOCIAL ================= */
@@ -304,9 +314,16 @@ a:visited{
   text-decoration:none;
 }
 
-.social-btn:hover{
-  color:var(--accent);
-  box-shadow:0 10px 25px rgba(56,189,248,0.2);
+.social-btn.github:hover{
+  background:#fff;
+  color:#000;
+  border-color:#fff;
+}
+
+.social-btn.instagram:hover{
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);
+  color:#fff;
+  border:none;
 }
 
 /* ================= TOGGLE ================= */
@@ -341,6 +358,7 @@ body.light-mode .toggle-circle{
   width:140px;
   height:140px;
   border-radius:50%;
+  filter:blur(20px);
   background:radial-gradient(circle, rgba(56,189,248,0.25), transparent);
   pointer-events:none;
   z-index:9999;
