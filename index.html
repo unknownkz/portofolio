@@ -24,8 +24,8 @@
   </ul>
 
   <div class="nav-actions">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    <button id="themeToggle">🌙</button>
+    <button id="menuToggle">☰</button>
   </div>
 </nav>
 
@@ -34,16 +34,16 @@
   <div class="hero-inner">
     <div class="hero-text">
       <h1 class="reveal">Axel Alexius <span>Latukolan</span></h1>
-      <p class="reveal delay-1">Produksi | Admin | Warehouse</p>
+      <p class="reveal">Produksi | Admin | Warehouse</p>
 
-      <div class="buttons reveal delay-2">
+      <div class="buttons reveal">
         <a href="#contact" class="btn">Hubungi Saya</a>
-        <a href="#" class="btn-outline">Download CV</a>
+        <a href="cv.pdf" download class="btn-outline">Download CV</a>
       </div>
     </div>
 
-    <div class="hero-img reveal delay-1">
-      <img src="profile.png" alt="Axel Alexius Latukolan">
+    <div class="hero-img">
+      <img src="profile.png" alt="Axel">
     </div>
   </div>
 </header>
@@ -51,49 +51,43 @@
 <!-- CONTENT -->
 <main class="container">
 
-  <section class="card reveal" id="about">
-    <h2>Tentang Saya</h2>
-    <p>Pribadi disiplin, teliti, dan berpengalaman di bidang produksi, pelayanan, dan administrasi.</p>
-  </section>
+<section id="about" class="card reveal">
+  <h2>Tentang Saya</h2>
+  <p>Disiplin, teliti, dan berpengalaman di bidang produksi, pelayanan, dan administrasi.</p>
+</section>
 
-  <section class="card reveal" id="experience">
-    <h2>Pengalaman</h2>
-    <div class="timeline">
-      <div class="timeline-item">
-        <b>PT Mayora Indah Tbk</b><br>
-        Produksi (Packing) | 2026 - Sekarang
-      </div>
-      <div class="timeline-item">
-        <b>Dapur Ema</b><br>
-        Waiter | 2020 - 2021
-      </div>
-      <div class="timeline-item">
-        <b>Swissôtel Jakarta</b><br>
-        Housekeeping | 2018 - 2019
-      </div>
-    </div>
-  </section>
+<section id="experience" class="card reveal">
+  <h2>Pengalaman</h2>
+  <div class="timeline">
+    <div class="timeline-item">PT Mayora Indah Tbk (2026 - Sekarang)</div>
+    <div class="timeline-item">Dapur Ema (2020 - 2021)</div>
+    <div class="timeline-item">Swissôtel Jakarta (2018 - 2019)</div>
+  </div>
+</section>
 
-  <section class="card reveal" id="skills">
-    <h2>Keahlian</h2>
-    <div class="skills">
-      <div class="skill">
-        Excel
-        <div class="bar"><span style="width:90%"></span></div>
-      </div>
-      <div class="skill">
-        Administrasi
-        <div class="bar"><span style="width:85%"></span></div>
-      </div>
-      <div class="skill">
-        Teamwork
-        <div class="bar"><span style="width:90%"></span></div>
-      </div>
-      <div class="skill">
-        Programming
-        <div class="bar"><span style="width:60%"></span></div>
-      </div>
-    </div>
+<section id="skills" class="card reveal">
+  <h2>Keahlian</h2>
+  <div class="skills">
+    <div class="skill">Excel<div class="bar"><span style="width:90%"></span></div></div>
+    <div class="skill">Administrasi<div class="bar"><span style="width:85%"></span></div></div>
+    <div class="skill">Teamwork<div class="bar"><span style="width:90%"></span></div></div>
+    <div class="skill">Programming<div class="bar"><span style="width:60%"></span></div></div>
+  </div>
+</section>
+
+<section id="contact" class="card reveal">
+  <h2>Kontak</h2>
+  <p>📞 085717663312</p>
+  <p>📧 axelalexiusl@gmail.com</p>
+</section>
+
+</main>
+
+<a class="wa" href="https://wa.me/6285717663312">💬</a>
+
+<script src="script.js"></script>
+</body>
+</html>    </div>
   </section>
 
   <section class="card reveal" id="contact">
