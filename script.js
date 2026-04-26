@@ -175,19 +175,6 @@ if(cursor){
   }
 
   animateCursor();
-
-  // ================= HOVER EFFECT =================
-const hoverItems = document.querySelectorAll("a, button, .btn, .contact-btn, .logo");
-
-hoverItems.forEach(el=>{
-  el.addEventListener("mouseenter", ()=>{
-    cursor.classList.add("active");
-  });
-
-  el.addEventListener("mouseleave", ()=>{
-    cursor.classList.remove("active");
-  });
-});
 /* ================= CARD HOVER DEPTH ================= */
 .card{
   transition:all 0.3s ease;
