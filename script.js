@@ -103,6 +103,26 @@ window.addEventListener("scroll", () => {
   }
 });
 
+// ================= LOGO 3D TILT =================
+const logo = document.querySelector(".logo-icon");
+
+if(logo){
+  logo.addEventListener("mousemove", (e)=>{
+    const rect = logo.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = -(y - rect.height/2) / 6;
+    const rotateY = (x - rect.width/2) / 6;
+
+    logo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+  });
+
+  logo.addEventListener("mouseleave", ()=>{
+    logo.style.transform = "rotateX(0) rotateY(0) scale(1)";
+  });
+}
+
 
 // ================= INIT =================
 activeNav();
