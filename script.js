@@ -147,15 +147,37 @@ if(themeBtn){
     }
   });
 }
-// ================= CURSOR GLOW =================
+// ================= CURSOR GLOW (PREMIUM UPGRADE) =================
 const cursor = document.querySelector(".cursor-glow");
 
 if(cursor){
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let currentX = 0;
+  let currentY = 0;
+
+  // ambil posisi mouse
   window.addEventListener("mousemove", (e)=>{
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
-}
+
+  // smooth follow (biar tidak patah-patah)
+  function animateCursor(){
+    currentX += (mouseX - currentX) * 0.15;
+    currentY += (mouseY - currentY) * 0.15;
+
+    cursor.style.left = currentX + "px";
+    cursor.style.top = currentY + "px";
+
+    requestAnimationFrame(animateCursor);
+  }
+
+  animateCursor();
+
+  // ================= HOVER EFFECT =================
+  const hoverItems = document.querySelectorAll("a, button, .btn, .contact
 
 // ================= INIT =================
 activeNav();
