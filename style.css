@@ -28,7 +28,7 @@ body{
   font-family:'Poppins',sans-serif;
   color:var(--text);
   overflow-x:hidden;
-  background:var(--bg);
+  background:transparent;
   transition:0.3s;
 }
 
@@ -82,9 +82,23 @@ body.light-mode a{
 }
 
 .nav-links{
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:70%;
+  height:100vh;
   display:flex;
-  gap:20px;
-  list-style:none;
+  flex-direction:column;
+  padding:100px 30px;
+  gap:25px;
+  background:rgba(15,23,42,0.9);
+  backdrop-filter:blur(20px);
+  transition:0.5s ease;
+  z-index:1500;
+}
+
+.nav-links.active{
+  right:0;
 }
 
 .nav-links a{
@@ -286,15 +300,27 @@ a:visited{
   gap:12px;
 }
 
-.contact-btn{
+.contact-btn,
+.social-btn{
   display:flex;
-  color:var(--text);
   align-items:center;
   gap:12px;
-  padding:14px;
-  border-radius:12px;
+  padding:14px 16px;
+  border-radius:14px;
   background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--text);
+  backdrop-filter:blur(10px);
   transition:0.3s;
+}
+
+/* hover premium */
+.contact-btn:hover,
+.social-btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 40px rgba(56,189,248,0.2);
+  border-color:var(--accent);
+  color:var(--accent);
 }
 
 .contact-btn.phone:hover{
@@ -409,11 +435,6 @@ body.light-mode .toggle-circle{
   text-align:center;
   padding:20px;
   opacity:0.7;
-}
-
-/* ================= HOVER SCALE GLOBAL ================= */
-a:hover, button:hover{
-  transform:scale(1.05);
 }
 
 /* ================= MOBILE ================= */
