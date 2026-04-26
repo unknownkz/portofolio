@@ -122,7 +122,31 @@ if(logo){
     logo.style.transform = "rotateX(0) rotateY(0) scale(1)";
   });
 }
+// ================= DARK / LIGHT TOGGLE (PREMIUM) =================
+const themeBtn = document.getElementById("themeToggle");
 
+// CEK SIMPANAN SAAT LOAD
+if(localStorage.getItem("theme") === "light"){
+  document.body.classList.add("light-mode");
+  if(themeBtn){
+    themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';
+  }
+}
+
+// CLICK TOGGLE
+if(themeBtn){
+  themeBtn.addEventListener("click", ()=>{
+    document.body.classList.toggle("light-mode");
+
+    if(document.body.classList.contains("light-mode")){
+      localStorage.setItem("theme", "light");
+      themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';
+    }else{
+      localStorage.setItem("theme", "dark");
+      themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-moon"></i>';
+    }
+  });
+}
 
 // ================= INIT =================
 activeNav();
