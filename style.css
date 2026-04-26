@@ -600,21 +600,6 @@ body.light-mode{
   50%{ background-position:100% 50%; }
   100%{ background-position:0% 50%; }
 }
-/* ================= CURSOR GLOW ================= */
-.cursor-glow{
-  position:fixed;
-  top:0;
-  left:0;
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background:radial-gradient(circle, rgba(56,189,248,0.25), transparent 70%);
-  pointer-events:none;
-  transform:translate(-50%, -50%);
-  z-index:9999;
-  mix-blend-mode:screen;
-  transition:transform 0.08s linear;
-}
 
 /* LIGHT MODE */
 body.light-mode .cursor-glow{
@@ -662,4 +647,10 @@ button:hover ~ .cursor-glow{
 .cursor-glow.click{
   transform:translate(-50%, -50%) scale(0.8);
   opacity:0.6;
+}
+/* ================= CURSOR OFF MOBILE ================= */
+@media(max-width:768px){
+  .cursor-glow{
+    display:none !important;
+  }
 }
