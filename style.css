@@ -196,30 +196,110 @@ body.light-mode a{
   }
 }
 
-/* ================= LOGO ================= */
-.logo{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:600;
-  font-size:18px;
-}
-
+/* ================= CRYPTO LOGO ================= */
 .logo-icon{
-  width:36px;
-  height:36px;
+  position:relative;
+  width:42px;
+  height:42px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+
+  font-weight:700;
   color:#fff;
-  box-shadow:0 0 12px rgba(56,189,248,0.6);
-  animation:logoFloat 3s infinite ease-in-out;
+
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+
+  /* glow utama */
+  box-shadow:
+    0 0 10px rgba(56,189,248,0.6),
+    0 0 30px rgba(56,189,248,0.4),
+    inset 0 0 10px rgba(255,255,255,0.2);
+
+  animation:logoPulse 3s infinite ease-in-out;
 }
 
-@keyframes logoFloat{
-  50%{transform:translateY(-6px);}
+/* 🔥 aura luar (crypto ring) */
+.logo-icon::before{
+  content:'';
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+
+  background:conic-gradient(
+    transparent,
+    #38bdf8,
+    transparent,
+    #0ea5e9,
+    transparent
+  );
+
+  animation:rotateRing 4s linear infinite;
+  filter:blur(6px);
+  opacity:0.7;
+  z-index:-1;
+}
+
+/* 🔥 glow tambahan */
+.logo-icon::after{
+  content:'';
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle,
+    rgba(56,189,248,0.25),
+    transparent 70%
+  );
+
+  filter:blur(15px);
+  z-index:-2;
+}
+/* ANIMASI LOGO */
+@keyframes logoPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 0 10px rgba(56,189,248,0.6),
+      0 0 30px rgba(56,189,248,0.4);
+  }
+  50%{
+    transform:scale(1.08);
+    box-shadow:
+      0 0 20px rgba(56,189,248,0.9),
+      0 0 50px rgba(56,189,248,0.6);
+  }
+}
+
+@keyframes rotateRing{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+.logo:hover .logo-icon{
+  transform:scale(1.1);
+  box-shadow:
+    0 0 25px rgba(56,189,248,1),
+    0 0 60px rgba(56,189,248,0.8);
+}
+
+body.light-mode .logo-icon{
+  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+  color:#fff;
+
+  box-shadow:
+    0 0 10px rgba(14,165,233,0.4),
+    0 0 20px rgba(14,165,233,0.3);
+}
+
+body.light-mode .logo-icon::before{
+  opacity:0.4;
+}
+
+body.light-mode .logo-icon::after{
+  opacity:0.2;
 }
 
 /* ================= HERO ================= */
