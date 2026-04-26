@@ -69,6 +69,34 @@ body.light-mode a{
   50%{ background-position:100% 50%; }
   100%{ background-position:0% 50%; }
 }
+/* ================= CINEMATIC REVEAL ================= */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active{
+  opacity:1;
+  transform:translateY(0);
+}
+.reveal-left{
+  opacity:0;
+  transform:translateX(-40px);
+  transition:0.8s ease;
+}
+
+.reveal-right{
+  opacity:0;
+  transform:translateX(40px);
+  transition:0.8s ease;
+}
+
+.reveal-left.active,
+.reveal-right.active{
+  opacity:1;
+  transform:translateX(0);
+}
 
 /* ================= NAVBAR ================= */
 .navbar{
