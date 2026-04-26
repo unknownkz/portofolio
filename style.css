@@ -13,6 +13,10 @@
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:'Poppins',sans-serif;
   background:var(--bg);
@@ -59,7 +63,6 @@ body{
   letter-spacing:1px;
 }
 
-/* HOVER LOGO */
 .logo:hover .logo-icon{
   transform:rotate(15deg) scale(1.1);
   box-shadow:0 0 10px var(--accent);
@@ -74,6 +77,7 @@ body{
   display:flex;
   gap:20px;
   list-style:none;
+  transition:0.3s ease;
 }
 
 .nav-links a{
@@ -109,7 +113,7 @@ body{
   padding:30px 20px;
 }
 
-/* FIX DESKTOP SPACE */
+/* DESKTOP FIX */
 @media(min-width:1024px){
   .hero-inner{
     min-height:75vh;
@@ -125,10 +129,6 @@ body{
 
   .hero-text p{
     font-size:16px;
-  }
-
-  .hero-img img{
-    width:280px;
   }
 }
 
@@ -146,9 +146,9 @@ body{
   opacity:0.8;
 }
 
-/* FOTO */
+/* FOTO (RESPONSIVE FIX) */
 .hero-img img{
-  width:230px;
+  width:clamp(180px, 25vw, 280px);
   border-radius:20px;
   animation:float 3s infinite;
 }
@@ -204,6 +204,14 @@ body{
   padding:20px;
   border-radius:15px;
   margin-bottom:15px;
+}
+
+/* ================= ABOUT ================= */
+#about p{
+  line-height:1.7;
+  text-align:justify;
+  font-size:14px;
+  opacity:0.9;
 }
 
 /* ================= TIMELINE ================= */
@@ -268,7 +276,24 @@ body{
   color:var(--accent);
 }
 
-/* ================= WA ================= */
+/* ================= LINK KONTAK ================= */
+.card p{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.card a{
+  color:var(--text);
+  text-decoration:none;
+  transition:0.3s;
+}
+
+.card a:hover{
+  color:var(--accent);
+}
+
+/* ================= WHATSAPP ================= */
 .wa{
   position:fixed;
   bottom:20px;
@@ -313,16 +338,8 @@ body{
 
 }
 
-/* ================= ABOUT ================= */
-#about p{
-  line-height:1.7;
-  text-align:justify;
-  font-size:14px;
-  opacity:0.9;
-}
-
-/* HEADER FIX */
+/* ================= HEADER FIX ================= */
 header{
   display:flex;
   align-items:center;
-}
+  }
