@@ -147,7 +147,7 @@ body.light-mode a{
     backdrop-filter:blur(20px);
 
     transform:translateX(100%);
-    transition:0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
     z-index:2000;
   }
   .nav-links li{
@@ -564,7 +564,7 @@ body.light-mode .hero-text span{
 /* ================= CINEMATIC REVEAL ================= */
 .reveal{
   opacity:0;
-  transform:translateY(40px);
+  transform:translateY(60px) scale(0.98);
   transition: all 0.8s ease;
   will-change:transform, opacity;
 }
@@ -575,7 +575,7 @@ body.light-mode .hero-text span{
 .reveal.active{
   opacity:1;
   transition-delay:0.1s;
-  transform:translateY(0);
+  transform:translateY(0) scale(1);
 }
 .reveal-left{
   opacity:0;
