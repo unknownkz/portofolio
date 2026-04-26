@@ -119,43 +119,6 @@ body.light-mode a{
 }
 
 /* ================= MOBILE NAV ================= */
-@media(max-width:768px){
-
-  .menu-toggle{
-    display:block;
-  }
-
-  .nav-links{
-    position:fixed;
-    top:0;
-    right:0;
-    width:280px;
-    height:100vh;
-
-    display:flex;
-    flex-direction:column;
-    gap:25px;
-    padding:100px 30px;
-
-    background:rgba(15,23,42,0.95);
-    backdrop-filter:blur(20px);
-
-    transform:translateX(100%);
-    transition:0.4s ease;
-    z-index:1500;
-  }
-
-  .nav-links.active{
-    transform:translateX(0);
-  }
-
-}
-
-.nav-links a{
-  text-decoration:none;
-  color:var(--text);
-  position:relative;
-}
 /* ANIMASI MENU (PREMIUM) */
 @media(max-width:768px){
 
