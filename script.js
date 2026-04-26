@@ -4,24 +4,6 @@ const nav = document.getElementById("navLinks");
 const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
 
-
-// ================= ANIMASI REVEAL ======================
-const revealElements = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("active");
-    }
-  });
-},{
-  threshold:0.15
-});
-
-revealElements.forEach(el=>{
-  observer.observe(el);
-});
-
 // ================= PREMIUM MOBILE MENU =================
 const overlay = document.querySelector(".nav-overlay");
 
@@ -211,6 +193,22 @@ if(themeBtn){
   });
 }
 
+// ================= ANIMASI REVEAL ======================
+const revealElements = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("active");
+    }
+  });
+},{
+  threshold:0.15
+});
+
+revealElements.forEach(el=>{
+  observer.observe(el);
+});
 
 // ================= CURSOR =================
 if(cursor){
