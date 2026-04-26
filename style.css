@@ -676,3 +676,18 @@ body.light-mode .footer:hover p{
   color:var(--accent);
   opacity:1;
 }
+/* 🔥 FIX MENU LIGHT MODE */
+body.light-mode .nav-links{
+  background:#ffffff; /* putih solid */
+  color:#0f172a;
+}
+body.light-mode .nav-links a{
+  color:#0f172a;
+}
+body.light-mode .nav-overlay{
+  background:rgba(0,0,0,0.2);
+  backdrop-filter:blur(4px);
+}
+body.light-mode .nav-links{
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
