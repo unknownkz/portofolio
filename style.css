@@ -300,3 +300,34 @@ body{
   font-size:14px;
   opacity:0.9;
 }
+/* ================= DESKTOP FIX ================= */
+@media(min-width:1024px){
+
+  .hero-inner{
+    min-height:80vh; /* isi layar lebih penuh */
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .hero-text{
+    max-width:500px;
+  }
+
+  .hero-text h1{
+    font-size:38px;
+  }
+
+  .hero-text p{
+    font-size:16px;
+  }
+
+  .hero-img img{
+    width:300px;
+  }
+
+}
+header{
+  display:flex;
+  align-items:center;
+}
