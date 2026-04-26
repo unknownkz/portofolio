@@ -3,38 +3,42 @@ const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
-
-// ================= PREMIUM MOBILE MENU =================
 const overlay = document.querySelector(".nav-overlay");
 
-if(toggle && nav && overlay){
-toggle.addEventListener("click", () => {
-nav.classList.toggle("active");
-overlay.classList.toggle("active");
-toggle.classList.toggle("active");
-// 🔥 LOCK SCROLL
-document.body.classList.toggle("menu-open");
-});
+// ================= MENU TOGGLE =================
+if(toggle && nav){
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+    toggle.classList.toggle("active");
+    document.body.classList.toggle("menu-open");
 
-overlay.addEventListener("click", ()=>{
-nav.classList.remove("active");
-overlay.classList.remove("active");
-toggle.classList.remove("active");
-// 🔥 UNLOCK SCROLL
-document.body.classList.remove("menu-open");
-});
-
-document.querySelectorAll(".nav-links a").forEach(link=>{
-  link.addEventListener("click", ()=>{
-    nav.classList.remove("active");
-    toggle.classList.remove("active");
-    document.body.classList.remove("menu-open");
-
+    // overlay ikut toggle kalau ada
     if(overlay){
-      overlay.classList.remove("active");
+      overlay.classList.toggle("active");
     }
   });
-});
+
+  // klik menu link
+  document.querySelectorAll(".nav-links a").forEach(link=>{
+    link.addEventListener("click", ()=>{
+      nav.classList.remove("active");
+      toggle.classList.remove("active");
+      document.body.classList.remove("menu-open");
+
+      if(overlay){
+        overlay.classList.remove("active");
+      }
+    });
+  });
+}
+// ================= OVERLAY =================
+if(overlay){
+  overlay.addEventListener("click", ()=>{
+    nav.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  });
 }
 
 // ================= ACTIVE NAV =================
