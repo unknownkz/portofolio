@@ -150,7 +150,9 @@ body.light-mode a{
     transition:0.4s ease;
     z-index:3000;
   }
-
+  .nav-links li{
+  list-style:none;
+  }
   .nav-links.active{
     transform:translateX(0);
   }
@@ -163,13 +165,6 @@ body.light-mode a{
   position:relative;
   font-size:18px;
   font-weight:500;
-}
-.nav-links li{
-  list-style:none;
-}
-.nav-links{
-  background:rgba(15,23,42,0.98);
-  backdrop-filter:blur(20px);
 }
 
 /* ANIMASI MENU (PREMIUM) */
