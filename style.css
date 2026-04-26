@@ -396,3 +396,59 @@ body{
 .delay-2{ transition-delay:0.2s; }
 .delay-3{ transition-delay:0.3s; }
 .delay-4{ transition-delay:0.4s; }
+
+/* ================= SOCIAL MEDIA ================= */
+.social-box{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.social-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--text);
+  text-decoration:none;
+  transition:all 0.3s ease;
+  backdrop-filter:blur(8px);
+}
+
+.social-btn i{
+  font-size:18px;
+}
+
+/* HOVER GLOBAL */
+.social-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* GITHUB */
+.social-btn.github:hover{
+  background:#fff;
+  color:#000;
+  border-color:#fff;
+}
+
+/* INSTAGRAM */
+.social-btn.instagram:hover{
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);
+  color:#fff;
+  border:none;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  text-align:center;
+  padding:20px;
+  margin-top:20px;
+  font-size:13px;
+  opacity:0.7;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
