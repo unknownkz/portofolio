@@ -74,7 +74,7 @@ body.light-mode a{
 .navbar{
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:6000;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -97,7 +97,7 @@ body.light-mode a{
   opacity:0;
   pointer-events:none;
   transition:0.3s;
-  z-index:1500;
+  z-index:3000;
 }
 
 .nav-overlay.active{
@@ -471,7 +471,7 @@ a:visited{
   display:none;
   font-size:22px;
   cursor:pointer;
-  z-index:2000;
+  z-index:5000;
   position:relative;
 }
 /* tampil di mobile */
