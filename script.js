@@ -196,18 +196,18 @@ if(themeBtn){
 // ================= ANIMASI REVEAL ======================
 const revealElements = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
 
-const observer = new IntersectionObserver(entries=>{
+const revealObserver = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       entry.target.classList.add("active");
     }
   });
 },{
-  threshold:0.15
+  threshold:0.2
 });
 
 revealElements.forEach(el=>{
-  observer.observe(el);
+  revealObserver.observe(el);
 });
 
 // ================= CURSOR =================
