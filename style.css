@@ -4,6 +4,11 @@
   --card:#1e293b;
   --text:#e2e8f0;
   --accent:#38bdf8;
+  --space-xs:8px;
+  --space-sm:12px;
+  --space-md:20px;
+  --space-lg:30px;
+  --space-xl:50px;
 }
 
 /* ================= RESET ================= */
@@ -110,7 +115,7 @@ body{
   align-items:center;
   justify-content:space-between;
   gap:40px;
-  padding:30px 20px;
+  padding:var(--space-xl) var(--space-md);
 }
 
 @media(min-width:1024px){
@@ -203,17 +208,33 @@ body{
 .container{
   max-width:900px;
   margin:auto;
-  padding:15px 20px;
+  padding:var(--space-lg) var(--space-md);
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-lg);
 }
-
 /* ================= CARD ================= */
 .card{
   background:var(--card);
-  padding:20px;
+  padding:var(--space-md);
   border-radius:15px;
-  margin-bottom:45px;
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-sm);
+  transition:all 0.3s ease;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+/* ================= TYPOGRAPHY ================= */
+h2{
+  margin-bottom:var(--space-sm);
+  font-size:18px;
 }
 
+p{
+  line-height:1.6;
 /* ================= ABOUT ================= */
 #about p{
   line-height:1.7;
@@ -380,7 +401,12 @@ body{
     display:flex;
   }
 }
-
+/* ================= DESKTOP EXPAND ================= */
+@media(min-width:768px){
+  .container{
+    max-width:1000px;
+  }
+}
 /* ================= SCROLL PREMIUM ================= */
 .reveal{
   opacity:0;
