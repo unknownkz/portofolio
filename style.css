@@ -620,3 +620,46 @@ body.light-mode{
 body.light-mode .cursor-glow{
   background:radial-gradient(circle, rgba(14,165,233,0.2), transparent 70%);
 }
+
+/* ================= CURSOR GLOW UPGRADE ================= */
+.cursor-glow{
+  position:fixed;
+  top:0;
+  left:0;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(56,189,248,0.25), transparent 70%);
+  pointer-events:none;
+  transform:translate(-50%, -50%) scale(1);
+  z-index:9999;
+  mix-blend-mode:screen;
+  transition:
+    transform 0.15s ease,
+    background 0.3s ease,
+    opacity 0.3s ease;
+  opacity:0.9;
+}
+
+/* LIGHT MODE */
+body.light-mode .cursor-glow{
+  background:radial-gradient(circle, rgba(14,165,233,0.2), transparent 70%);
+}
+
+/* HOVER GLOBAL (fallback kalau JS belum jalan) */
+a:hover ~ .cursor-glow,
+button:hover ~ .cursor-glow{
+  transform:translate(-50%, -50%) scale(1.4);
+}
+
+/* BIAR LEBIH HIDUP */
+.cursor-glow.active{
+  transform:translate(-50%, -50%) scale(1.8);
+  opacity:1;
+}
+
+/* EFFECT CLICK */
+.cursor-glow.click{
+  transform:translate(-50%, -50%) scale(0.8);
+  opacity:0.6;
+}
