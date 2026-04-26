@@ -620,8 +620,34 @@ p{
   height:100%;
   background:linear-gradient(90deg,#38bdf8,#0ea5e9);
   width:0;
+  position:relative;
+  overflow:hidden;
   transition:1.5s;
-  box-shadow:0 0 10px rgba(56,189,248,0.6);
+}
+
+/* 🔥 efek glow jalan */
+.bar span::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-50%;
+  width:50%;
+  height:100%;
+
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+
+  animation:shine 2s infinite;
+}
+
+/* bar animasi jalan */
+@keyframes shine{
+  0%{ left:-50%; }
+  100%{ left:120%; }
 }
 
 /* ================= FIX LINK COLOR ================= */
