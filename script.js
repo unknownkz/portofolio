@@ -176,8 +176,18 @@ if(cursor){
 
   animateCursor();
 
-  // ================= HOVER EFFECT =================
-  const hoverItems = document.querySelectorAll("a, button, .btn, .contact
+// ================= HOVER EFFECT =================
+const hoverItems = document.querySelectorAll("a, button, .btn, .contact-btn");
+
+hoverItems.forEach(el=>{
+  el.addEventListener("mouseenter", ()=>{
+    cursor.classList.add("active");
+  });
+
+  el.addEventListener("mouseleave", ()=>{
+    cursor.classList.remove("active");
+  });
+});
 
 // ================= INIT =================
 activeNav();
