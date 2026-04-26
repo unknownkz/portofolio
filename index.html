@@ -9,77 +9,103 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="script.js"></script>
-
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">Axel<span>.</span></div>
 
-  <ul class="nav-links" id="navLinks">
+  <ul class="nav-links">
     <li><a href="#home">Beranda</a></li>
     <li><a href="#about">Tentang</a></li>
     <li><a href="#experience">Pengalaman</a></li>
     <li><a href="#skills">Skill</a></li>
     <li><a href="#contact">Kontak</a></li>
   </ul>
-
-  <div class="nav-actions">
-    <button id="themeToggle">🌙</button>
-    <button id="menuToggle">☰</button>
-  </div>
 </nav>
 
 <!-- HERO -->
 <header id="home" class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
-      <h1 class="reveal">Axel Alexius <span>Latukolan</span></h1>
-      <p class="reveal">Produksi | Admin | Warehouse</p>
 
-      <div class="buttons reveal">
+    <div class="hero-text">
+      <h1>Axel Alexius <span>Latukolan</span></h1>
+      <p>Produksi | Admin | Warehouse</p>
+
+      <div class="buttons">
         <a href="#contact" class="btn">Hubungi Saya</a>
         <a href="cv.pdf" download class="btn-outline">Download CV</a>
       </div>
     </div>
 
     <div class="hero-img">
-      <img src="profile.png" alt="Axel">
+      <img src="profile.png" alt="Axel Alexius Latukolan">
     </div>
+
   </div>
 </header>
 
 <!-- CONTENT -->
 <main class="container">
 
-<section id="about" class="card reveal">
+<section id="about" class="card">
   <h2>Tentang Saya</h2>
-  <p>Disiplin, teliti, dan berpengalaman di bidang produksi, pelayanan, dan administrasi.</p>
+  <p>
+    Saya adalah pribadi disiplin, teliti, dan bertanggung jawab.
+    Memiliki pengalaman di bidang produksi, pelayanan, dan administrasi.
+  </p>
 </section>
 
-<section id="experience" class="card reveal">
+<section id="experience" class="card">
   <h2>Pengalaman</h2>
+
   <div class="timeline">
-    <div class="timeline-item">PT Mayora Indah Tbk (2026 - Sekarang)</div>
-    <div class="timeline-item">Dapur Ema (2020 - 2021)</div>
-    <div class="timeline-item">Swissôtel Jakarta (2018 - 2019)</div>
+    <div class="timeline-item">
+      <b>PT Mayora Indah Tbk</b><br>
+      Produksi (Packing) | 2026 - Sekarang
+    </div>
+
+    <div class="timeline-item">
+      <b>Dapur Ema</b><br>
+      Waiter | 2020 - 2021
+    </div>
+
+    <div class="timeline-item">
+      <b>Swissôtel Jakarta</b><br>
+      Housekeeping | 2018 - 2019
+    </div>
   </div>
+
 </section>
 
-<section id="skills" class="card reveal">
+<section id="skills" class="card">
   <h2>Keahlian</h2>
+
   <div class="skills">
-    <div class="skill">Excel<div class="bar"><span style="width:90%"></span></div></div>
-    <div class="skill">Administrasi<div class="bar"><span style="width:85%"></span></div></div>
-    <div class="skill">Teamwork<div class="bar"><span style="width:90%"></span></div></div>
-    <div class="skill">Programming<div class="bar"><span style="width:60%"></span></div></div>
+    <div class="skill">
+      Excel
+      <div class="bar"><span style="width:90%"></span></div>
+    </div>
+
+    <div class="skill">
+      Administrasi
+      <div class="bar"><span style="width:85%"></span></div>
+    </div>
+
+    <div class="skill">
+      Teamwork
+      <div class="bar"><span style="width:90%"></span></div>
+    </div>
+
+    <div class="skill">
+      Programming
+      <div class="bar"><span style="width:60%"></span></div>
+    </div>
   </div>
+
 </section>
 
-<section id="contact" class="card reveal">
+<section id="contact" class="card">
   <h2>Kontak</h2>
   <p>📞 085717663312</p>
   <p>📧 axelalexiusl@gmail.com</p>
@@ -87,25 +113,14 @@
 
 </main>
 
+<!-- WHATSAPP -->
 <a class="wa" href="https://wa.me/6285717663312">💬</a>
 
-<script src="script.js"></script>
-</body>
-</html>    </div>
-  </section>
-
-  <section class="card reveal" id="contact">
-    <h2>Kontak</h2>
-    <p>📞 085717663312</p>
-    <p>📧 axelalexiusl@gmail.com</p>
-  </section>
-
-</main>
-
-<!-- WHATSAPP -->
-<a class="wa" href="https://wa.me/6285717663312" aria-label="WhatsApp">💬</a>
+<!-- GSAP (WAJIB untuk versi premium) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <script src="script.js"></script>
+
 </body>
-</html></body>
 </html>
