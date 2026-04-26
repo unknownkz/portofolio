@@ -104,7 +104,7 @@ window.addEventListener("scroll", ()=>{
 // ================= PARALLAX =================
 window.addEventListener("scroll", ()=>{
   const scrolled = window.scrollY;
-  document.body.style.backgroundPosition = `center ${scrolled * 0.2}px`;
+  document.body.style.setProperty("--bg-y", `${scrolled * 0.2}px`);
 });
 
 
