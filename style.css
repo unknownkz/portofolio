@@ -287,15 +287,170 @@ body.light-mode a{
 
 body.light-mode .logo-icon{
   background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+}
+
+/* ================= LOGO CRYPTO ================= */
+.logo-icon{
+  position:relative;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:700;
   color:#fff;
+
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+
+  box-shadow:
+    0 0 10px rgba(56,189,248,0.6),
+    0 0 30px rgba(56,189,248,0.4),
+    inset 0 0 10px rgba(255,255,255,0.2);
+
+  animation:logoPulse 3s infinite ease-in-out;
+  z-index:1;
+}
+
+/* 🔥 aura luar */
+.logo-icon::before{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+
+  background:conic-gradient(
+    transparent,
+    #38bdf8,
+    transparent,
+    #0ea5e9,
+    transparent
+  );
+
+  animation:rotateRing 6s linear infinite;
+  filter:blur(8px);
+  opacity:0.6;
+  z-index:-1;
+}
+
+/* glow */
+.logo-icon::after{
+  content:'';
+  position:absolute;
+  inset:-15px;
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle,
+    rgba(56,189,248,0.25),
+    transparent 70%
+  );
+
+  filter:blur(20px);
+  z-index:-2;
+}
+
+/* ================= LOGO ORBIT ================= */
+.orbit{
+  position:absolute;
+  inset:-18px;
+  border-radius:50%;
+  animation:orbitRotate 6s linear infinite;
+  pointer-events:none;
+}
+
+.orbit span{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#38bdf8;
+  border-radius:50%;
+
+  box-shadow:
+    0 0 6px #38bdf8,
+    0 0 12px #38bdf8;
+}
+
+.orbit span:nth-child(1){
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.orbit span:nth-child(2){
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* orbit kedua */
+.orbit2{
+  inset:-26px;
+  animation:orbitRotateReverse 10s linear infinite;
+}
+
+.orbit2 span{
+  width:4px;
+  height:4px;
+  background:#0ea5e9;
+}
+
+/* ================= LOGO ANIMATION ================= */
+@keyframes logoPulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.08);
+  }
+}
+
+@keyframes rotateRing{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+@keyframes orbitRotate{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+@keyframes orbitRotateReverse{
+  from{ transform:rotate(360deg); }
+  to{ transform:rotate(0deg); }
+}
+
+/* ================= LOGO HOVER EFFECT ================= */
+.logo:hover .logo-icon{
+  transform:scale(1.1);
+  box-shadow:
+    0 0 25px rgba(56,189,248,1),
+    0 0 60px rgba(56,189,248,0.8);
+}
+
+.logo:hover .orbit{
+  animation-duration:2s;
+}
+
+.logo:hover .orbit2{
+  animation-duration:4s;
+}
+
+/* ================= LOGO LIGHT MODE ================= */
+body.light-mode .logo-icon{
+  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
 
   box-shadow:
     0 0 10px rgba(14,165,233,0.4),
     0 0 20px rgba(14,165,233,0.3);
 }
 
-body.light-mode .logo-icon::before{
-  opacity:0.4;
+body.light-mode .orbit span{
+  background:#0ea5e9;
+  box-shadow:
+    0 0 4px #0ea5e9,
+    0 0 10px #0ea5e9;
 }
 
 body.light-mode .logo-icon::after{
@@ -607,13 +762,6 @@ body.light-mode .toggle-circle{
   transition:transform 0.1s;
 }
 
-/* ================= FOOTER ================= */
-.footer{
-  text-align:center;
-  padding:20px;
-  opacity:0.7;
-}
-
 /* ================= FIX BUTTON LIGHT MODE ================= */
 body.light-mode .btn{
   background:#0ea5e9; /* biru lebih gelap */
@@ -704,97 +852,8 @@ body.light-mode .nav-links a:hover{
   color:var(--accent);
 }
 
-/* ================= FOOTER BASE ================= */
-.footer{
-  position:relative;
-  margin-top:80px;
-  padding:40px 20px;
-  text-align:center;
-  font-size:13px;
-  overflow:hidden;
 
-  /* cinematic reveal */
-  opacity:0;
-  transform:translateY(60px) scale(0.98);
-  transition: all 1s cubic-bezier(0.22,1,0.36,1);
-
-  /* subtle floating */
-  animation: floatFooter 6s ease-in-out infinite;
-}
-
-.footer.active{
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
-
-/* ================= FLOAT ================= */
-@keyframes floatFooter{
-  0%{ transform:translateY(0); }
-  50%{ transform:translateY(-3px); }
-  100%{ transform:translateY(0); }
-}
-
-/* ================= NEON LINE SCAN ================= */
-.footer::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:200%;
-  height:1px;
-
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(56,189,248,0.9),
-    transparent
-  );
-
-  animation: scanLine 4s linear infinite;
-}
-
-@keyframes scanLine{
-  0%{ transform:translateX(0); }
-  100%{ transform:translateX(50%); }
-}
-
-/* ================= PARTICLE GLOW ================= */
-.footer::after{
-  content:'';
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(circle at 20% 80%, rgba(56,189,248,0.15), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(14,165,233,0.15), transparent 40%);
-
-  animation: particleMove 10s ease-in-out infinite;
-  z-index:-1;
-  pointer-events:none;
-}
-
-@keyframes particleMove{
-  0%{ transform:translateY(0); }
-  50%{ transform:translateY(-20px); }
-  100%{ transform:translateY(0); }
-}
-
-/* ================= TEXT ================= */
-.footer p{
-  opacity:0;
-  transform:translateY(10px);
-  transition:0.6s ease;
-}
-
-.footer.active p{
-  opacity:0.8;
-  transform:translateY(0);
-}
-
-.footer.active p:nth-child(2){
-  transition-delay:0.2s;
-}
-/* ================= CRYPTO FOOTER ================= */
+/* ================= FOOTER CRYPTO ================= */
 .footer{
   position:relative;
   margin-top:100px;
@@ -802,6 +861,7 @@ body.light-mode .nav-links a:hover{
   text-align:center;
   font-size:13px;
   overflow:hidden;
+  backdrop-filter: blur(10px);
 
   background:linear-gradient(
     180deg,
@@ -876,7 +936,7 @@ body.light-mode .nav-links a:hover{
   animation:blink 2s infinite;
 }
 
-/* ================= LIGHT MODE (CRYPTO STYLE) ================= */
+/* ================= FOOTER LIGHT MODE (CRYPTO STYLE) ================= */
 body.light-mode .footer{
   background:linear-gradient(
     180deg,
@@ -903,172 +963,31 @@ body.light-mode .footer::before{
 body.light-mode .footer::after{
   background:radial-gradient(
     circle,
-/* ================= LOGO CRYPTO ================= */
-.logo-icon{
-  position:relative;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:700;
-  color:#fff;
-
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-
-  box-shadow:
-    0 0 10px rgba(56,189,248,0.6),
-    0 0 30px rgba(56,189,248,0.4),
-    inset 0 0 10px rgba(255,255,255,0.2);
-
-  animation:logoPulse 3s infinite ease-in-out;
-  z-index:1;
-}
-
-/* 🔥 aura luar */
-.logo-icon::before{
-  content:'';
-  position:absolute;
-  inset:-8px;
-  border-radius:50%;
-
-  background:conic-gradient(
-    transparent,
-    #38bdf8,
-    transparent,
-    #0ea5e9,
-    transparent
-  );
-
-  animation:rotateRing 6s linear infinite;
-  filter:blur(8px);
-  opacity:0.6;
-  z-index:-1;
-}
-
-/* glow */
-.logo-icon::after{
-  content:'';
-  position:absolute;
-  inset:-15px;
-  border-radius:50%;
-
-  background:radial-gradient(
-    circle,
-    rgba(56,189,248,0.25),
+    rgba(14,165,233,0.15),
     transparent 70%
   );
-
-  filter:blur(20px);
-  z-index:-2;
 }
 
-/* ================= LOGO ORBIT ================= */
-.orbit{
-  position:absolute;
-  inset:-18px;
-  border-radius:50%;
-  animation:orbitRotate 6s linear infinite;
-  pointer-events:none;
+/* text fix */
+body.light-mode .footer p{
+  color:#0f172a;
+  opacity:0.85;
 }
 
-.orbit span{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:#38bdf8;
-  border-radius:50%;
-
-  box-shadow:
-    0 0 6px #38bdf8,
-    0 0 12px #38bdf8;
+body.light-mode .footer:hover p{
+  color:#0ea5e9;
+  text-shadow:none;
 }
 
-.orbit span:nth-child(1){
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
+/* ================= FOOTER ANIMATION ================= */
+@keyframes cryptoLine{
+  0%{ transform:translateX(-50%); }
+  100%{ transform:translateX(0); }
 }
 
-.orbit span:nth-child(2){
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-/* orbit kedua */
-.orbit2{
-  inset:-26px;
-  animation:orbitRotateReverse 10s linear infinite;
-}
-
-.orbit2 span{
-  width:4px;
-  height:4px;
-  background:#0ea5e9;
-}
-
-/* ================= LOGO ANIMATION ================= */
-@keyframes logoPulse{
-  0%,100%{
-    transform:scale(1);
-  }
-  50%{
-    transform:scale(1.08);
-  }
-}
-
-@keyframes rotateRing{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
-}
-
-@keyframes orbitRotate{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
-}
-
-@keyframes orbitRotateReverse{
-  from{ transform:rotate(360deg); }
-  to{ transform:rotate(0deg); }
-}
-
-/* ================= LOGO HOVER EFFECT ================= */
-.logo:hover .logo-icon{
-  transform:scale(1.1);
-  box-shadow:
-    0 0 25px rgba(56,189,248,1),
-    0 0 60px rgba(56,189,248,0.8);
-}
-
-.logo:hover .orbit{
-  animation-duration:2s;
-}
-
-.logo:hover .orbit2{
-  animation-duration:4s;
-}
-
-/* ================= LOGO LIGHT MODE ================= */
-body.light-mode .logo-icon{
-  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
-
-  box-shadow:
-    0 0 10px rgba(14,165,233,0.4),
-    0 0 20px rgba(14,165,233,0.3);
-}
-
-body.light-mode .orbit span{
-  background:#0ea5e9;
-  box-shadow:
-    0 0 4px #0ea5e9,
-    0 0 10px #0ea5e9;
-}
-
-body.light-mode .logo-icon::after{
-  opacity:0.2;
+@keyframes blink{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.5; }
 }
 
 /* ============ LIGHT MODE NAV LINK ============
