@@ -245,9 +245,22 @@ body.light-mode a{
 }
 
 .hero-img img{
-  width:220px;
+  width:100%;
+  height:auto;
   border-radius:20px;
+  object-fit:cover;
   box-shadow:0 10px 40px rgba(56,189,248,0.3);
+}
+
+@media(max-width:768px){
+  .hero-inner{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .hero-img img{
+    max-width:180px;
+  }
 }
 
 /* ================= BUTTON ================= */
