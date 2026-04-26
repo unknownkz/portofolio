@@ -80,7 +80,23 @@ body.light-mode a{
   background:rgba(15,23,42,0.9);
   box-shadow:0 5px 20px rgba(0,0,0,0.3);
 }
+/* ================= NAV OVERLAY ================= */
+.nav-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(6px);
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+  z-index:1400;
+}
 
+.nav-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+/* ================= NAV LINKS ================= */
 .nav-links{
   position:fixed;
   top:0;
@@ -439,9 +455,31 @@ body.light-mode .toggle-circle{
 
 /* ================= MOBILE ================= */
 @media(max-width:768px){
-  .hero-inner{
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:fixed;
+    top:0;
+    right:-100%;
+    width:70%;
+    height:100vh;
+    display:flex;
     flex-direction:column;
-    text-align:center;
+    padding:100px 30px;
+    gap:25px;
+
+    background:rgba(15,23,42,0.95);
+    backdrop-filter:blur(20px);
+
+    transition:0.4s ease;
+    z-index:1500;
+  }
+
+  .nav-links.active{
+    right:0;
   }
 }
 
