@@ -1,0 +1,148 @@
+:root{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#e2e8f0;
+  --accent:#38bdf8;
+}
+
+body.light{
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --text:#0f172a;
+}
+
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:0.3s;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:60px 10%;
+  min-height:100vh;
+}
+
+.hero-text h1{
+  font-size:36px;
+}
+
+.hero-text span{
+  color:var(--accent);
+}
+
+.hero-text p{
+  margin:10px 0;
+}
+
+.hero-img img{
+  width:280px;
+  border-radius:20px;
+}
+
+/* BUTTON */
+.btn{
+  background:var(--accent);
+  padding:10px 20px;
+  color:white;
+  text-decoration:none;
+  border-radius:10px;
+  margin-right:10px;
+}
+
+.btn-outline{
+  border:1px solid var(--accent);
+  padding:10px 20px;
+  color:var(--accent);
+  text-decoration:none;
+  border-radius:10px;
+}
+
+/* SECTION */
+section{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+}
+
+/* TIMELINE */
+.timeline{
+  border-left:2px solid var(--accent);
+  padding-left:20px;
+}
+
+.timeline-item{
+  margin-bottom:15px;
+}
+
+/* SKILLS */
+.skills{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+
+.skill{
+  background:var(--card);
+  padding:10px;
+  border-radius:10px;
+}
+
+.skill:hover{
+  box-shadow:0 0 10px var(--accent);
+}
+
+.bar{
+  height:5px;
+  background:#555;
+  margin-top:5px;
+}
+
+.bar span{
+  display:block;
+  height:100%;
+  background:var(--accent);
+}
+
+/* TOGGLE */
+.toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  cursor:pointer;
+}
+
+/* WA */
+.wa{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  padding:15px;
+  border-radius:50%;
+  color:white;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  header{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .hero-img img{
+    margin-top:20px;
+  }
+}
