@@ -450,5 +450,6 @@ body{
   margin-top:20px;
   font-size:13px;
   opacity:0.7;
+  box-shadow:0 -5px 30px rgba(0,0,0,0.3);
   border-top:1px solid rgba(255,255,255,0.05);
 }
