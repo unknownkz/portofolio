@@ -3,18 +3,76 @@ const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 
 if(toggle && nav){
-  toggle.onclick = () => {
-    nav.classList.toggle("active");
-  };
-}
+  // ================= PREMIUM MOBILE MENU =================
+const overlay = document.createElement("div");
+overlay.classList.add("nav-overlay");
+document.body.appendChild(overlay);
 
+if(toggle && nav){
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+    overlay.classList.toggle("active");
+    toggle.classList.toggle("active");
+  });
+
+  // klik luar nutup
+  overlay.addEventListener("click", ()=>{
+    nav.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.classList.remove("active");
+  });
+
+  // klik menu nutup
+  document.querySelectorAll(".nav-links a").forEach(link=>{
+    link.addEventListener("click", ()=>{
+      nav.classList.remove("active");
+      overlay.classList.remove("active");
+      toggle.classList.remove("active");
+    });
+  });
+}
+// ================= SMOOTH SCROLL =================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e){
+    e.preventDefault();
+
+    const target = document.querySelector(this.getAttribute("href"));
+    if(target){
+      window.scrollTo({
+        top: target.offsetTop - 80,
+        behavior: "smooth"
+      });
+    }
+  });
+});
 // auto close menu saat klik
 document.querySelectorAll(".nav-links a").forEach(link=>{
   link.addEventListener("click", ()=>{
     if(nav) nav.classList.remove("active");
   });
 });
+// ================= MAGNETIC BUTTON =================
+const magnets = document.querySelectorAll(".btn, .contact-btn, .social-btn");
 
+magnets.forEach(el=>{
+  el.addEventListener("mousemove", (e)=>{
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+
+    el.style.transform = `translate(${x*0.2}px, ${y*0.2}px) scale(1.05)`;
+  });
+
+  el.addEventListener("mouseleave", ()=>{
+    el.style.transform = "translate(0,0) scale(1)";
+  });
+});
+  // ================= PARALLAX =================
+window.addEventListener("scroll", ()=>{
+  const scrolled = window.scrollY;
+  document.body.style.backgroundPosition = `center ${scrolled * 0.2}px`;
+});
 
 // ================= ACTIVE NAV =================
 const sections = document.querySelectorAll("section, header");
@@ -64,6 +122,7 @@ const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
       entry.target.classList.add("active");
+      entry.target.style.transitionDelay = "0.1s";
     }
   });
 },{
@@ -198,6 +257,22 @@ if(cursor){
 }
 if(window.innerWidth < 768){
   if(cursor) cursor.style.display = "none";
+}
+  // ================= CURSOR SCALE =================
+const interactive = document.querySelectorAll("a, button, .card");
+
+interactive.forEach(el=>{
+  el.addEventListener("mouseenter", ()=>{
+    cursor.style.transform += " scale(1.5)";
+  });
+
+  el.addEventListener("mouseleave", ()=>{
+    cursor.style.transform = cursor.style.transform.replace(" scale(1.5)", "");
+  });
+});
+// ================= PERFORMANCE =================
+if(window.innerWidth < 768){
+  document.querySelectorAll(".cursor-glow").forEach(el=>el.remove());
 }
 // ================= INIT =================
 activeNav();
