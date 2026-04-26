@@ -197,16 +197,18 @@ body.light-mode a{
 }
 
 /* ================= CRYPTO LOGO ================= */
-.logo-icon:hover::after{
+.logo-icon::after{
   content:"Axel A.L";
   position:absolute;
   top:50px;
   left:50%;
   transform:translateX(-50%);
-  font-size:12px;
+  font-size:11px;
   color:#38bdf8;
-  opacity:0.8;
+  opacity:0.7;
+  white-space:nowrap;
 }
+
 .logo-icon{
   position:relative;
   width:42px;
