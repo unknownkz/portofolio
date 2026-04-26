@@ -175,45 +175,9 @@ if(cursor){
   }
 
   animateCursor();
-/* ================= CARD HOVER DEPTH ================= */
-.card{
-  transition:all 0.3s ease;
-}
 
-.card:hover{
-  transform:translateY(-5px) scale(1.01);
-  box-shadow:0 20px 40px rgba(0,0,0,0.4);
-}
-// ================= CURSOR INTERACTION =================
-const hoverElements = document.querySelectorAll("a, button, .contact-btn, .btn");
-
-hoverElements.forEach(el=>{
-  el.addEventListener("mouseenter", ()=>{
-    cursor.classList.add("active");
-  });
-
-  el.addEventListener("mouseleave", ()=>{
-    cursor.classList.remove("active");
-  });
-});
-
-  // ================= PARALLAX PREMIUM =================
-window.addEventListener("scroll", ()=>{
-  const scrollY = window.scrollY;
-
-  document.body.style.backgroundPosition = `0% ${scrollY * 0.05}%`;
-});
-  // ================= NAVBAR SCROLL EFFECT =================
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", ()=>{
-  if(window.scrollY > 50){
-    navbar.classList.add("scrolled");
-  }else{
-    navbar.classList.remove("scrolled");
-  }
-});
-  
+  // ================= HOVER EFFECT =================
+  const hoverItems = document.querySelectorAll("a, button, .btn, .contact
 
 // ================= INIT =================
 activeNav();
