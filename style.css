@@ -293,17 +293,17 @@ body{
   color:var(--accent);
 }
 
-/* ================= WHATSAPP ================= */
-.wa{
-  position:fixed;
-  bottom:20px;
-  right:20px;
+/* ================= WA BUTTON HERO ================= */
+.wa-btn{
   background:#25D366;
-  color:white;
-  padding:15px;
-  border-radius:50%;
+  color:#fff;
 }
 
+.wa-btn:hover{
+  background:#1ebe5d;
+  color:#fff;
+  box-shadow:0 5px 20px rgba(37,211,102,0.4);
+}
 /* ================= MOBILE ================= */
 @media(max-width:768px){
 
