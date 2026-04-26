@@ -343,28 +343,34 @@ header{
   display:flex;
   align-items:center;
   }
-/* ================= GITHUB PREMIUM ================= */
-.github-btn{
-  display:inline-flex;
+/* ================= CONTACT PREMIUM ================= */
+.contact-box{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.contact-btn{
+  display:flex;
   align-items:center;
   gap:10px;
-  padding:10px 15px;
+  padding:12px 15px;
   border-radius:10px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.1);
   color:var(--text);
   text-decoration:none;
   transition:0.3s ease;
-  margin-top:10px;
 }
 
 /* ICON */
-.github-btn i{
-  font-size:18px;
+.contact-btn i{
+  font-size:16px;
 }
 
-/* HOVER EFFECT */
-.github-btn:hover{
+/* HOVER */
+.contact-btn:hover{
   transform:translateY(-3px);
   background:rgba(56,189,248,0.1);
   border-color:var(--accent);
@@ -372,7 +378,14 @@ header{
   box-shadow:0 10px 25px rgba(56,189,248,0.2);
 }
 
-/* ACTIVE CLICK */
-.github-btn:active{
-  transform:scale(0.95);
+/* CLICK */
+.contact-btn:active{
+  transform:scale(0.96);
+}
+
+/* KHUSUS GITHUB */
+.contact-btn.github:hover{
+  background:rgba(255,255,255,0.08);
+  border-color:#fff;
+  color:#fff;
 }
