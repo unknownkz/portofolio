@@ -185,14 +185,31 @@ body{
 
 /* ================= TIMELINE ================= */
 .timeline{
+  position:relative;
   border-left:2px solid var(--accent);
+  padding-left:20px;
+}
+
+/* ITEM */
+.timeline-item{
+  position:relative;
+  margin-bottom:20px;
   padding-left:10px;
 }
 
-.timeline-item{
-  margin-bottom:15px;
+/* TITIK BULAT */
+.timeline-item::before{
+  content:'';
+  position:absolute;
+  left:-11px;
+  top:5px;
+  width:10px;
+  height:10px;
+  background:var(--accent);
+  border-radius:50%;
 }
 
+/* TEXT */
 .timeline-item h3{
   font-size:15px;
   font-weight:600;
@@ -202,7 +219,6 @@ body{
   font-size:13px;
   opacity:0.8;
 }
-
 /* ================= SKILL ================= */
 .skill-box{
   margin-bottom:15px;
