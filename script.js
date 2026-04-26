@@ -7,7 +7,7 @@ const cursor = document.querySelector(".cursor-glow");
 // ================= PREMIUM MOBILE MENU =================
 const overlay = document.querySelector(".nav-overlay");
 
-if(toggle && nav){
+if(toggle && nav && overlay){
 toggle.addEventListener("click", () => {
 nav.classList.toggle("active");
 overlay.classList.toggle("active");
