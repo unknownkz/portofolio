@@ -19,12 +19,11 @@
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
-html, body{
-  overflow-x:hidden;
-}
 
 html{
   scroll-behavior:smooth;
+  overflow-x:hidden;
+  height:100%;
 }
 
 body{
@@ -33,6 +32,7 @@ body{
   overflow-x:hidden;
   background:var(--bg);
   transition:0.3s;
+  height:100%;
 }
 body.menu-open{
   overflow:hidden;
@@ -137,6 +137,8 @@ body.light-mode a{
     right:0;
     width:280px;
     height:100vh;
+    height:100dvh;
+    overflow-y:auto;
 
     display:flex;
     flex-direction:column;
