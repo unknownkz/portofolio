@@ -545,17 +545,24 @@ p{
 /* ================= THEME SYSTEM ================= */
 
 /* LIGHT MODE */
-body.light-mode{
-  --bg:#f1f5f9;
-  --card:#ffffff;
-  --text:#0f172a;
-  --accent:#0ea5e9;
+body.light-mode::before{
+  background:linear-gradient(270deg,#f1f5f9,#e2e8f0,#f1f5f9);
 }
 
 /* biar background ikut berubah smooth */
 body{
+  background:var(--bg);
   transition:background 0.3s ease, color 0.3s ease;
 }
+  body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:linear-gradient(270deg,#0f172a,#1e293b,#0f172a);
+  background-size:600% 600%;
+  animation:bgMove 12s ease infinite;
+  z-index:-1;
+  }
 
 /* card juga smooth */
 .card{
