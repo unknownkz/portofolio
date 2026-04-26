@@ -197,14 +197,6 @@ hoverElements.forEach(el=>{
   });
 });
 
-// efek klik
-window.addEventListener("mousedown", ()=>{
-  cursor.classList.add("click");
-});
-
-window.addEventListener("mouseup", ()=>{
-  cursor.classList.remove("click");
-});
   // ================= PARALLAX PREMIUM =================
 window.addEventListener("scroll", ()=>{
   const scrollY = window.scrollY;
