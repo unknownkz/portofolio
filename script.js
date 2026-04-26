@@ -223,6 +223,21 @@ if(window.innerWidth < 768){
 document.querySelectorAll(".cursor-glow").forEach(el=>el.remove());
 }
 
+// ================= FOOTER =================
+const footer = document.querySelector(".footer");
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("active");
+    }
+  });
+},{ threshold:0.2 });
+
+if(footer){
+  observer.observe(footer);
+}
+
 // ================= ESC CLOSE MENU =================
 document.addEventListener("keydown", (e)=>{
 if(e.key === "Escape"){
