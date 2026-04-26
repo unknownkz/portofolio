@@ -51,8 +51,8 @@ body::before{
 
   z-index:-1;
   pointer-events:none;
-  opacity:0.5;
-  filter:blur(40px);
+  opacity:0.25;
+  filter:blur(20px);
 }
 
 body.light-mode::before{
@@ -74,7 +74,7 @@ body.light-mode a{
 .navbar{
   position:sticky;
   top:0;
-  z-index:4000;
+  z-index:1000;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -97,7 +97,7 @@ body.light-mode a{
   opacity:0;
   pointer-events:none;
   transition:0.3s;
-  z-index:2000;
+  z-index:1500;
 }
 
 .nav-overlay.active{
@@ -127,7 +127,7 @@ body.light-mode a{
     justify-content:center;
     font-size:22px;
     cursor:pointer;
-    z-index:2000;
+    z-index:3000;
     position:relative;
   }
 
@@ -148,7 +148,7 @@ body.light-mode a{
 
     transform:translateX(100%);
     transition:0.4s ease;
-    z-index:3000;
+    z-index:2000;
   }
   .nav-links li{
   list-style:none;
@@ -258,7 +258,7 @@ body.light-mode a{
 
 .hero-img::before{
   content:'';
-  position:absolute;
+  position:relative;
   inset:-20px;
   background:radial-gradient(circle, rgba(56,189,248,0.2), transparent 70%);
   filter:blur(30px);
@@ -566,8 +566,12 @@ body.light-mode .hero-text span{
   opacity:0;
   transform:translateY(40px);
   transition: all 0.8s ease;
+  will-change:transform, opacity;
 }
-
+.no-js .reveal{
+  opacity:1;
+  transform:none;
+}
 .reveal.active{
   opacity:1;
   transition-delay:0.1s;
@@ -577,12 +581,14 @@ body.light-mode .hero-text span{
   opacity:0;
   transform:translateX(-40px);
   transition:0.8s ease;
+  will-change:transform, opacity;
 }
 
 .reveal-right{
   opacity:0;
   transform:translateX(40px);
   transition:0.8s ease;
+  will-change:transform, opacity;
 }
 
 .reveal-left.active,
