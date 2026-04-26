@@ -398,3 +398,30 @@ a:hover, button:hover{
     text-align:center;
   }
 }
+
+/* ================= FIX BUTTON LIGHT MODE ================= */
+body.light-mode .btn{
+  background:#0ea5e9; /* biru lebih gelap */
+  color:#fff;
+}
+
+body.light-mode .btn-outline{
+  border:2px solid #0ea5e9;
+  color:#0ea5e9;
+  background:rgba(14,165,233,0.08);
+}
+
+/* hover biar jelas */
+body.light-mode .btn:hover{
+  box-shadow:0 10px 30px rgba(14,165,233,0.5);
+}
+
+body.light-mode .btn-outline:hover{
+  background:#0ea5e9;
+  color:#fff;
+}
+
+body.light-mode .hero-text span{
+  -webkit-text-fill-color:unset;
+  color:var(--accent);
+}
