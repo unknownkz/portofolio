@@ -336,6 +336,37 @@ a:visited{
 }
 
 /* ================= TOGGLE ================= */
+.menu-toggle{
+  display:none;
+  font-size:22px;
+  cursor:pointer;
+  z-index:2000;
+  position:relative;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:60px;
+    right:20px;
+    background:var(--card);
+    flex-direction:column;
+    padding:15px;
+    border-radius:10px;
+    display:none;
+    z-index:1500;
+  }
+
+  .nav-links.active{
+    display:flex;
+  }
+}
 .theme-btn{
   width:52px;
   height:26px;
