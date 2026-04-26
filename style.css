@@ -49,16 +49,19 @@ body{
 }
 
 .logo-icon{
-  background:var(--accent);
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
   color:#fff;
-  width:30px;
-  height:30px;
+  width:36px;
+  height:36px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-radius:50%;
-  font-weight:bold;
-  transition:0.3s;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:1px;
+  box-shadow:0 0 12px rgba(56,189,248,0.6);
+  transition:all 0.3s ease;
 }
 
 .logo-text{
@@ -66,8 +69,8 @@ body{
 }
 
 .logo:hover .logo-icon{
-  transform:rotate(15deg) scale(1.1);
-  box-shadow:0 0 10px var(--accent);
+  transform:scale(1.15) rotate(10deg);
+  box-shadow:0 0 20px rgba(56,189,248,0.9);
 }
 
 .logo:hover .logo-text{
