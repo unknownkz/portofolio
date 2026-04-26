@@ -2,17 +2,18 @@
 const toggle = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
 
-toggle.onclick = () => {
-  nav.classList.toggle("active");
-};
+if(toggle && nav){
+  toggle.onclick = () => {
+    nav.classList.toggle("active");
+  };
+}
 
 // auto close menu saat klik
 document.querySelectorAll(".nav-links a").forEach(link=>{
   link.addEventListener("click", ()=>{
-    nav.classList.remove("active");
+    if(nav) nav.classList.remove("active");
   });
 });
-
 
 // ================= ACTIVE NAV =================
 const sections = document.querySelectorAll("section, header");
@@ -48,6 +49,18 @@ function animateSkills(){
       skill.classList.add("done"); // biar tidak ulang
     }
   });
+}
+
+// ================= WA BUTTON ANIMATION =================
+const waBtn = document.querySelector(".wa-btn");
+
+if(waBtn){
+  setInterval(()=>{
+    waBtn.style.transform = "scale(1.05)";
+    setTimeout(()=>{
+      waBtn.style.transform = "scale(1)";
+    }, 300);
+  }, 2000);
 }
 
 
