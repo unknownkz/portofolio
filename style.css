@@ -249,7 +249,20 @@ body.light-mode a{
   height:auto;
   border-radius:20px;
   object-fit:cover;
-  box-shadow:0 10px 40px rgba(56,189,248,0.3);
+  position:relative;
+  animation:floatPhoto 4s ease-in-out infinite;
+  box-shadow:
+    0 10px 40px rgba(56,189,248,0.3),
+    0 0 20px rgba(56,189,248,0.4);
+}
+
+.hero-img::before{
+  content:'';
+  position:absolute;
+  inset:-20px;
+  background:radial-gradient(circle, rgba(56,189,248,0.2), transparent 70%);
+  filter:blur(30px);
+  z-index:-1;
 }
 
 @media(max-width:768px){
@@ -261,6 +274,12 @@ body.light-mode a{
   .hero-img img{
     max-width:180px;
   }
+}
+
+@keyframes floatPhoto{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(-10px); }
+  100%{ transform:translateY(0px); }
 }
 
 /* ================= BUTTON ================= */
