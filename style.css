@@ -624,104 +624,122 @@ body.light-mode .nav-links a:hover{
   color:var(--accent);
 }
 
-/* ================= FOOTER PRO ================= */
+/* ================= FOOTER BASE ================= */
 .footer{
   position:relative;
   margin-top:80px;
-  padding:30px 20px;
+  padding:40px 20px;
   text-align:center;
   font-size:13px;
   overflow:hidden;
+
+  /* cinematic reveal */
+  opacity:0;
+  transform:translateY(60px) scale(0.98);
+  transition: all 1s cubic-bezier(0.22,1,0.36,1);
+
+  /* subtle floating */
+  animation: floatFooter 6s ease-in-out infinite;
 }
 
-/* GARIS PEMBATAS ATAS */
+.footer.active{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* ================= FLOAT ================= */
+@keyframes floatFooter{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(-3px); }
+  100%{ transform:translateY(0); }
+}
+
+/* ================= NEON LINE SCAN ================= */
 .footer::before{
   content:'';
   position:absolute;
   top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:80%;
+  left:-100%;
+  width:200%;
   height:1px;
+
   background:linear-gradient(
     90deg,
     transparent,
-    rgba(56,189,248,0.6),
+    rgba(56,189,248,0.9),
     transparent
   );
+
+  animation: scanLine 4s linear infinite;
 }
 
-/* GLOW HALUS DI DARK MODE */
+@keyframes scanLine{
+  0%{ transform:translateX(0); }
+  100%{ transform:translateX(50%); }
+}
+
+/* ================= PARTICLE GLOW ================= */
 .footer::after{
   content:'';
   position:absolute;
-  top:-20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:200px;
-  height:80px;
-  background:radial-gradient(
-    circle,
-    rgba(56,189,248,0.15),
-    transparent 70%
-  );
-  filter:blur(20px);
+  inset:0;
+
+  background:
+    radial-gradient(circle at 20% 80%, rgba(56,189,248,0.15), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(14,165,233,0.15), transparent 40%);
+
+  animation: particleMove 10s ease-in-out infinite;
   z-index:-1;
+  pointer-events:none;
 }
 
-/* TEXT */
+@keyframes particleMove{
+  0%{ transform:translateY(0); }
+  50%{ transform:translateY(-20px); }
+  100%{ transform:translateY(0); }
+}
+
+/* ================= TEXT ================= */
 .footer p{
-  opacity:0.7;
-  letter-spacing:0.5px;
-  transition:0.3s;
+  opacity:0;
+  transform:translateY(10px);
+  transition:0.6s ease;
 }
 
-/* HOVER TEXT */
+.footer.active p{
+  opacity:0.8;
+  transform:translateY(0);
+}
+
+.footer.active p:nth-child(2){
+  transition-delay:0.2s;
+}
+
+/* ================= HOVER ================= */
 .footer:hover p{
   opacity:1;
   color:var(--accent);
-}
-
-.footer p + p{
-  margin-top:12px;
-  font-size:11px;
-  opacity:0.6;
+  text-shadow:0 0 10px rgba(56,189,248,0.6);
 }
 
 /* ================= LIGHT MODE ================= */
 body.light-mode .footer{
-  background:transparent;
-}
-
-/* GARIS LIGHT MODE */
-body.light-mode .footer::before{
   background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(14,165,233,0.4),
-    transparent
+    180deg,
+    rgba(255,255,255,0.95),
+    rgba(241,245,249,0.9)
   );
+  backdrop-filter:blur(14px);
+  border-top:1px solid rgba(0,0,0,0.06);
 }
 
-/* GLOW DIMATIKAN DI LIGHT MODE */
 body.light-mode .footer::after{
-  background:radial-gradient(
-    circle,
-    rgba(14,165,233,0.1),
-    transparent 70%
-  );
+  background:
+    radial-gradient(circle at 30% 70%, rgba(14,165,233,0.15), transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(56,189,248,0.15), transparent 40%);
 }
 
-/* TEXT LIGHT MODE */
-body.light-mode .footer p{
-  color:#0f172a;
-  opacity:0.6;
-}
-
-body.light-mode .footer:hover p{
-  color:var(--accent);
-  opacity:1;
-}
+/* ======= LIGHT MODE NAV LINK ===========
 /* 🔥 FIX MENU LIGHT MODE */
 body.light-mode .nav-links{
   background:#ffffff; /* putih solid */
