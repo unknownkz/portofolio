@@ -13,7 +13,7 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo">Axel A.L<span>.</span></div>
+  <div class="logo">Axel<span>.</span></div>
 
   <ul class="nav-links" id="navLinks">
     <li><a href="#home">Beranda</a></li>
@@ -23,38 +23,40 @@
     <li><a href="#contact">Kontak</a></li>
   </ul>
 
-  <div class="nav-right">
-    <div class="toggle" onclick="toggleMode()">🌙</div>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
   </div>
 </nav>
 
 <!-- HERO -->
-<header id="home" class="container">
-  <div class="hero-text animate-left">
-    <h1>Axel Alexius <span>Latukolan</span></h1>
-    <p>Produksi | Admin | Warehouse</p>
+<header id="home" class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1 class="reveal">Axel Alexius <span>Latukolan</span></h1>
+      <p class="reveal delay-1">Produksi | Admin | Warehouse</p>
 
-    <div class="buttons">
-      <a href="#contact" class="btn">Hubungi Saya</a>
-      <a href="#" class="btn-outline">Download CV</a>
+      <div class="buttons reveal delay-2">
+        <a href="#contact" class="btn">Hubungi Saya</a>
+        <a href="#" class="btn-outline">Download CV</a>
+      </div>
     </div>
-  </div>
 
-  <div class="hero-img animate-right">
-    <img src="profile.png" alt="Axel">
+    <div class="hero-img reveal delay-1">
+      <img src="profile.png" alt="Axel Alexius Latukolan">
+    </div>
   </div>
 </header>
 
-<!-- SECTION -->
-<section class="container">
+<!-- CONTENT -->
+<main class="container">
 
-  <div class="card reveal" id="about">
+  <section class="card reveal" id="about">
     <h2>Tentang Saya</h2>
     <p>Pribadi disiplin, teliti, dan berpengalaman di bidang produksi, pelayanan, dan administrasi.</p>
-  </div>
+  </section>
 
-  <div class="card reveal" id="experience">
+  <section class="card reveal" id="experience">
     <h2>Pengalaman</h2>
     <div class="timeline">
       <div class="timeline-item">
@@ -70,28 +72,42 @@
         Housekeeping | 2018 - 2019
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card reveal" id="skills">
+  <section class="card reveal" id="skills">
     <h2>Keahlian</h2>
     <div class="skills">
-      <div class="skill">Excel<div class="bar"><span style="width:90%"></span></div></div>
-      <div class="skill">Administrasi<div class="bar"><span style="width:85%"></span></div></div>
-      <div class="skill">Teamwork<div class="bar"><span style="width:90%"></span></div></div>
-      <div class="skill">Programming<div class="bar"><span style="width:60%"></span></div></div>
+      <div class="skill">
+        Excel
+        <div class="bar"><span style="width:90%"></span></div>
+      </div>
+      <div class="skill">
+        Administrasi
+        <div class="bar"><span style="width:85%"></span></div>
+      </div>
+      <div class="skill">
+        Teamwork
+        <div class="bar"><span style="width:90%"></span></div>
+      </div>
+      <div class="skill">
+        Programming
+        <div class="bar"><span style="width:60%"></span></div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card reveal" id="contact">
+  <section class="card reveal" id="contact">
     <h2>Kontak</h2>
     <p>📞 085717663312</p>
     <p>📧 axelalexiusl@gmail.com</p>
-  </div>
+  </section>
 
-</section>
+</main>
 
-<a class="wa" href="https://wa.me/6285717663312">💬</a>
+<!-- WHATSAPP -->
+<a class="wa" href="https://wa.me/6285717663312" aria-label="WhatsApp">💬</a>
 
 <script src="script.js"></script>
 </body>
+</html></body>
 </html>
