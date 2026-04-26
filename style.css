@@ -175,25 +175,26 @@ body.light-mode a{
 .nav-links a:hover::after{
   width:100%;
 }
-.nav-links.active a{
-  opacity:1;
-  transform:translateX(0);
-}
 
-.nav-links.active li:nth-child(1) a{ transition-delay:0.1s }
-.nav-links.active li:nth-child(2) a{ transition-delay:0.2s }
-.nav-links.active li:nth-child(3) a{ transition-delay:0.3s }
-.nav-links.active li:nth-child(4) a{ transition-delay:0.4s }
-.nav-links.active li:nth-child(5) a{ transition-delay:0.5s }
-.nav-links a::after{
-  content:'';
-  position:absolute;
-  bottom:-5px;
-  left:0;
-  width:0%;
-  height:2px;
-  background:var(--accent);
-  transition:0.3s;
+@media(max-width:768px){
+
+  .nav-links a{
+    opacity:0;
+    transform:translateX(20px);
+    transition:0.3s ease;
+  }
+
+  .nav-links.active a{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  .nav-links.active li:nth-child(1) a{ transition-delay:0.1s }
+  .nav-links.active li:nth-child(2) a{ transition-delay:0.2s }
+  .nav-links.active li:nth-child(3) a{ transition-delay:0.3s }
+  .nav-links.active li:nth-child(4) a{ transition-delay:0.4s }
+  .nav-links.active li:nth-child(5) a{ transition-delay:0.5s }
+
 }
 
 /* ================= LOGO ================= */
