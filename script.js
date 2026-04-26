@@ -6,9 +6,7 @@ const cursor = document.querySelector(".cursor-glow");
 
 
 // ================= PREMIUM MOBILE MENU =================
-const overlay = document.createElement("div");
-overlay.classList.add("nav-overlay");
-document.body.appendChild(overlay);
+const overlay = document.querySelector(".nav-overlay");
 
 if(toggle && nav){
   toggle.addEventListener("click", () => {
