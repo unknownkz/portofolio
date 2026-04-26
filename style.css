@@ -268,3 +268,8 @@ body{
     display:flex;
   }
 }
+/* ================= ABOUT TEXT ================= */
+#about p{
+  line-height:1.7;
+  text-align:justify;
+}
