@@ -15,12 +15,16 @@ if(toggle && nav){
     nav.classList.toggle("active");
     overlay.classList.toggle("active");
     toggle.classList.toggle("active");
+    // 🔥 LOCK SCROLL
+    document.body.classList.toggle("menu-open");
   });
 
   overlay.addEventListener("click", ()=>{
     nav.classList.remove("active");
     overlay.classList.remove("active");
     toggle.classList.remove("active");
+    // 🔥 UNLOCK SCROLL
+    document.body.classList.remove("menu-open");
   });
 
   document.querySelectorAll(".nav-links a").forEach(link=>{
@@ -28,6 +32,7 @@ if(toggle && nav){
       nav.classList.remove("active");
       overlay.classList.remove("active");
       toggle.classList.remove("active");
+      document.body.classList.remove("menu-open");
     });
   });
 }
@@ -225,6 +230,15 @@ if(window.innerWidth < 768){
   document.querySelectorAll(".cursor-glow").forEach(el=>el.remove());
 }
 
+// ================= ESC CLOSE MENU =================
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    nav.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  }
+});
 
 // ================= INIT =================
 activeNav();
