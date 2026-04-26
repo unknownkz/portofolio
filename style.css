@@ -682,6 +682,12 @@ body.light-mode .nav-links a:hover{
   color:var(--accent);
 }
 
+.footer p + p{
+  margin-top:12px;
+  font-size:11px;
+  opacity:0.6;
+}
+
 /* ================= LIGHT MODE ================= */
 body.light-mode .footer{
   background:transparent;
