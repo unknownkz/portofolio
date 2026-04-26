@@ -158,25 +158,6 @@ body.light-mode a{
 }
 /* ANIMASI MENU (PREMIUM) */
 @media(max-width:768px){
-  .nav-links a{
-    opacity:0;
-    transform:translateX(20px);
-  }
-
-  .nav-links.active a{
-    opacity:1;
-    transform:translateX(0);
-  }
-}
-.nav-links a:hover{
-  transform:translateX(5px);
-  color:var(--accent);
-}
-.nav-links a:hover::after{
-  width:100%;
-}
-
-@media(max-width:768px){
 
   .nav-links a{
     opacity:0;
