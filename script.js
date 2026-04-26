@@ -25,14 +25,30 @@ document.body.classList.remove("menu-open");
 });
 
 document.querySelectorAll(".nav-links a").forEach(link=>{
-link.addEventListener("click", ()=>{
-nav.classList.remove("active");
-overlay.classList.remove("active");
-toggle.classList.remove("active");
-document.body.classList.remove("menu-open");
+  link.addEventListener("click", function(e){
+
+    const target = document.querySelector(this.getAttribute("href"));
+
+    if(target){
+      e.preventDefault();
+
+      // SCROLL DULU
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 80,
+        behavior: "smooth"
+      });
+
+      // BARU CLOSE MENU (delay biar halus)
+      setTimeout(()=>{
+        nav.classList.remove("active");
+        overlay.classList.remove("active");
+        toggle.classList.remove("active");
+        document.body.classList.remove("menu-open");
+      }, 300);
+    }
+
+  });
 });
-});
-}
 
 // ================= SMOOTH SCROLL =================
 document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
