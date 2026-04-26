@@ -147,7 +147,7 @@ if(themeBtn){
     }
   });
 }
-// ================= CURSOR GLOW (PREMIUM UPGRADE) =================
+// ================= CURSOR GLOW (FIXED) =================
 const cursor = document.querySelector(".cursor-glow");
 
 if(cursor){
@@ -157,13 +157,11 @@ if(cursor){
   let currentX = 0;
   let currentY = 0;
 
-  // ambil posisi mouse
   window.addEventListener("mousemove", (e)=>{
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
 
-  // smooth follow (biar tidak patah-patah)
   function animateCursor(){
     currentX += (mouseX - currentX) * 0.15;
     currentY += (mouseY - currentY) * 0.15;
@@ -176,5 +174,30 @@ if(cursor){
 
   animateCursor();
 
+  // HOVER EFFECT
+  const hoverItems = document.querySelectorAll("a, button, .btn, .contact-btn");
+
+  hoverItems.forEach(item=>{
+    item.addEventListener("mouseenter", ()=>{
+      cursor.classList.add("active");
+    });
+
+    item.addEventListener("mouseleave", ()=>{
+      cursor.classList.remove("active");
+    });
+  });
+
+  // CLICK EFFECT
+  window.addEventListener("mousedown", ()=>{
+    cursor.classList.add("click");
+  });
+
+  window.addEventListener("mouseup", ()=>{
+    cursor.classList.remove("click");
+  });
+}
+if(window.innerWidth < 768){
+  if(cursor) cursor.style.display = "none";
+}
 // ================= INIT =================
 activeNav();
