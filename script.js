@@ -35,6 +35,7 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
     }
   });
 });
+}
 
 // ================= ACTIVE NAV =================
 const sections = document.querySelectorAll("section, header");
