@@ -523,15 +523,14 @@ main{
 
 /* ================= HERO CRYPTO ================= */
 header{
+  width:100%;
   min-height:100vh;
   display:flex;
   align-items:center;
+  justify-content:center;
   position:relative;
-  overflow:hidden;
-  margin-bottom:40px;
   z-index:1;
 }
-
 /* grid glow background */
 header::before{
   content:'';
@@ -541,17 +540,21 @@ header::before{
     radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(14,165,233,0.15), transparent 40%);
   z-index:-1;
+  pointer-events:none;
 }
 
 /* layout */
 .hero-inner{
+  width:100%;
   max-width:1100px;
   margin:auto;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:50px;
-  padding:var(--space-xl) var(--space-md);
+
+  gap:40px;
+  padding:40px 20px;
 }
 
 /* ===== TEXT ===== */
@@ -621,9 +624,15 @@ header::before{
   box-shadow:0 0 15px rgba(56,189,248,0.3);
 }
 
+.hero-text{
+  flex:1;
+}
 /* ===== HERO IMAGE ===== */
 .hero-img{
   position:relative;
+  flex:1;
+  display:flex;
+  justify-content:center;
 }
 
 /* foto */
