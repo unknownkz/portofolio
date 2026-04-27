@@ -751,6 +751,42 @@ section{
   transform:translateY(-6px) scale(1.01);
   box-shadow:0 20px 60px rgba(0,0,0,0.4);
 }
+/* CARD BODY LIGHT MODE */
+body.light-mode .card{
+  position:relative;
+  background:#ffffff;
+  border:1px solid rgba(0,0,0,0.06);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08),
+    0 2px 8px rgba(0,0,0,0.05);
+
+  backdrop-filter:none;
+}
+
+body.light-mode .card::after{
+  content:'';
+  position:absolute;
+  bottom:-10px;
+  left:5%;
+  width:90%;
+  height:1px;
+  background:rgba(0,0,0,0.05);
+}
+
+body.light-mode .contact-btn,
+body.light-mode .social-btn{
+  background:#f1f5f9;
+  border:1px solid rgba(0,0,0,0.05);
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+body.light-mode .card:hover{
+  transform:translateY(-5px);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.12);
+}
 
 /* ================= TYPO ================= */
 h2{
