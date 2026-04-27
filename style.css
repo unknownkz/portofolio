@@ -521,78 +521,7 @@ main{
   z-index:2;
 }
 
-/* ================= HERO CRYPTO ================= */
-header{
-  width:100%;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:1;
-}
-/* grid glow background */
-header::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(14,165,233,0.15), transparent 40%);
-  z-index:-1;
-  pointer-events:none;
-}
-
-/* layout */
-.hero-inner{
-  width:100%;
-  max-width:1100px;
-  margin:auto;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  gap:40px;
-  padding:40px 20px;
-}
-
-/* ===== TEXT ===== */
-.hero-text h1{
-  font-size:40px;
-  font-weight:700;
-  line-height:1.3;
-}
-
-/* crypto glow text */
-.glow-text{
-  color:#38bdf8;
-  text-shadow:
-    0 0 8px rgba(56,189,248,0.8),
-    0 0 20px rgba(56,189,248,0.6),
-    0 0 40px rgba(56,189,248,0.4);
-}
-
-/* typing */
-.typing{
-  color:#22d3ee;
-  border-right:2px solid #22d3ee;
-  padding-right:4px;
-  animation:blinkCursor 1s infinite;
-}
-
-/* sub text */
-.hero-text p{
-  margin-top:12px;
-  opacity:0.85;
-  line-height:1.6;
-  max-width:520px;
-}
-
-/* ===== HERO BUTTON ===== */
-.buttons{
-  display:flex;
-  gap:12px;
+;
   margin-top:20px;
 }
 
@@ -712,19 +641,96 @@ header::before{
   /* 🔥 FOTO LEBIH PROPORSIONAL */
   .hero-img img{
     max-width:180px;
-    width:100%;
+/* ================= HERO CLEAN CRYPTO ================= */
+
+header{
+  width:100%;
+  position:relative;
+  z-index:2;
+  padding-top:80px; /* biar gak ketutup navbar */
+}
+
+/* CONTAINER */
+.hero-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:60px 20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+}
+
+/* TEXT */
+.hero-text{
+  flex:1;
+  max-width:520px;
+}
+
+.hero-text h1{
+  font-size:36px;
+  font-weight:700;
+  line-height:1.3;
+}
+
+/* NAMA (crypto gradient halus) */
+.hero-text span{
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* DESKRIPSI */
+.hero-text p{
+  margin-top:12px;
+  opacity:0.8;
+  line-height:1.6;
+}
+
+/* BUTTON */
+.buttons{
+  margin-top:20px;
+  display:flex;
+  gap:12px;
+}
+
+/* IMAGE */
+.hero-img{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-img img{
+  width:100%;
+  max-width:260px;
+  border-radius:18px;
+  object-fit:cover;
+
+  /* glow crypto ringan */
+  box-shadow:
+    0 10px 40px rgba(56,189,248,0.25);
+}
+
+/* ===== HERO MOBILE ===== */
+@media(max-width:768px){
+
+  .hero-inner{
+    flex-direction:column;
+    text-align:center;
   }
 
-  /* 🔥 TOMBOL BIAR RAPI */
+  .hero-text{
+    max-width:100%;
+  }
+
+  .hero-img img{
+    max-width:200px;
+  }
+
   .buttons{
     justify-content:center;
-    flex-wrap:wrap; /* penting */
-    gap:10px;
-  }
-
-  .btn, .btn-outline{
-    width:100%;
-    max-width:220px;
   }
 
 }
