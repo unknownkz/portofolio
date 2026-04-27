@@ -774,18 +774,6 @@ body.light-mode .card::after{
   background:rgba(0,0,0,0.05);
 }
 
-/* CONTACT (tetap soft putih) */
-body.light-mode .contact-btn{
-  background:#f1f5f9;
-  border:1px solid rgba(0,0,0,0.05);
-}
-
-/* SOCIAL (beda style biar hidup 🔥) */
-body.light-mode .social-btn{
-  background:#ffffff;
-  border:1px solid rgba(0,0,0,0.06);
-}
-
 body.light-mode .card:hover{
   transform:translateY(-5px);
   box-shadow:
@@ -895,8 +883,7 @@ a:visited{
   gap:12px;
 }
 
-.contact-btn,
-.social-btn{
+.contact-btn{
   display:flex;
   align-items:center;
   gap:12px;
@@ -910,8 +897,7 @@ a:visited{
 }
 
 /* hover premium */
-.contact-btn:hover,
-.social-btn:hover{
+.contact-btn:hover{
   transform:translateY(-4px);
   box-shadow:0 15px 40px rgba(56,189,248,0.2);
   border-color:var(--accent);
@@ -928,6 +914,12 @@ a:visited{
   color:#ef4444;
   border-color:#ef4444;
   box-shadow:0 10px 25px rgba(239,68,68,0.3);
+}
+
+/* CONTACT (tetap soft putih) */
+body.light-mode .contact-btn{
+  background:#f1f5f9;
+  border:1px solid rgba(0,0,0,0.05);
 }
 
 /* ================= SOCIAL ================= */
