@@ -996,8 +996,32 @@ body.light-mode .contact-btn{
 }
 
 body.light-mode .social-btn{
-  background:#f1f5f9;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:14px;
+
+  background:#f1f5f9; /* abu soft */
   border:1px solid rgba(0,0,0,0.05);
+  color:#0f172a;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.06),
+    inset 0 1px 2px rgba(255,255,255,0.8);
+
+  transition:0.25s;
+}
+
+body.light-mode .social-btn:hover{
+  transform:translateY(-3px);
+
+  background:#ffffff;
+  border-color:rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.12),
+    inset 0 1px 2px rgba(255,255,255,1);
 }
 
 .social-btn i{
