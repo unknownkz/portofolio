@@ -934,8 +934,8 @@ a:visited{
   padding:14px 16px;
   border-radius:14px;
 
-  background:#f1f5f9;
-  border:1px solid rgba(0,0,0,0.05);
+  background:rgba(255,255,255,0.05); /* 🔥 FIX */
+  border:1px solid rgba(255,255,255,0.08);
 
   color:var(--text);
   text-decoration:none;
@@ -995,6 +995,21 @@ a:visited{
 
 .social-btn:hover{
   transform:translateY(-4px);
+  background:rgba(56,189,248,0.08);
+  border-color:rgba(56,189,248,0.4);
+}
+
+body.light-mode .social-btn{
+  background:#f1f5f9;
+  border:1px solid rgba(0,0,0,0.05);
+}
+
+.social-btn i{
+  opacity:0.8;
+}
+
+.social-btn:hover i{
+  opacity:1;
 }
 
 /* ================= TOGGLE ================= */
