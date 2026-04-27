@@ -88,7 +88,7 @@ lastScroll = current;
 });
 
 // ================= HERO ===================
-const text = "Web3 Analyst";
+const text = "rofesional Disiplin dengan Pengalaman Hospitality & Analisis Web3 Analyst";
 let i = 0;
 function typing(){
   if(i < text.length){
