@@ -108,7 +108,7 @@ function typing(){
       element.innerHTML += parts[partIndex];
       partIndex++;
       charIndex = 0;
-      setTimeout(typing, 100);
+      setTimeout(typing, 250);
       return;
     }
 
@@ -116,11 +116,11 @@ function typing(){
     if(charIndex < parts[partIndex].length){
       element.innerHTML += parts[partIndex].charAt(charIndex);
       charIndex++;
-      setTimeout(typing, 80);
+      setTimeout(typing, 250);
     }else{
       partIndex++;
       charIndex = 0;
-      setTimeout(typing, 80);
+      setTimeout(typing, 250);
     }
 
   }
