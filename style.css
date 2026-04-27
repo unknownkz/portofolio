@@ -108,6 +108,9 @@ body.light-mode a{
 /* navbar hover crypto */
 .navbar:hover{
   border-color:rgba(56,189,248,0.3);
+  box-shadow:
+    0 0 20px rgba(56,189,248,0.4),
+    0 0 40px rgba(56,189,248,0.2);
 }
 /* ================= NAV OVERLAY ================= */
 .nav-overlay{
