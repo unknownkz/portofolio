@@ -88,15 +88,23 @@ lastScroll = current;
 });
 
 // ================= HERO ===================
-const text = "rofesional Disiplin dengan Pengalaman Hospitality & Analisis Web3 Analyst";
+const text = `Profesional Disiplin dengan Pengalaman 
+<span class="highlight">Hospitality</span> & Analisis 
+<span class="highlight2">Web3 Analyst</span>`;
+
 let i = 0;
+let speed = 30;
+
 function typing(){
+  const element = document.getElementById("typing");
+
   if(i < text.length){
-    document.getElementById("typing").innerHTML += text.charAt(i);
+    element.innerHTML += text.charAt(i);
     i++;
-    setTimeout(typing, 70);
+    setTimeout(typing, speed);
   }
 }
+
 typing();
 
 // ================= PARALLAX =================
