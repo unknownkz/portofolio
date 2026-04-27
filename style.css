@@ -1122,7 +1122,7 @@ body.light-mode .footer:hover p{
   50%{ opacity:0.5; }
 }
 
-/* ============ LIGHT MODE NAV LINK ============
+/* ============ LIGHT MODE NAV LINK ============ */
 /* 🔥 FIX MENU LIGHT MODE */
 body.light-mode .nav-links{
   background:#ffffff; /* putih solid */
