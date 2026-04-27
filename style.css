@@ -33,6 +33,7 @@ body{
   background:var(--bg);
   transition:0.3s;
   height:100%;
+  padding-top:80px;
 }
 body.menu-open{
   overflow:hidden;
@@ -73,20 +74,30 @@ body.light-mode a{
 /* ================= NAVBAR ================= */
 .navbar{
   position:sticky;
-  top:0;
+  top:12px;
   z-index:6000;
+  max-width:1100px;
+  margin:0 auto;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 10%;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(10px);
+  padding:12px 20px;
+  border-radius:14px;
+  background:rgba(15,23,42,0.65);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(56,189,248,0.15);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.3s;
 }
 /* shrink saat scroll */
 .navbar.scrolled{
   padding:10px 10%;
   background:rgba(15,23,42,0.9);
   box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+/* navbar hover crypto */
+.navbar:hover{
+  border-color:rgba(56,189,248,0.3);
 }
 /* ================= NAV OVERLAY ================= */
 .nav-overlay{
@@ -114,7 +125,10 @@ body.light-mode a{
 /* ================= NAV LINKS DESKTOP ================= */
 .nav-links{
   display:flex;
-  gap:20px;
+  gap:18px;
+  align-items:center;
+}
+.nav-links li{
   list-style:none;
 }
 
@@ -169,19 +183,17 @@ body.light-mode a{
   }
 
 }
-
 .nav-links a{
-  text-decoration:none;
-  color:var(--text);
-  position:relative;
-  padding:12px 15px;
-  border-radius:10px;
-  transition:0.3s;
-  font-size:18px;
-  font-weight:500;
-  display:flex;
-  align-items:center;
-  gap:10px;
+  font-size:15px;
+  padding:8px 12px;
+  border-radius:8px;
+
+  transition:0.25s;
+}
+.nav-links a:hover{
+  background:rgba(56,189,248,0.1);
+  transform:none;
+  box-shadow:none;
 }
 .nav-links i{
   color:#38bdf8;
@@ -198,11 +210,6 @@ body.light-mode a{
   height:2px;
   background:linear-gradient(90deg,#38bdf8,#0ea5e9);
   transition:0.3s;
-}
-.nav-links a:hover{
-  background:rgba(56,189,248,0.1);
-  transform:translateX(5px);
-  box-shadow:0 0 15px rgba(56,189,248,0.4);
 }
 /* hover efek */
 .nav-links a:hover::after{
@@ -1054,9 +1061,9 @@ body.light-mode .hero-text span{
 
 /* ================= FIX NAVBAR LIGHT MODE ================= */
 body.light-mode .navbar{
-  background:rgba(255,255,255,0.85);
-  border-bottom:1px solid rgba(0,0,0,0.05);
-  box-shadow:0 5px 20px rgba(0,0,0,0.05);
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(0,0,0,0.05);
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
 }
 
 /* logo text biar jelas */
@@ -1085,7 +1092,6 @@ body.light-mode .nav-links a:hover{
   font-size:13px;
   overflow:hidden;
   backdrop-filter: blur(10px);
-
   background:linear-gradient(
     180deg,
     rgba(15,23,42,0.9),
