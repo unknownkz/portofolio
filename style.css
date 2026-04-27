@@ -809,7 +809,7 @@ a:visited{
 .menu-toggle.active i{
   transform:rotate(90deg);
 }
-
+/* ================ Dark/Light Button =============== */
 .theme-btn{
   width:52px;
   height:26px;
@@ -818,6 +818,39 @@ a:visited{
   cursor:pointer;
   background:rgba(255,255,255,0.1);
   position:relative;
+}
+/* ================= FIX TOGGLE LIGHT MODE ================= */
+body.light-mode .theme-btn{
+  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
+  box-shadow:
+    0 4px 15px rgba(14,165,233,0.4),
+    0 0 20px rgba(56,189,248,0.5);
+}
+
+/* BULATAN */
+body.light-mode .toggle-circle{
+  background:#ffffff;
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.9),
+    0 0 20px rgba(56,189,248,0.6);
+}
+/* ICON DI DALAM TOGGLE */
+.theme-btn i{
+  position:absolute;
+  right:6px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  color:#fff;
+}
+
+/* HOVER EFFECT */
+.theme-btn:hover{
+  transform:scale(1.08);
+  box-shadow:
+    0 0 15px rgba(56,189,248,0.8),
+    0 0 30px rgba(56,189,248,0.5);
+  transition:0.3s;
 }
 
 .toggle-circle{
@@ -833,6 +866,10 @@ a:visited{
 
 body.light-mode .toggle-circle{
   transform:translateX(24px);
+}
+
+body.light-mode .menu-toggle i{
+  color:#0f172a;
 }
 
 /* ================= CURSOR ================= */
