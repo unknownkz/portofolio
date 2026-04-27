@@ -774,12 +774,16 @@ body.light-mode .card::after{
   background:rgba(0,0,0,0.05);
 }
 
-body.light-mode .contact-btn,
-body.light-mode .social-btn{
+/* CONTACT (tetap soft putih) */
+body.light-mode .contact-btn{
   background:#f1f5f9;
   border:1px solid rgba(0,0,0,0.05);
+}
 
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+/* SOCIAL (beda style biar hidup 🔥) */
+body.light-mode .social-btn{
+  background:#ffffff;
+  border:1px solid rgba(0,0,0,0.06);
 }
 
 body.light-mode .card:hover{
