@@ -661,25 +661,46 @@ header::before{
 
 /* ===== HERO RESPONSIVE ===== */
 @media(max-width:768px){
+
   .hero-inner{
     flex-direction:column;
     text-align:center;
-    gap:30px;
+    gap:25px;
+    padding:30px 16px;
   }
 
+  /* 🔥 JUDUL BIAR GAK KEGEDEAN */
+  .hero-text h1{
+    font-size:26px;
+    line-height:1.3;
+  }
+
+  /* 🔥 PARAGRAF LEBIH ENAK DIBACA */
+  .hero-text p{
+    font-size:14px;
+    margin:auto;
+    max-width:320px;
+  }
+
+  /* 🔥 FOTO LEBIH PROPORSIONAL */
   .hero-img img{
-    max-width:200px;
+    max-width:180px;
+    width:100%;
   }
 
+  /* 🔥 TOMBOL BIAR RAPI */
   .buttons{
     justify-content:center;
+    flex-wrap:wrap; /* penting */
+    gap:10px;
   }
 
-  .hero-text p{
-    margin:auto;
+  .btn, .btn-outline{
+    width:100%;
+    max-width:220px;
   }
+
 }
-
 /* ================= BUTTON ================= */
 .buttons{
   display:flex;
