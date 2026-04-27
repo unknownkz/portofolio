@@ -511,6 +511,8 @@ header{
   align-items:center;
   position:relative;
   overflow:hidden;
+  margin-bottom:40px;
+  z-index:1;
 }
 
 /* grid glow background */
@@ -713,6 +715,13 @@ header::before{
   display:flex;
   flex-direction:column;
   gap:var(--space-lg);
+  position:relative;
+  z-index:2;
+}
+
+main{
+  position:relative;
+  z-index:2;
 }
 /* ================= SECTION SPACING ================= */
 section{
