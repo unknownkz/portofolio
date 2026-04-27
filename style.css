@@ -528,6 +528,7 @@ body.light-mode .logo-icon::after{
   -webkit-text-fill-color:transparent;
   background-size:200%;
   animation:gradientMove 4s linear infinite;
+}
 
 
 @keyframes gradientMove{
