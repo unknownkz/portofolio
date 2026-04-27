@@ -90,24 +90,43 @@ lastScroll = current;
 // ================= HERO ===================
 const element = document.getElementById("typing");
 
-const text = `
-Profesional Disiplin dengan Pengalaman 
-<span class="highlight">Hospitality</span> & Analisis 
-<span class="highlight2">Web3 Analyst</span>
-`;
+const parts = [
+  "Profesional Disiplin dengan Pengalaman ",
+  '<span class="highlight">Hospitality</span>',
+  " & Analisis ",
+  '<span class="highlight2">Web3 Analyst</span>'
+];
 
-let i = 0;
+let partIndex = 0;
+let charIndex = 0;
 
 function typing(){
-  if(i < text.length){
-    element.innerHTML = text.slice(0, i);
-    i++;
-    setTimeout(typing, 20);
+  if(partIndex < parts.length){
+
+    // kalau bagian span → langsung tampil
+    if(parts[partIndex].includes("<span")){
+      element.innerHTML += parts[partIndex];
+      partIndex++;
+      charIndex = 0;
+      setTimeout(typing, 100);
+      return;
+    }
+
+    // ketik normal
+    if(charIndex < parts[partIndex].length){
+      element.innerHTML += parts[partIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(typing, 30);
+    }else{
+      partIndex++;
+      charIndex = 0;
+      setTimeout(typing, 50);
+    }
+
   }
 }
 
 typing();
-
 // ================= PARALLAX =================
 window.addEventListener("scroll", ()=>{
 const scrolled = window.scrollY;
