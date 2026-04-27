@@ -26,7 +26,6 @@ body.light-mode{
   padding:0;
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
-  transition:background 0.05s, color 0.05s, border 0.05s;
 }
 
 html{
