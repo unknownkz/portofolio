@@ -87,6 +87,18 @@ lastScroll = current;
 }
 });
 
+// ================= HERO ===================
+const text = "Web3 Analyst";
+let i = 0;
+function typing(){
+  if(i < text.length){
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typing, 70);
+  }
+}
+typing();
+
 // ================= PARALLAX =================
 window.addEventListener("scroll", ()=>{
 const scrolled = window.scrollY;
