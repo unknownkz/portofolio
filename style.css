@@ -522,16 +522,13 @@ body.light-mode .logo-icon::after{
 }
 
 .hero-text span{
-  background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+  display:inline;
+  background:linear-gradient(90deg,#38bdf8,#0ea5e9,#38bdf8);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-}
-
-.hero-text h1 span{
-  background:linear-gradient(90deg,#38bdf8,#0ea5e9,#38bdf8);
   background-size:200%;
   animation:gradientMove 4s linear infinite;
-}
+
 
 @keyframes gradientMove{
   0%{ background-position:0%; }
