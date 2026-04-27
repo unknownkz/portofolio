@@ -504,6 +504,23 @@ body.light-mode .logo-icon::after{
   opacity:0.2;
 }
 
+/* ================= CONTAINER ================= */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:var(--space-lg) var(--space-md);
+  display:flex;
+  flex-direction:column;
+  gap:var(--space-lg);
+  position:relative;
+  z-index:2;
+}
+
+main{
+  position:relative;
+  z-index:2;
+}
+
 /* ================= HERO CRYPTO ================= */
 header{
   min-height:100vh;
@@ -728,22 +745,6 @@ header::before{
   color:var(--accent);
 }
 
-/* ================= CONTAINER ================= */
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:var(--space-lg) var(--space-md);
-  display:flex;
-  flex-direction:column;
-  gap:var(--space-lg);
-  position:relative;
-  z-index:2;
-}
-
-main{
-  position:relative;
-  z-index:2;
-}
 /* ================= SECTION SPACING ================= */
 section{
   margin-bottom:var(--space-xl);
