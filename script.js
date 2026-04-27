@@ -88,20 +88,21 @@ lastScroll = current;
 });
 
 // ================= HERO ===================
-const text = `Profesional Disiplin dengan Pengalaman 
+const element = document.getElementById("typing");
+
+const text = `
+Profesional Disiplin dengan Pengalaman 
 <span class="highlight">Hospitality</span> & Analisis 
-<span class="highlight2">Web3 Analyst</span>`;
+<span class="highlight2">Web3 Analyst</span>
+`;
 
 let i = 0;
-let speed = 30;
 
 function typing(){
-  const element = document.getElementById("typing");
-
   if(i < text.length){
-    element.innerHTML += text.charAt(i);
+    element.innerHTML = text.slice(0, i);
     i++;
-    setTimeout(typing, speed);
+    setTimeout(typing, 20);
   }
 }
 
