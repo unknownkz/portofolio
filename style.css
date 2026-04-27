@@ -12,6 +12,13 @@
   --space-lg:30px;
   --space-xl:50px;
 }
+body.light-mode{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --accent:#0ea5e9;
+  --accent2:#38bdf8;
+}
 
 /* ================= RESET ================= */
 *{
@@ -19,6 +26,7 @@
   padding:0;
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
+  transition:background 0.3s, color 0.3s, border 0.3s;
 }
 
 html{
