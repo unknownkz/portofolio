@@ -1318,6 +1318,7 @@ body.light-mode .nav-links{
   width:100%;
   height:100%;
   transform: translateZ(0);
+  will-change: transform;
 
   z-index:-1; /* di belakang konten */
   pointer-events:none;
