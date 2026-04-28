@@ -129,11 +129,11 @@ body.light-mode a{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.5);
-  backdrop-filter: none;
+  backdrop-filter:blur(6px);
   opacity:0;
   pointer-events:none;
   transition:0.3s;
-  z-index:-1;
+  z-index:3000;
   will-change: opacity;
   transform: translateZ(0);
 }
