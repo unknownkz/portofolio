@@ -124,7 +124,7 @@ for(let i=0; i<particleCount; i++){
 }
 
 /* animasi */
-function animate(){
+function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   particles.forEach(p => {
@@ -167,7 +167,7 @@ function animate(){
   requestAnimationFrame(animate);
 }
 
-animate();
+animateParticles();
 
 // ================= HERO ===================
 const element = document.getElementById("typing");
@@ -312,7 +312,7 @@ mouseX = e.clientX;
 mouseY = e.clientY;
 });
 
-function animate(){
+function animateCursor(){
 currentX += (mouseX-currentX)*0.15;
 currentY += (mouseY-currentY)*0.15;
 
@@ -323,7 +323,7 @@ requestAnimationFrame(animate);
 
 }
 
-animate();
+animateCursor();
 
 document.querySelectorAll("a, button, .btn, .contact-btn").forEach(el=>{
 el.addEventListener("mouseenter", ()=>cursor.classList.add("active"));
