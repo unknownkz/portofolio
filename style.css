@@ -271,221 +271,128 @@ body.light-mode a{
   }
 }
 
-/* ================= CRYPTO LOGO ================= */
-.logo-icon{
+/* ================= LOGO (IMAGE BASED) ================= */
+.logo-wrap{
   position:relative;
   width:42px;
   height:42px;
-  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  font-weight:700;
-  color:#fff;
-
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-
-  /* glow utama */
-  box-shadow:
-    0 0 10px rgba(56,189,248,0.6),
-    0 0 30px rgba(56,189,248,0.4),
-    inset 0 0 10px rgba(255,255,255,0.2);
-
-  animation:logoPulse 3s infinite ease-in-out;
+  isolation:isolate;
 }
 
-/* 🔥 aura luar (crypto ring) */
-.logo-icon::before{
-  content:'';
-  position:absolute;
-  inset:-6px;
+/* IMAGE */
+.logo-img{
+  width:42px;
+  height:42px;
+  object-fit:contain;
   border-radius:50%;
+  z-index:2;
+  position:relative;
 
-  background:conic-gradient(
-    transparent,
-    #38bdf8,
-    transparent,
-    #0ea5e9,
-    transparent
-  );
+  transition:0.3s;
 
-  animation:rotateRing 4s linear infinite;
-  filter:blur(6px);
-  opacity:0.7;
-  z-index:-1;
+  /* DARK MODE */
+  filter:
+    drop-shadow(0 0 6px var(--accent))
+    drop-shadow(0 0 20px var(--accent));
 }
 
-/* 🔥 glow tambahan */
-.logo-icon::after{
-  content:'';
-  position:absolute;
-  inset:-12px;
-  border-radius:50%;
-
-  background:radial-gradient(
-    circle,
-    rgba(56,189,248,0.25),
-    transparent 70%
-  );
-
-  filter:blur(15px);
-  z-index:-2;
-}
-/* ANIMASI LOGO */
-@keyframes logoPulse{
-  0%,100%{
-    transform:scale(1);
-    box-shadow:
-      0 0 10px rgba(56,189,248,0.6),
-      0 0 30px rgba(56,189,248,0.4);
-  }
-  50%{
-    transform:scale(1.08);
-    box-shadow:
-      0 0 20px rgba(56,189,248,0.9),
-      0 0 50px rgba(56,189,248,0.6);
-  }
-}
-
-@keyframes rotateRing{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
-}
-
-.logo:hover .logo-icon{
+/* HOVER */
+.logo-wrap:hover .logo-img{
   transform:scale(1.1);
-  box-shadow:
-    0 0 25px rgba(56,189,248,1),
-    0 0 60px rgba(56,189,248,0.8);
-}
-
-body.light-mode .logo-icon{
-  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
-}
-
-/* ================= LOGO CRYPTO ================= */
-.logo-icon{
-  position:relative;
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:700;
-  color:#fff;
-
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-
-  box-shadow:
-    0 0 10px rgba(56,189,248,0.6),
-    0 0 30px rgba(56,189,248,0.4),
-    inset 0 0 10px rgba(255,255,255,0.2);
-
-  animation:logoPulse 3s infinite ease-in-out;
-  z-index:1;
-}
-
-/* 🔥 aura luar */
-.logo-icon::before{
-  content:'';
-  position:absolute;
-  inset:-8px;
-  border-radius:50%;
-
-  background:conic-gradient(
-    transparent,
-    #38bdf8,
-    transparent,
-    #0ea5e9,
-    transparent
-  );
-
-  animation:rotateRing 6s linear infinite;
-  filter:blur(8px);
-  opacity:0.6;
-  z-index:-1;
-}
-
-/* glow */
-.logo-icon::after{
-  content:'';
-  position:absolute;
-  inset:-15px;
-  border-radius:50%;
-
-  background:radial-gradient(
-    circle,
-    rgba(56,189,248,0.25),
-    transparent 70%
-  );
-
-  filter:blur(20px);
-  z-index:-2;
+  filter:
+    drop-shadow(0 0 12px var(--accent))
+    drop-shadow(0 0 40px var(--accent));
 }
 
 /* ================= LOGO ORBIT ================= */
-.orbit{
+.logo-wrap .orbit{
   position:absolute;
-  inset:-18px;
   border-radius:50%;
-  animation:orbitRotate 6s linear infinite;
   pointer-events:none;
 }
 
-.orbit span{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:#38bdf8;
-  border-radius:50%;
-
-  box-shadow:
-    0 0 6px #38bdf8,
-    0 0 12px #38bdf8;
+/* orbit 1 */
+.logo-wrap .orbit1{
+  inset:-14px;
+  animation:orbitRotate 6s linear infinite;
 }
 
-.orbit span:nth-child(1){
+/* orbit 2 */
+.logo-wrap .orbit2{
+  inset:-22px;
+  animation:orbitRotateReverse 10s linear infinite;
+}
+
+/* DOT */
+.logo-wrap .orbit span{
+  position:absolute;
+  border-radius:50%;
+}
+
+/* posisi */
+.logo-wrap .orbit span:nth-child(1){
   top:0;
   left:50%;
   transform:translateX(-50%);
 }
-
-.orbit span:nth-child(2){
+.logo-wrap .orbit span:nth-child(2){
   bottom:0;
   left:50%;
   transform:translateX(-50%);
 }
 
-/* orbit kedua */
-.orbit2{
-  inset:-26px;
-  animation:orbitRotateReverse 10s linear infinite;
+/* DARK */
+.logo-wrap .orbit1 span{
+  width:6px;
+  height:6px;
+  background:var(--accent);
+  box-shadow:
+    0 0 6px var(--accent),
+    0 0 15px var(--accent);
 }
 
-.orbit2 span{
+.logo-wrap .orbit2 span{
   width:4px;
   height:4px;
-  background:#0ea5e9;
+  background:var(--accent2);
+  box-shadow:
+    0 0 6px var(--accent2),
+    0 0 12px var(--accent2);
+}
+
+/* ================= LOGO LIGHT MODE ================= */
+body.light-mode .logo-img{
+  filter:
+    drop-shadow(0 0 4px rgba(14,165,233,0.4))
+    drop-shadow(0 0 12px rgba(14,165,233,0.3));
+}
+
+body.light-mode .logo-wrap .orbit1 span{
+  background:var(--accent);
+  box-shadow:
+    0 0 4px var(--accent),
+    0 0 8px var(--accent);
+}
+
+body.light-mode .logo-wrap .orbit2 span{
+  background:var(--accent2);
+  box-shadow:
+    0 0 4px var(--accent2),
+    0 0 8px var(--accent2);
+}
+
+/* ================= LOGO HOVER SPEED ================= */
+.logo-wrap:hover .orbit1{
+  animation-duration:2.5s;
+}
+.logo-wrap:hover .orbit2{
+  animation-duration:5s;
 }
 
 /* ================= LOGO ANIMATION ================= */
-@keyframes logoPulse{
-  0%,100%{
-    transform:scale(1);
-  }
-  50%{
-    transform:scale(1.08);
-  }
-}
-
-@keyframes rotateRing{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
-}
-
 @keyframes orbitRotate{
   from{ transform:rotate(0deg); }
   to{ transform:rotate(360deg); }
@@ -494,42 +401,6 @@ body.light-mode .logo-icon{
 @keyframes orbitRotateReverse{
   from{ transform:rotate(360deg); }
   to{ transform:rotate(0deg); }
-}
-
-/* ================= LOGO HOVER EFFECT ================= */
-.logo:hover .logo-icon{
-  transform:scale(1.1);
-  box-shadow:
-    0 0 25px rgba(56,189,248,1),
-    0 0 60px rgba(56,189,248,0.8);
-}
-
-.logo:hover .orbit{
-  animation-duration:2s;
-}
-
-.logo:hover .orbit2{
-  animation-duration:4s;
-}
-
-/* ================= LOGO LIGHT MODE ================= */
-body.light-mode .logo-icon{
-  background:linear-gradient(135deg,#0ea5e9,#38bdf8);
-
-  box-shadow:
-    0 0 10px rgba(14,165,233,0.4),
-    0 0 20px rgba(14,165,233,0.3);
-}
-
-body.light-mode .orbit span{
-  background:#0ea5e9;
-  box-shadow:
-    0 0 4px #0ea5e9,
-    0 0 10px #0ea5e9;
-}
-
-body.light-mode .logo-icon::after{
-  opacity:0.2;
 }
 
 /* ================= CONTAINER ================= */
