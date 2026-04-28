@@ -97,8 +97,16 @@ function getParticleColor(){
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("scroll", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
 
 let particles = [];
 
