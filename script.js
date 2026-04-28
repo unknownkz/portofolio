@@ -90,7 +90,7 @@ lastScroll = current;
 // ================= PARTICLES ==============
 function getParticleColor(){
   return document.body.classList.contains("light-mode")
-    ? "rgba(14,165,233,0.5)"
+    ? "rgba(14,165,233,0.9)"
     : "rgba(56,189,248,0.7)";
 }
 
@@ -142,7 +142,7 @@ function animateParticles(){
     ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
 
     ctx.fillStyle = getParticleColor();
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = document.body.classList.contains("light-mode") ? 15 : 10;
     ctx.shadowColor = getParticleColor();
 
     ctx.fill();
@@ -155,7 +155,10 @@ function animateParticles(){
 
       if(dist < 100){
         ctx.beginPath();
-        ctx.strokeStyle = "rgba(56,189,248,0.08)";
+        ctx.strokeStyle =
+          document.body.classList.contains("light-mode")
+            ? "rgba(14,165,233,0.15)"
+            : "rgba(56,189,248,0.08)";
         ctx.lineWidth = 0.5;
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
