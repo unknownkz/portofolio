@@ -274,8 +274,8 @@ body.light-mode a{
 /* ================= LOGO (IMAGE BASED) ================= */
 .logo-wrap{
   position:relative;
-  width:42px;
-  height:42px;
+  width:60px;
+  height:60px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -284,8 +284,8 @@ body.light-mode a{
 
 /* IMAGE */
 .logo-img{
-  width:42px;
-  height:42px;
+  width:60px;
+  height:60px;
   object-fit:contain;
   border-radius:50%;
   z-index:2;
@@ -297,6 +297,18 @@ body.light-mode a{
   filter:
     drop-shadow(0 0 6px var(--accent))
     drop-shadow(0 0 20px var(--accent));
+}
+
+/* desktop */
+@media(min-width:768px){
+  .logo-wrap{
+    width:70px;
+    height:70px;
+  }
+  .logo-img{
+    width:70px;
+    height:70px;
+  }
 }
 
 /* HOVER */
@@ -316,13 +328,13 @@ body.light-mode a{
 
 /* orbit 1 */
 .logo-wrap .orbit1{
-  inset:-14px;
+  inset:-18px;
   animation:orbitRotate 6s linear infinite;
 }
 
 /* orbit 2 */
 .logo-wrap .orbit2{
-  inset:-22px;
+  inset:-28px;
   animation:orbitRotateReverse 10s linear infinite;
 }
 
