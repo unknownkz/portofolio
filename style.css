@@ -81,18 +81,6 @@ body.light-mode a{
   100%{ background-position:0% 50%; }
 }
 
-/* ========= Particles ========== */
-#particles{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-
-  z-index:0; /* di belakang konten */
-  pointer-events:none;
-}
-
 /* ================= NAVBAR ================= */
 .navbar{
   position:fixed;
@@ -1318,4 +1306,16 @@ body.light-mode .nav-links{
   background:rgba(255,255,255,0.05) !important;
   border:1px solid rgba(255,255,255,0.08) !important;
   color:var(--text) !important;
+}
+
+/* ========= Particles ========== */
+#particles{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+
+  z-index:0; /* di belakang konten */
+  pointer-events:none;
 }
