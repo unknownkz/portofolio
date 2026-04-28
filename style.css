@@ -303,6 +303,29 @@ body.light-mode a{
     drop-shadow(0 0 20px var(--accent));
 }
 
+.logo{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+/* glow langsung ke logo */
+.logo::before{
+  content:'';
+  position:absolute;
+  inset:-25px;
+  border-radius:50%;
+
+  background:radial-gradient(
+    circle,
+    rgba(56,189,248,0.35),
+    transparent 70%
+  );
+
+  filter:blur(25px);
+  z-index:-1;
+}
+
 /* desktop */
 @media(min-width:768px){
   .logo-wrap{
@@ -448,18 +471,17 @@ header{
 header::before{
   content:'';
   position:absolute;
-  top:-8px;
-  left:-18px;
-  width:140px;
-  height:140px;
+  inset:0;
 
   background:radial-gradient(
-    circle,
-    rgba(56,189,248,0.4),
-    transparent 70%
+    circle at 15% 20%,
+    rgba(56,189,248,0.08),
+    transparent 60%
   );
 
-  filter:blur(30px);
+  filter:blur(40px);
+  opacity:0.6;
+
   pointer-events:none;
   z-index:0;
 }
