@@ -108,10 +108,12 @@ body.light-mode a{
 }
 
 /* shrink saat scroll */
-.navbar.scrolled{
+.navbar.scrolled .logo-wrap{
   padding:10px 10%;
   background:rgba(2,6,23,0.85);
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  transform:scale(0.9);
+  transition:0.3s;
 }
 /* navbar hover crypto */
 .navbar:hover{
@@ -276,6 +278,7 @@ body.light-mode a{
   position:relative;
   width:60px;
   height:60px;
+  margin-top:4px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -439,7 +442,25 @@ header{
   width:100%;
   position:relative;
   z-index:2;
-  padding-top:90px;
+  padding-top:100px;
+}
+
+header::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:120px;
+
+  background:radial-gradient(
+    circle at 20% 20%,
+    rgba(56,189,248,0.15),
+    transparent 70%
+  );
+
+  pointer-events:none;
+  z-index:0;
 }
 
 /* CONTAINER */
