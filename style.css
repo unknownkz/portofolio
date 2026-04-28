@@ -81,6 +81,18 @@ body.light-mode a{
   100%{ background-position:0% 50%; }
 }
 
+/* ========= Particles ========== */
+#particles{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+
+  z-index:0; /* di belakang konten */
+  pointer-events:none;
+}
+
 /* ================= NAVBAR ================= */
 .navbar{
   position:fixed;
@@ -1300,16 +1312,6 @@ body.light-mode .nav-overlay{
 }
 body.light-mode .nav-links{
   box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-}
-
-#particles{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-1; /* 🔥 penting */
-  pointer-events:none;
 }
 
 .social-btn{
