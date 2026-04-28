@@ -87,6 +87,87 @@ lastScroll = current;
 }
 });
 
+// ================= PARTICLES ==============
+function getParticleColor(){
+  return document.body.classList.contains("light-mode")
+    ? "rgba(14,165,233,0.5)"
+    : "rgba(56,189,248,0.7)";
+}
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+/* jumlah particle (mobile friendly) */
+const particleCount = window.innerWidth < 768 ? 40 : 80;
+
+/* buat particle */
+for(let i=0; i<particleCount; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.3,
+    speedY: (Math.random() - 0.5) * 0.3
+  });
+}
+
+/* animasi */
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    /* looping biar tidak hilang */
+    if(p.x > canvas.width) p.x = 0;
+    if(p.x < 0) p.x = canvas.width;
+    if(p.y > canvas.height) p.y = 0;
+    if(p.y < 0) p.y = canvas.height;
+
+    /* gambar bintang */
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+
+    ctx.fillStyle = getParticleColor();
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = getParticleColor();
+
+    ctx.fill();
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i;j<particles.length;j++){
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+
+      if(dist < 100){
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(56,189,248,0.08)";
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+/* resize fix */
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
 // ================= HERO ===================
 const element = document.getElementById("typing");
 
