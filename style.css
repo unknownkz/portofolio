@@ -280,6 +280,7 @@ body.light-mode a{
   align-items:center;
   justify-content:center;
   isolation:isolate;
+  transform:translateY(2px);
 }
 
 /* IMAGE */
