@@ -105,7 +105,6 @@ function resizeCanvas(){
 resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
-window.addEventListener("scroll", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
 
 let particles = [];
