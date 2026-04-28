@@ -116,8 +116,6 @@ body.light-mode a{
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
   transform:scale(0.9);
   transition:0.3s;
-  transform: translateZ(0);
-  will-change: transform;
 }
 /* navbar hover crypto */
 .navbar:hover{
