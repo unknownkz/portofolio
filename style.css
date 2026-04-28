@@ -133,7 +133,9 @@ body.light-mode a{
   opacity:0;
   pointer-events:none;
   transition:0.3s;
-  z-index:3000;
+  z-index:-1;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 .nav-overlay.active{
