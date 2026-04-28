@@ -164,7 +164,7 @@ function animateParticles(){
     }
   }
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateParticles);
 }
 
 animateParticles();
@@ -319,7 +319,7 @@ currentY += (mouseY-currentY)*0.15;
 cursor.style.left = currentX+"px";  
 cursor.style.top = currentY+"px";  
 
-requestAnimationFrame(animate);
+requestAnimationFrame(animateCursor);
 
 }
 
