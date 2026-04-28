@@ -170,12 +170,6 @@ function animate(){
 
 animate();
 
-/* resize fix */
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
 // ================= HERO ===================
 const element = document.getElementById("typing");
 
