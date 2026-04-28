@@ -448,17 +448,18 @@ header{
 header::before{
   content:'';
   position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:120px;
+  top:-20px;
+  left:-40px;
+  width:220px;
+  height:220px;
 
   background:radial-gradient(
-    circle at 20% 20%,
-    rgba(56,189,248,0.15),
+    circle,
+    rgba(56,189,248,0.35),
     transparent 70%
   );
 
+  filter:blur(40px);
   pointer-events:none;
   z-index:0;
 }
