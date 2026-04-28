@@ -42,6 +42,8 @@ body{
   transition:0.3s;
   height:100%;
   padding-top:80px;
+  position: relative;
+  z-index:0;
 }
 body.menu-open{
   overflow:hidden;
@@ -1313,6 +1315,7 @@ body.light-mode .nav-links{
   inset: 0;
   width:100%;
   height:100%;
+  transform: translateZ(0);
 
   z-index:-1; /* di belakang konten */
   pointer-events:none;
