@@ -41,25 +41,31 @@ if(overlay){
   });
 }
 
-// ================= ACTIVE NAV =================
+// ================= ACTIVE NAV (FIX MOBILE) =================
 const sections = document.querySelectorAll("section, header");
 const links = document.querySelectorAll(".nav-links a");
 
 function activeNav(){
-let current = "";
+  let current = "";
 
-sections.forEach(sec=>{
-if(window.scrollY >= sec.offsetTop - 120){
-current = sec.id;
-}
-});
+  sections.forEach(sec=>{
+    const sectionTop = sec.offsetTop;
+    const sectionHeight = sec.offsetHeight;
 
-links.forEach(link=>{
-link.classList.remove("active");
-if(link.getAttribute("href") === "#" + current){
-link.classList.add("active");
-}
-});
+    if(
+      window.scrollY >= sectionTop - 80 &&
+      window.scrollY < sectionTop + sectionHeight - 80
+    ){
+      current = sec.id;
+    }
+  });
+
+  links.forEach(link=>{
+    link.classList.remove("active");
+    if(link.getAttribute("href") === "#" + current){
+      link.classList.add("active");
+    }
+  });
 }
 
 // ================= NAVBAR SCROLL =================
@@ -365,4 +371,7 @@ document.body.classList.remove("menu-open");
 });
 
 // ================= INIT =================
+window.addEventListener("scroll", activeNav);
+window.addEventListener("load", activeNav);
+
 activeNav();
