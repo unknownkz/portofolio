@@ -5,16 +5,21 @@ const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
 const overlay = document.querySelector(".nav-overlay");
 
-// ================= MENU TOGGLE =================
+// ================= MENU TOGGLE (FIXED) =================
 if(toggle && nav){
   toggle.addEventListener("click", () => {
     nav.classList.toggle("active");
     toggle.classList.toggle("active");
     document.body.classList.toggle("menu-open");
 
-    // overlay ikut toggle kalau ada
     if(overlay){
       overlay.classList.toggle("active");
+    }
+
+    // 🔥 reset active saat buka menu
+    if(nav.classList.contains("active")){
+      document.querySelectorAll(".nav-links a")
+        .forEach(link => link.classList.remove("active"));
     }
   });
 
@@ -28,6 +33,9 @@ if(toggle && nav){
       if(overlay){
         overlay.classList.remove("active");
       }
+
+      // 🔥 update active setelah klik
+      setTimeout(activeNav, 150);
     });
   });
 }
