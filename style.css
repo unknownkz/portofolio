@@ -756,10 +756,11 @@ p{
   width:0;
   position:relative;
   overflow:hidden;
-  transition:1.5s;
+  transition:width 1.5s ease;
   box-shadow:
     0 0 10px rgba(56,189,248,0.6),
     0 0 20px rgba(56,189,248,0.4);
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
 /* 🔥 efek glow jalan */
@@ -778,13 +779,38 @@ p{
     transparent
   );
 
-  animation:shine 2.5s linear infinite;
+  opacity:0;
+  transition:0.3s;
 }
 
-/* bar animasi jalan */
+.skill-box:hover .bar span::after{
+  animation:shine 1.2s linear;
+  opacity:1;
+}
+
+@media (max-width:768px){
+  .bar span::after{
+    animation:shine 2s linear infinite;
+    opacity:0.5;
+  }
+}
+
 @keyframes shine{
   0%{ left:-50%; }
   100%{ left:120%; }
+}
+
+@keyframes pulseGlow{
+  0%,100%{
+    box-shadow:
+      0 0 8px rgba(56,189,248,0.4),
+      0 0 15px rgba(56,189,248,0.2);
+  }
+  50%{
+    box-shadow:
+      0 0 15px rgba(56,189,248,0.8),
+      0 0 25px rgba(56,189,248,0.5);
+  }
 }
 
 body.light-mode .bar span::after{
