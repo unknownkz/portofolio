@@ -95,6 +95,19 @@ lastScroll = current;
 }
 });
 
+// ================= NAVBAR OFFSET =================
+function updateOffset(){
+  const navbar = document.querySelector(".navbar");
+  const navHeight = navbar ? navbar.offsetHeight : 80;
+
+  document.querySelectorAll("section").forEach(sec=>{
+    sec.style.scrollMarginTop = (navHeight + 10) + "px";
+  });
+}
+
+updateOffset();
+window.addEventListener("resize", updateOffset);
+
 // ================= PARTICLES ==============
 function getParticleColor(){
   return document.body.classList.contains("light-mode")
