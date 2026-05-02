@@ -724,14 +724,17 @@ body.light-mode .card:hover{
   position:relative;
   padding:20px;
   border-radius:16px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
   backdrop-filter:blur(12px);
   overflow:hidden;
 
   opacity:0;
   transform:translateY(30px);
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    opacity 0.6s ease;
 }
 
 /* 🔥 GRADIENT BORDER GLOW (REFINED) */
@@ -743,16 +746,25 @@ body.light-mode .card:hover{
 
   background:linear-gradient(
     120deg,
-    rgba(56,189,248,0.5),
-    rgba(14,165,233,0.3),
-    transparent
+    rgba(56,189,248,0.6),
+    rgba(14,165,233,0.4),
+    transparent,
+    rgba(56,189,248,0.6)
   );
+  
+  background-size:200% 200%;
+  animation:borderMove 6s linear infinite;
 
   filter:blur(6px);
   opacity:0;
   transition:0.4s;
 
   z-index:-1;
+}
+
+@keyframes borderMove{
+  0%{ background-position:0% 50%; }
+  100%{ background-position:200% 50%; }
 }
 
 .skill-card:hover::before{
@@ -769,6 +781,12 @@ body.light-mode .card:hover{
   height:46px;
   border-radius:12px;
   background:rgba(56,189,248,0.1);
+  filter:
+    drop-shadow(0 0 6px rgba(56,189,248,0.6))
+    drop-shadow(0 0 15px rgba(56,189,248,0.3));
+
+  transition:0.3s;
+  transform:scale(1.1);
 }
 
 /* TEXT */
@@ -784,13 +802,15 @@ body.light-mode .card:hover{
 
 /* HOVER */
 .skill-card:hover{
-  transform:translateY(-4px) scale(1.01);
+  transform:translateY(-5px) scale(1.01);
+  transition-delay:0s, 0.1s, 0.1s;
 
   box-shadow:
-    0 8px 20px rgba(56,189,248,0.18),
-    0 0 10px rgba(56,189,248,0.15);
+    0 10px 25px rgba(56,189,248,0.2),
+    0 0 12px rgba(56,189,248,0.15);
 
   border-color:rgba(56,189,248,0.3);
+  transform:translateY(-6px) scale(1.01);
 }
 @media (hover: none){
 
@@ -800,6 +820,7 @@ body.light-mode .card:hover{
     box-shadow:
       0 5px 12px rgba(56,189,248,0.12),
       0 0 6px rgba(56,189,248,0.1);
+    transform:translateY(-6px) scale(1.01);
   }
 
 }
