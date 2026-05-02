@@ -47,14 +47,16 @@ const links = document.querySelectorAll(".nav-links a");
 
 function activeNav(){
   let current = "";
+  const navbar = document.querySelector(".navbar");
+  const navHeight = navbar ? navbar.offsetHeight : 80;
 
   sections.forEach(sec=>{
     const sectionTop = sec.offsetTop;
     const sectionHeight = sec.offsetHeight;
 
     if(
-      window.scrollY >= sectionTop - 80 &&
-      window.scrollY < sectionTop + sectionHeight - 80
+      window.scrollY >= sectionTop - navHeight &&
+      window.scrollY < sectionTop + sectionHeight - navHeight
     ){
       current = sec.id;
     }
