@@ -241,29 +241,34 @@ function typing(){
 }
 
 typing();
+
 // ================= PARALLAX =================
 window.addEventListener("scroll", ()=>{
 const scrolled = window.scrollY;
 document.body.style.setProperty("--bg-y", `${scrolled * 0.2}px`);
 });
 
-// ================= SKILL ANIMATION =================
-const skillBars = document.querySelectorAll(".bar span");
+// ================= SKILL STAGGER (NEW) =================
+const skillCards = document.querySelectorAll(".skill-card");
 
-const skillObserver = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-const bar = entry.target;
-bar.style.width = bar.dataset.width;
+const skillCardObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+
+      skillCards.forEach((card, i)=>{
+        setTimeout(()=>{
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, i * 150); // delay berurutan
+      });
+
+    }
+  });
+},{ threshold:0.2 });
+
+if(skillCards.length){
+  skillCardObserver.observe(skillCards[0]);
 }
-});
-},{ threshold:0.3 });
-
-skillBars.forEach(bar=>{
-bar.dataset.width = bar.style.width;
-bar.style.width = "0";
-skillObserver.observe(bar);
-});
 
 // ================= REVEAL ANIMATION (FINAL CLEAN) =================
 const revealElements = document.querySelectorAll(
