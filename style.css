@@ -662,7 +662,7 @@ header::before{
 
 /* ================= SECTION SPACING ================= */
 section{
-  margin-bottom:140px;
+  margin-bottom: var(--space-xl);
 }
 
 /* ================= CARD ================= */
