@@ -731,13 +731,15 @@ body.light-mode .card:hover{
 
   opacity:0;
   transform:translateY(30px);
+
   transition:
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s ease,
+    border-color 0.4s ease,
     opacity 0.6s ease;
 }
 
-/* 🔥 GRADIENT BORDER GLOW (REFINED) */
+/* 🔥 GRADIENT BORDER GLOW */
 .skill-card::before{
   content:'';
   position:absolute;
@@ -746,18 +748,18 @@ body.light-mode .card:hover{
 
   background:linear-gradient(
     120deg,
-    rgba(56,189,248,0.6),
-    rgba(14,165,233,0.4),
+    rgba(56,189,248,0.5),
+    rgba(14,165,233,0.3),
     transparent,
-    rgba(56,189,248,0.6)
+    rgba(56,189,248,0.5)
   );
-  
+
   background-size:200% 200%;
   animation:borderMove 6s linear infinite;
 
   filter:blur(6px);
   opacity:0;
-  transition:0.4s;
+  transition:opacity 0.4s ease;
 
   z-index:-1;
 }
@@ -765,10 +767,6 @@ body.light-mode .card:hover{
 @keyframes borderMove{
   0%{ background-position:0% 50%; }
   100%{ background-position:200% 50%; }
-}
-
-.skill-card:hover::before{
-  opacity:0.7;
 }
 
 /* ICON */
@@ -781,12 +779,8 @@ body.light-mode .card:hover{
   height:46px;
   border-radius:12px;
   background:rgba(56,189,248,0.1);
-  filter:
-    drop-shadow(0 0 6px rgba(56,189,248,0.6))
-    drop-shadow(0 0 15px rgba(56,189,248,0.3));
 
-  transition:0.3s;
-  transform:scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 /* TEXT */
@@ -802,27 +796,42 @@ body.light-mode .card:hover{
 
 /* HOVER */
 .skill-card:hover{
-  transform:translateY(-5px) scale(1.01);
-  transition-delay:0s, 0.1s, 0.1s;
+  transform:translateY(-6px) scale(1.01);
 
   box-shadow:
-    0 10px 25px rgba(56,189,248,0.2),
-    0 0 12px rgba(56,189,248,0.15);
+    0 10px 25px rgba(56,189,248,0.18),
+    0 0 12px rgba(56,189,248,0.12);
 
   border-color:rgba(56,189,248,0.3);
-  transform:translateY(-6px) scale(1.01);
-}
-@media (hover: none){
 
+  transition-delay:0s, 0.1s, 0.1s, 0s;
+}
+
+/* glow delay */
+.skill-card:hover::before{
+  opacity:0.7;
+  transition-delay:0.1s;
+}
+
+/* icon delay */
+.skill-card:hover .skill-icon{
+  transform:scale(1.1);
+  transition-delay:0.15s;
+}
+
+/* MOBILE FIX */
+@media (hover: none){
   .skill-card:hover{
-    transform:scale(0.99);
+    transform:scale(0.98);
 
     box-shadow:
       0 5px 12px rgba(56,189,248,0.12),
-      0 0 6px rgba(56,189,248,0.1);
-    transform:translateY(-6px) scale(1.01);
+      0 0 6px rgba(56,189,248,0.08);
   }
 
+  .skill-card:hover::before{
+    opacity:0.4;
+  }
 }
 
 /* LIGHT MODE */
