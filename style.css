@@ -41,7 +41,6 @@ body{
   background:var(--bg);
   transition:0.3s;
   height:100%;
-  padding-top:80px;
   position: relative;
   z-index:0;
 }
