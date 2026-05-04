@@ -430,8 +430,16 @@ if(document.body.classList.contains("light-mode")){
 const glow = document.querySelector(".cursor-glow");
 const aura = document.querySelector(".cursor-aura");
 const trail = document.querySelector(".cursor-trail");
+const isMobile = window.innerWidth < 768;
 
-if(glow && aura && trail){
+/* 🔥 MOBILE OFF */
+if(isMobile){
+  glow?.remove();
+  aura?.remove();
+  trail?.remove();
+}
+
+if(!isMobile && glow && aura && trail){
 
 let mouseX = 0, mouseY = 0;
 let glowX = 0, glowY = 0;
