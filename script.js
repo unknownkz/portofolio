@@ -24,10 +24,9 @@ function fakeLoad(){
     progressBar.style.width = "100%";
 
     setTimeout(()=>{
-      document.body.classList.add("loading");
+      const loader = document.querySelector(".loader");
       loader.classList.add("hide");
-      loader.style.display = "none";
-      document.querySelector(".loader").classList.add("hide");
+      loader.style.display = "none"; // 🔥 ini penting
     }, 400);
 
     return;
