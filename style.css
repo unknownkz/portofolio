@@ -1329,8 +1329,15 @@ body.light-mode .menu-toggle i{
   width:140px;
   height:140px;
   border-radius:50%;
-  filter:blur(20px);
-  background:radial-gradient(circle, rgba(56,189,248,0.25), transparent);
+
+  background: radial-gradient(
+    circle,
+    rgba(56,189,248,0.35),
+    transparent 70%
+  );
+
+  filter: blur(25px);
+
   pointer-events:none;
   z-index:9999;
   transition:transform 0.1s;
