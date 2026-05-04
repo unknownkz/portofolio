@@ -210,6 +210,12 @@ function animateParticles(){
       let dy = p.y - mouse.y;
       let dist = Math.sqrt(dx*dx + dy*dy);
 
+      if(dist < 80){
+        ctx.shadowBlur = 25;
+      }else{
+        ctx.shadowBlur = 10;
+      }
+
       if(dist < 120){
         p.x += dx * 0.015;
         p.y += dy * 0.015;
