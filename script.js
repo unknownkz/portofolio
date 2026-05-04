@@ -27,6 +27,7 @@ function fakeLoad(){
       const loader = document.querySelector(".loader");
       loader.classList.add("hide");
       loader.style.display = "none"; // 🔥 ini penting
+      document.body.classList.remove("loading");
     }, 400);
 
     return;
