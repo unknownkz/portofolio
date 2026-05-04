@@ -212,13 +212,6 @@ function animateParticles(){
         p.x += dx * 0.015;
         p.y += dy * 0.015;
       }
-
-      // 🔥 TAMBAH INI
-      if(dist < 80){
-        ctx.shadowBlur = 25;
-      } else {
-        ctx.shadowBlur = 10;
-      }
     }
 
     // gerak
@@ -245,41 +238,43 @@ function animateParticles(){
     ctx.fill();
   });
 
-  // 🔗 connection (lebih soft & dynamic)
-  for(let i=0;i<particles.length;i++){
-    for(let j=i;j<particles.length;j++){
+for(let i=0;i<particles.length;i++){
+  for(let j=i;j<particles.length;j++){
 
-      let dx = particles[i].x - particles[j].x;
-      let dy = particles[i].y - particles[j].y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
+    let dx = particles[i].x - particles[j].x;
+    let dy = particles[i].y - particles[j].y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
 
-      if(dist < 110){
-        let opacity = 1 - dist / 110;
+    if(dist < 110){
+      let opacity = 1 - dist / 110;
 
-        ctx.beginPath();
-        ctx.globalAlpha = 0.6 + opacity * 0.4;
+      ctx.beginPath();
 
-        // 🔥 GRADIENT LINE
-        let gradient = ctx.createLinearGradient(
-          particles[i].x,
-          particles[i].y,
-          particles[j].x,
-          particles[j].y
-        );
+      // 🔥 gradient aktif
+      let gradient = ctx.createLinearGradient(
+        particles[i].x,
+        particles[i].y,
+        particles[j].x,
+        particles[j].y
+      );
 
-        gradient.addColorStop(0, `rgba(56,189,248,${opacity * 0.25})`);
-        gradient.addColorStop(1, `rgba(14,165,233,${opacity * 0.05})`);
-        
-        ctx.strokeStyle = `rgba(56,189,248,${opacity * 0.15})`;
-        ctx.lineWidth = 0.6;
+      gradient.addColorStop(0, `rgba(56,189,248,${opacity * 0.25})`);
+      gradient.addColorStop(1, `rgba(14,165,233,${opacity * 0.05})`);
 
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.stroke();
-      }
+      ctx.strokeStyle = gradient;
+
+      ctx.globalAlpha = 0.6 + opacity * 0.4;
+
+      ctx.lineWidth = 0.6;
+
+      ctx.moveTo(particles[i].x, particles[i].y);
+      ctx.lineTo(particles[j].x, particles[j].y);
+      ctx.stroke();
+
+      ctx.globalAlpha = 1; // 🔥 WAJIB RESET
     }
   }
-
+}
   requestAnimationFrame(animateParticles);
 }
 animateParticles();
