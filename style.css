@@ -60,6 +60,7 @@ body.menu-open{
   overflow:hidden;
   will-change: opacity, transform;
   transform: translateZ(0);
+  pointer-events:all;
 }
 
 /* grid cyber */
@@ -175,6 +176,7 @@ body.menu-open{
   opacity:0;
   visibility:hidden;
   transition:0.8s ease;
+  pointer-events:none;
 }
 
 /* ================= BACKGROUND ANIMATION ================= */
