@@ -25,6 +25,8 @@ function fakeLoad(){
 
     setTimeout(()=>{
       document.body.classList.add("loading");
+      loader.classList.add("hide");
+      loader.style.display = "none";
       document.querySelector(".loader").classList.add("hide");
     }, 400);
 
