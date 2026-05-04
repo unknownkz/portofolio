@@ -47,6 +47,15 @@ body{
 body.menu-open{
   overflow:hidden;
 }
+body.loading{
+  overflow:hidden;
+}
+
+body.loading main,
+body.loading header,
+body.loading nav{
+  opacity:0;
+}
 
 /* ================= LOADER WEB3 ================= */
 .loader{
@@ -77,7 +86,8 @@ body.menu-open{
   white-space:pre-wrap;
   word-break:break-all;
 
-  animation:codeFlow 10s linear infinite;
+  animation:none;
+  opacity:0.05;
 }
 
 /* glow ambient */
@@ -231,8 +241,25 @@ body::before{
   z-index:-2;
   pointer-events:none;
 
-  opacity:0.15;     /* 🔥 lebih soft */
-  filter:blur(10px); /* 🔥 jangan 20px */
+  opacity:0.08;
+  filter:blur(8px);
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+
+  background:linear-gradient(
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px
+  );
+
+  background-size:100% 3px;
+  pointer-events:none;
+
+  opacity:0.05;
+  z-index:1;
 }
 
 body.light-mode::before{
@@ -287,10 +314,9 @@ body.light-mode a{
 }
 /* navbar hover crypto */
 .navbar:hover{
-  border-color:rgba(56,189,248,0.3);
+  border-color:rgba(56,189,248,0.25);
   box-shadow:
-    0 0 20px rgba(56,189,248,0.4),
-    0 0 40px rgba(56,189,248,0.2);
+    0 8px 30px rgba(56,189,248,0.15);
 }
 /* ================= NAV OVERLAY ================= */
 .nav-overlay{
@@ -775,11 +801,6 @@ header::before{
   animation:blink 1s infinite;
 }
 
-@keyframes blink{
-  0%,100%{ opacity:1; }
-  50%{ opacity:0; }
-}
-
 /* ===== HERO MOBILE ===== */
 @media(max-width:768px){
 
@@ -906,6 +927,13 @@ body.light-mode .card:hover{
     box-shadow 0.4s ease,
     border-color 0.4s ease,
     opacity 0.6s ease;
+  will-change: transform, opacity;
+}
+
+@media (max-width:768px){
+  .skill-card::before{
+    animation:none;
+  }
 }
 
 /* 🔥 GRADIENT BORDER GLOW */
@@ -1569,4 +1597,24 @@ body.light-mode .nav-links{
 
   z-index:-1; /* di belakang konten */
   pointer-events:none;
+}
+
+#particles::after{
+  content:'';
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(14,165,233,0.15), transparent 60%);
+
+  filter:blur(80px);
+  opacity:0.4;
+
+  animation:floatNode 10s ease-in-out infinite;
+}
+
+@keyframes floatNode{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-20px); }
 }
