@@ -6,22 +6,38 @@ const cursor = document.querySelector(".cursor-glow");
 const overlay = document.querySelector(".nav-overlay");
 
 // ================= WEB3 LOADER =================
-window.addEventListener("load", ()=>{
-  const loader = document.querySelector(".loader");
+const progressBar = document.querySelector(".loader-progress");
+const percentText = document.getElementById("loadPercent");
 
-  setTimeout(()=>{
-    loader.classList.add("hide");
-  }, 1500); // durasi intro
-});
-
+let progress = 0;
 const isMobile = window.innerWidth < 768;
 
-window.addEventListener("load", ()=>{
-  const loader = document.querySelector(".loader");
+function fakeLoad(){
 
-  setTimeout(()=>{
-    loader.classList.add("hide");
-  }, isMobile ? 800 : 1500); // mobile lebih cepat
+  let speed = Math.random() * 5 + 2;
+  progress += speed;
+
+  if(progress >= 100){
+    progress = 100;
+
+    percentText.innerText = "100%";
+    progressBar.style.width = "100%";
+
+    setTimeout(()=>{
+      document.querySelector(".loader").classList.add("hide");
+    }, 400);
+
+    return;
+  }
+
+  percentText.innerText = "SYNC " + Math.floor(progress) + "%";
+  progressBar.style.width = progress + "%";
+
+  setTimeout(fakeLoad, isMobile ? 40 : 60);
+}
+
+window.addEventListener("load", ()=>{
+  fakeLoad();
 });
 
 // ================= MENU TOGGLE (FIXED) =================
