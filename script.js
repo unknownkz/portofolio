@@ -427,31 +427,73 @@ if(document.body.classList.contains("light-mode")){
 }
 
 // ================= CURSOR =================
-if(cursor){
-let mouseX=0, mouseY=0, currentX=0, currentY=0;
+const glow = document.querySelector(".cursor-glow");
+const aura = document.querySelector(".cursor-aura");
+const trail = document.querySelector(".cursor-trail");
+
+if(glow && aura && trail){
+
+let mouseX = 0, mouseY = 0;
+let glowX = 0, glowY = 0;
+let auraX = 0, auraY = 0;
+let trailX = 0, trailY = 0;
 
 window.addEventListener("mousemove", e=>{
-mouseX = e.clientX;
-mouseY = e.clientY;
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 });
 
 function animateCursor(){
-currentX += (mouseX-currentX)*0.15;
-currentY += (mouseY-currentY)*0.15;
 
-cursor.style.left = currentX+"px";  
-cursor.style.top = currentY+"px";  
+  glowX += (mouseX - glowX) * 0.2;
+  glowY += (mouseY - glowY) * 0.2;
 
-requestAnimationFrame(animateCursor);
+  auraX += (mouseX - auraX) * 0.08;
+  auraY += (mouseY - auraY) * 0.08;
 
+  trailX += (mouseX - trailX) * 0.35;
+  trailY += (mouseY - trailY) * 0.35;
+
+  glow.style.left = glowX + "px";
+  glow.style.top = glowY + "px";
+
+  aura.style.left = auraX + "px";
+  aura.style.top = auraY + "px";
+
+  trail.style.left = trailX + "px";
+  trail.style.top = trailY + "px";
+
+  requestAnimationFrame(animateCursor);
 }
 
 animateCursor();
 
+/* hover effect */
 document.querySelectorAll("a, button, .btn, .contact-btn").forEach(el=>{
-el.addEventListener("mouseenter", ()=>cursor.classList.add("active"));
-el.addEventListener("mouseleave", ()=>cursor.classList.remove("active"));
+  el.addEventListener("mouseenter", ()=>{
+    glow.style.transform = "translate(-50%, -50%) scale(1.4)";
+    aura.style.transform = "translate(-50%, -50%) scale(1.6)";
+  });
+
+  el.addEventListener("mouseleave", ()=>{
+    glow.style.transform = "translate(-50%, -50%) scale(1)";
+    aura.style.transform = "translate(-50%, -50%) scale(1)";
+  });
 });
+
+/* click ripple */
+window.addEventListener("click", e=>{
+  const ripple = document.createElement("div");
+  ripple.className = "cursor-click";
+
+  ripple.style.left = e.clientX + "px";
+  ripple.style.top = e.clientY + "px";
+
+  document.body.appendChild(ripple);
+
+  setTimeout(()=> ripple.remove(), 600);
+});
+
 }
 
 // ================= PERFORMANCE =================
