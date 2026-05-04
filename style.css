@@ -1326,21 +1326,22 @@ body.light-mode .menu-toggle i{
 /* ================= CURSOR ================= */
 .cursor-glow{
   position:fixed;
-  width:140px;
-  height:140px;
+  width:180px;
+  height:180px;
   border-radius:50%;
 
   background: radial-gradient(
     circle,
-    rgba(56,189,248,0.35),
-    transparent 70%
+    rgba(56,189,248,0.4),
+    transparent 85%
   );
 
   filter: blur(25px);
 
   pointer-events:none;
   z-index:9999;
-  transition:transform 0.1s;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s linear;
 }
 
 /* ================= FIX BUTTON LIGHT MODE ================= */
