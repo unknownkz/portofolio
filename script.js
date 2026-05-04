@@ -24,6 +24,7 @@ function fakeLoad(){
     progressBar.style.width = "100%";
 
     setTimeout(()=>{
+      document.body.classList.add("loading");
       document.querySelector(".loader").classList.add("hide");
     }, 400);
 
@@ -173,57 +174,85 @@ window.addEventListener("orientationchange", resizeCanvas);
 
 let particles = [];
 
-/* jumlah particle (mobile friendly) */
-const particleCount = window.innerWidth < 768 ? 40 : 80;
+const particleCount = window.innerWidth < 768 ? 35 : 70;
 
-/* buat particle */
 for(let i=0; i<particleCount; i++){
   particles.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    size: Math.random() * 2 + 0.5,
-    speedX: (Math.random() - 0.5) * 0.3,
-    speedY: (Math.random() - 0.5) * 0.3
+    baseSize: Math.random() * 1.5 + 0.5,
+    size: 0,
+    pulse: Math.random() * Math.PI * 2,
+    speedX: (Math.random() - 0.5) * 0.25,
+    speedY: (Math.random() - 0.5) * 0.25
   });
 }
+
+// ================= MOUSE INTERACTION =================
+let mouse = { x:null, y:null };
+
+window.addEventListener("mousemove", e=>{
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
 
 /* animasi */
 function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   particles.forEach(p => {
+
+    // 🔥 tarik particle ke mouse (halus)
+    if(mouse.x !== null && mouse.y !== null){
+      let dx = p.x - mouse.x;
+      let dy = p.y - mouse.y;
+      let dist = Math.sqrt(dx*dx + dy*dy);
+
+      if(dist < 120){
+        p.x += dx * 0.015;
+        p.y += dy * 0.015;
+      }
+    }
+
+    // gerak
     p.x += p.speedX;
     p.y += p.speedY;
 
-    /* looping biar tidak hilang */
+    // loop
     if(p.x > canvas.width) p.x = 0;
     if(p.x < 0) p.x = canvas.width;
     if(p.y > canvas.height) p.y = 0;
     if(p.y < 0) p.y = canvas.height;
 
-    /* gambar bintang */
+    // pulse (🔥 ini bikin hidup)
+    p.pulse += 0.03;
+    p.size = p.baseSize + Math.sin(p.pulse) * 0.8;
+    
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
 
     ctx.fillStyle = getParticleColor();
-    ctx.shadowBlur = document.body.classList.contains("light-mode") ? 15 : 10;
+    ctx.shadowBlur = 15;
     ctx.shadowColor = getParticleColor();
 
     ctx.fill();
   });
+
+  // 🔗 connection (lebih soft & dynamic)
   for(let i=0;i<particles.length;i++){
     for(let j=i;j<particles.length;j++){
+
       let dx = particles[i].x - particles[j].x;
       let dy = particles[i].y - particles[j].y;
       let dist = Math.sqrt(dx*dx + dy*dy);
 
-      if(dist < 100){
+      if(dist < 110){
+        let opacity = 1 - dist / 110;
+
         ctx.beginPath();
-        ctx.strokeStyle =
-          document.body.classList.contains("light-mode")
-            ? "rgba(14,165,233,0.15)"
-            : "rgba(56,189,248,0.08)";
-        ctx.lineWidth = 0.5;
+        ct.strokeStyle = `rgba(56,189,248,${opacity * 0.15})`;
+        ctx.lineWidth = 0.6;
+
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
         ctx.stroke();
@@ -233,7 +262,6 @@ function animateParticles(){
 
   requestAnimationFrame(animateParticles);
 }
-
 animateParticles();
 
 // ================= HERO ===================
@@ -426,10 +454,10 @@ if(footer){
 // ================= ESC CLOSE MENU =================
 document.addEventListener("keydown", (e)=>{
 if(e.key === "Escape"){
-nav.classList.remove("active");
-overlay.classList.remove("active");
-toggle.classList.remove("active");
-document.body.classList.remove("menu-open");
+  nav.classList.remove("active");
+  overlay.classList.remove("active");
+  toggle.classList.remove("active");
+  document.body.classList.remove("menu-open");
 }
 });
 
