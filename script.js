@@ -212,6 +212,13 @@ function animateParticles(){
         p.x += dx * 0.015;
         p.y += dy * 0.015;
       }
+
+      // 🔥 TAMBAH INI
+      if(dist < 80){
+        ctx.shadowBlur = 25;
+      } else {
+        ctx.shadowBlur = 10;
+      }
     }
 
     // gerak
@@ -250,7 +257,20 @@ function animateParticles(){
         let opacity = 1 - dist / 110;
 
         ctx.beginPath();
-        ct.strokeStyle = `rgba(56,189,248,${opacity * 0.15})`;
+        ctx.globalAlpha = 0.6 + opacity * 0.4;
+
+        // 🔥 GRADIENT LINE
+        let gradient = ctx.createLinearGradient(
+          particles[i].x,
+          particles[i].y,
+          particles[j].x,
+          particles[j].y
+        );
+
+        gradient.addColorStop(0, `rgba(56,189,248,${opacity * 0.25})`);
+        gradient.addColorStop(1, `rgba(14,165,233,${opacity * 0.05})`);
+        
+        ctx.strokeStyle = `rgba(56,189,248,${opacity * 0.15})`;
         ctx.lineWidth = 0.6;
 
         ctx.moveTo(particles[i].x, particles[i].y);
