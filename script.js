@@ -10,7 +10,6 @@ const progressBar = document.querySelector(".loader-progress");
 const percentText = document.getElementById("loadPercent");
 
 let progress = 0;
-const isMobile = window.innerWidth < 768;
 
 function fakeLoad(){
 
@@ -502,11 +501,6 @@ window.addEventListener("click", e=>{
   setTimeout(()=> ripple.remove(), 600);
 });
 
-}
-
-// ================= PERFORMANCE =================
-if(window.innerWidth < 768){
-document.querySelectorAll(".cursor-glow").forEach(el=>el.remove());
 }
 
 // ================= FOOTER =================
