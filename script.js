@@ -226,7 +226,7 @@ function animateParticles(){
 
     // pulse (🔥 ini bikin hidup)
     p.pulse += 0.03;
-    p.size = p.baseSize + Math.sin(p.pulse) * 0.8;
+    p.size = Math.max(0.5, p.baseSize + Math.sin(p.pulse) * 0.8);
     
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
