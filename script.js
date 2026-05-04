@@ -5,6 +5,25 @@ const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
 const overlay = document.querySelector(".nav-overlay");
 
+// ================= WEB3 LOADER =================
+window.addEventListener("load", ()=>{
+  const loader = document.querySelector(".loader");
+
+  setTimeout(()=>{
+    loader.classList.add("hide");
+  }, 1500); // durasi intro
+});
+
+const isMobile = window.innerWidth < 768;
+
+window.addEventListener("load", ()=>{
+  const loader = document.querySelector(".loader");
+
+  setTimeout(()=>{
+    loader.classList.add("hide");
+  }, isMobile ? 800 : 1500); // mobile lebih cepat
+});
+
 // ================= MENU TOGGLE (FIXED) =================
 if(toggle && nav){
   toggle.addEventListener("click", () => {
