@@ -170,6 +170,9 @@ window.addEventListener("scroll", () => {
 
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d", { alpha: true });
+if(canvas){
+  canvas.style.transform = "translateZ(0)";
+};
 
 function resizeCanvas(){
   canvas.width = window.innerWidth;
