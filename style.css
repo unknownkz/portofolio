@@ -1647,6 +1647,9 @@ body.light-mode .nav-links{
 
   pointer-events: none;
 
+  backface-visibility: hidden;
+  perspective: 1000px;
+
   /* 🔥 FIX HILANG SAAT SCROLL */
   transform: translateZ(0);
   will-change: transform;
