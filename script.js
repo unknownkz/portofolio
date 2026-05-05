@@ -4,6 +4,8 @@ const nav = document.getElementById("navLinks");
 const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
 const overlay = document.querySelector(".nav-overlay");
+// DETECT DEVICE
+const isMobile = window.innerWidth < 768;
 
 // ================= WEB3 LOADER =================
 const progressBar = document.querySelector(".loader-progress");
@@ -182,9 +184,6 @@ resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
 window.addEventListener("orientationchange", resizeCanvas);
-
-// DETECT DEVICE
-const isMobile = window.innerWidth < 768;
 
 // 🔥 PARTICLE SETTINGS (DI-OPTIMASI)
 const particleCount = isMobile ? 18 : 55;
