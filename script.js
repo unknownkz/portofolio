@@ -155,9 +155,15 @@ window.addEventListener("resize", updateOffset);
 
 // ============ SMOOTH SCROLL ===============
 let scrolling = false;
+let scrollTimeout;
 
 window.addEventListener("scroll", () => {
   scrolling = true;
+
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    scrolling = false;
+  }, 80);
 });
 
 // ================= PARTICLES (SMOOTH VERSION) =================
@@ -213,37 +219,38 @@ window.addEventListener("mousemove", e=>{
 
 // ================= PARTICLES ANIMATE =================
 function animateParticles(){
-  if(scrolling){
-    requestAnimationFrame(animateParticles);
-    scrolling = false;
-    return; // skip 1 frame → biar gak glitch
-  }
 
+  // 🔥 WAJIB di atas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // 🔥 cuma skip DRAW, bukan skip FRAME
+  if(scrolling){
+    requestAnimationFrame(animateParticles);
+    return;
+  }
+
+  // render particles normal...
   particles.forEach(p => {
 
-    // GERAK NORMAL
     p.x += p.speedX;
     p.y += p.speedY;
 
-    // LOOP SCREEN
     if(p.x > canvas.width) p.x = 0;
     if(p.x < 0) p.x = canvas.width;
     if(p.y > canvas.height) p.y = 0;
     if(p.y < 0) p.y = canvas.height;
 
-    // PULSE HALUS
     p.pulse += 0.025;
     p.size = Math.max(0.4, p.baseSize + Math.sin(p.pulse) * 0.5);
 
-    // DRAW PARTICLE (🔥 NO HEAVY SHADOW)
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-
     ctx.fillStyle = getParticleColor();
     ctx.fill();
   });
+
+  requestAnimationFrame(animateParticles);
+}
 
   // ================= PARTICLES CONNECTION (DESKTOP ONLY) =================
   if(!isMobile){
