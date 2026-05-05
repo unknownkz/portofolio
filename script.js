@@ -222,6 +222,9 @@ window.addEventListener("mousemove", e=>{
 
 // ================= PARTICLES ANIMATE =================
 function animateParticles(){
+  // 🔥 paksa repaint (anti hilang)
+  canvas.style.opacity = "0.99";
+  canvas.style.opacity = "1";
 
   // 🔥 WAJIB di atas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
