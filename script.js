@@ -153,6 +153,26 @@ function updateOffset(){
 updateOffset();
 window.addEventListener("resize", updateOffset);
 
+// ============ SMOOTH SCROLL ===============
+let scrolling = false;
+
+window.addEventListener("scroll", () => {
+  scrolling = true;
+});
+
+function animateParticles(){
+
+  if(scrolling){
+    requestAnimationFrame(animateParticles);
+    scrolling = false;
+    return; // skip 1 frame → biar gak glitch
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // lanjut normal...
+}
+
 // ================= PARTICLES (SMOOTH VERSION) =================
 
 const canvas = document.getElementById("particles");
