@@ -171,6 +171,12 @@ window.addEventListener("scroll", () => {
 // ================= PREMIUM PARTICLES (CRYPTO UI) =================
 
 const canvas = document.getElementById("particles");
+
+if(!canvas) return;
+
+canvas.style.transform = "translateZ(0)";
+canvas.style.willChange = "transform";
+
 const ctx = canvas.getContext("2d");
 
 // resize
