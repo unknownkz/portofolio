@@ -237,7 +237,7 @@ function initParticles(){
       if(p.y>canvas.height) p.y=0;
 
       p.pulse += 0.05;
-      p.size = p.base + Math.sin(p.pulse)*0.7;
+      p.size = Math.max(0.5, p.base + Math.sin(p.pulse)*0.7);
 
       // mouse repel
       if(mouse.x !== null){
@@ -253,9 +253,11 @@ function initParticles(){
       }
 
       // 🔥 STRONG NEON GLOW (biar keliatan)
+      const radius = Math.max(1, p.size * 6);
+
       const glow = ctx.createRadialGradient(
         p.x, p.y, 0,
-        p.x, p.y, p.size * 6
+        p.x, p.y, radius
       );
 
       glow.addColorStop(0, `rgba(${r},${g},${b},1)`);
