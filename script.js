@@ -168,168 +168,155 @@ window.addEventListener("scroll", () => {
   }, 80);
 });
 
-// ================= PREMIUM PARTICLES (CRYPTO UI) =================
+// ================= PREMIUM PARTICLES (CRYPTO UI - VISIBLE FIX) =================
+function initParticles(){
 
-const canvas = document.getElementById("particles");
+  const canvas = document.getElementById("particles");
+  if(!canvas) return;
 
-if(!canvas) return;
+  canvas.style.transform = "translateZ(0)";
+  canvas.style.willChange = "transform";
 
-canvas.style.transform = "translateZ(0)";
-canvas.style.willChange = "transform";
+  const ctx = canvas.getContext("2d");
 
-const ctx = canvas.getContext("2d");
+  function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
 
-// resize
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
+  const isMobile = window.innerWidth < 768;
 
-window.addEventListener("resize", resizeCanvas);
+  const PARTICLE_COUNT = isMobile ? 25 : 85;
+  const CONNECT_DIST = isMobile ? 0 : 140;
+  const MOUSE_RADIUS = 160;
 
-// settings
-const PARTICLE_COUNT = isMobile ? 25 : 80;
-const CONNECT_DIST = isMobile ? 0 : 110;
-const MOUSE_RADIUS = 140;
+  let particles = [];
 
-let particles = [];
-
-// init particles
-for(let i=0;i<PARTICLE_COUNT;i++){
-  particles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    vx: (Math.random()-0.5)*0.4,
-    vy: (Math.random()-0.5)*0.4,
-    base: Math.random()*1.5+0.5,
-    size: 0,
-    pulse: Math.random()*Math.PI*2
-  });
-}
-
-// mouse
-let mouse = {x:null,y:null};
-
-window.addEventListener("mousemove", e=>{
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-// auto theme color
-function getColor(){
-  return document.body.classList.contains("light-mode")
-    ? "14,165,233"
-    : "56,189,248";
-}
-
-// ================= PARTICLES ANIMATION =================
-function animateParticles(){
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  if(scrolling){
-    requestAnimationFrame(animateParticles);
-    return;
+  for(let i=0;i<PARTICLE_COUNT;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*0.4,
+      vy: (Math.random()-0.5)*0.4,
+      base: Math.random()*1.8+0.6,
+      size: 0,
+      pulse: Math.random()*Math.PI*2
+    });
   }
 
-  // ===== PARTICLES =====
-  particles.forEach(p=>{
+  let mouse = {x:null,y:null};
 
-    // movement
-    p.x += p.vx;
-    p.y += p.vy;
-
-    // loop screen
-    if(p.x<0) p.x=canvas.width;
-    if(p.x>canvas.width) p.x=0;
-    if(p.y<0) p.y=canvas.height;
-    if(p.y>canvas.height) p.y=0;
-
-    // pulse smooth
-    p.pulse += 0.04;
-    p.size = p.base + Math.sin(p.pulse)*0.6;
-
-    // mouse interaction (smooth repel)
-    if(mouse.x !== null){
-      let dx = p.x - mouse.x;
-      let dy = p.y - mouse.y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-
-      if(dist < MOUSE_RADIUS){
-        p.x += dx * 0.01;
-        p.y += dy * 0.01;
-      }
-    }
-
-    const color = getColor();
-
-    // glow (ring halus)
-    const gradient = ctx.createRadialGradient(
-      p.x, p.y, 0,
-      p.x, p.y, p.size * 4
-    );
-
-    gradient.addColorStop(0, `rgba(${color},0.8)`);
-    gradient.addColorStop(1, `rgba(${color},0)`);
-
-    ctx.beginPath();
-    ctx.fillStyle = gradient;
-    ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI*2);
-    ctx.fill();
-
-    // core dot
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(${color},0.9)`;
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-    ctx.fill();
+  window.addEventListener("mousemove", e=>{
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
   });
 
-  // ===== PARTICLES CONNECTION (NODE NETWORK) =====
-  if(!isMobile){
+  function getColor(){
+    return document.body.classList.contains("light-mode")
+      ? [14,165,233]
+      : [56,189,248];
+  }
 
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
+  function animateParticles(){
 
-        let dx = particles[i].x - particles[j].x;
-        let dy = particles[i].y - particles[j].y;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const [r,g,b] = getColor();
+
+    // ===== PARTICLES =====
+    particles.forEach(p=>{
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if(p.x<0) p.x=canvas.width;
+      if(p.x>canvas.width) p.x=0;
+      if(p.y<0) p.y=canvas.height;
+      if(p.y>canvas.height) p.y=0;
+
+      p.pulse += 0.05;
+      p.size = p.base + Math.sin(p.pulse)*0.7;
+
+      // mouse repel
+      if(mouse.x !== null){
+        let dx = p.x - mouse.x;
+        let dy = p.y - mouse.y;
         let dist = Math.sqrt(dx*dx + dy*dy);
 
-        if(dist < CONNECT_DIST){
+        if(dist < MOUSE_RADIUS){
+          let force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+          p.x += dx * force * 0.03;
+          p.y += dy * force * 0.03;
+        }
+      }
 
-          let opacity = 1 - dist / CONNECT_DIST;
-          const color = getColor();
+      // 🔥 STRONG NEON GLOW (biar keliatan)
+      const glow = ctx.createRadialGradient(
+        p.x, p.y, 0,
+        p.x, p.y, p.size * 6
+      );
 
-          const gradient = ctx.createLinearGradient(
-            particles[i].x,
-            particles[i].y,
-            particles[j].x,
-            particles[j].y
-          );
+      glow.addColorStop(0, `rgba(${r},${g},${b},1)`);
+      glow.addColorStop(0.3, `rgba(${r},${g},${b},0.6)`);
+      glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
 
-          gradient.addColorStop(0, `rgba(${color},${opacity*0.4})`);
-          gradient.addColorStop(1, `rgba(${color},0)`);
+      ctx.beginPath();
+      ctx.fillStyle = glow;
+      ctx.arc(p.x, p.y, p.size * 6, 0, Math.PI*2);
+      ctx.fill();
 
-          ctx.beginPath();
-          ctx.strokeStyle = gradient;
-          ctx.lineWidth = 0.7;
-          ctx.globalAlpha = 0.8;
+      // core dot (lebih terang)
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${r},${g},${b},1)`;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+    });
 
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
+    // ===== CONNECTION (VISIBLE) =====
+    if(!isMobile){
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
 
-          ctx.globalAlpha = 1;
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let dist = Math.sqrt(dx*dx + dy*dy);
+
+          if(dist < CONNECT_DIST){
+
+            let opacity = 1 - dist / CONNECT_DIST;
+
+            // 🔥 GRADIENT LINE JELAS
+            const gradient = ctx.createLinearGradient(
+              particles[i].x,
+              particles[i].y,
+              particles[j].x,
+              particles[j].y
+            );
+
+            gradient.addColorStop(0, `rgba(${r},${g},${b},${opacity})`);
+            gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
+
+            ctx.beginPath();
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1.2; // 🔥 lebih tebal biar keliatan
+
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
         }
       }
     }
+
+    requestAnimationFrame(animateParticles);
   }
 
-  requestAnimationFrame(animateParticles);
+  animateParticles();
 }
 
-// start
-animateParticles();
+initParticles();
 
 // ================= HERO ===================
 const element = document.getElementById("typing");
