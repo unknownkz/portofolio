@@ -153,137 +153,118 @@ function updateOffset(){
 updateOffset();
 window.addEventListener("resize", updateOffset);
 
-// ================= PARTICLES ==============
+// ================= PARTICLES (SMOOTH VERSION) =================
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d", { alpha: true });
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", resizeCanvas);
+
+// DETECT DEVICE
+const isMobile = window.innerWidth < 768;
+
+// 🔥 PARTICLE SETTINGS (DI-OPTIMASI)
+const particleCount = isMobile ? 18 : 55;
+const maxDistance = isMobile ? 0 : 85; // mobile NO LINE
+
+let particles = [];
+
+// INIT PARTICLES
+for(let i = 0; i < particleCount; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    baseSize: Math.random() * 1.2 + 0.4,
+    size: 0,
+    pulse: Math.random() * Math.PI * 2,
+    speedX: (Math.random() - 0.5) * 0.2,
+    speedY: (Math.random() - 0.5) * 0.2
+  });
+}
+
+// COLOR
 function getParticleColor(){
   return document.body.classList.contains("light-mode")
     ? "rgba(14,165,233,0.9)"
     : "rgba(56,189,248,0.7)";
 }
 
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
-window.addEventListener("orientationchange", resizeCanvas);
-
-let particles = [];
-
-const particleCount = window.innerWidth < 768 ? 35 : 70;
-
-for(let i=0; i<particleCount; i++){
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    baseSize: Math.random() * 1.5 + 0.5,
-    size: 0,
-    pulse: Math.random() * Math.PI * 2,
-    speedX: (Math.random() - 0.5) * 0.25,
-    speedY: (Math.random() - 0.5) * 0.25
-  });
-}
-
-// ================= MOUSE INTERACTION =================
-let mouse = { x:null, y:null };
+// MOUSE INTERACTION (RINGAN)
+let mouse = { x: null, y: null };
 
 window.addEventListener("mousemove", e=>{
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 });
 
-/* animasi */
+// ================= PARTICLES ANIMATE =================
 function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach(p => {
 
-    // 🔥 tarik particle ke mouse (halus)
-    if(mouse.x !== null && mouse.y !== null){
-      let dx = p.x - mouse.x;
-      let dy = p.y - mouse.y;
-      let dist = Math.sqrt(dx*dx + dy*dy);
-
-      if(dist < 80){
-        ctx.shadowBlur = 25;
-      }else{
-        ctx.shadowBlur = 10;
-      }
-
-      if(dist < 120){
-        p.x += dx * 0.015;
-        p.y += dy * 0.015;
-      }
-    }
-
-    // gerak
+    // GERAK NORMAL
     p.x += p.speedX;
     p.y += p.speedY;
 
-    // loop
+    // LOOP SCREEN
     if(p.x > canvas.width) p.x = 0;
     if(p.x < 0) p.x = canvas.width;
     if(p.y > canvas.height) p.y = 0;
     if(p.y < 0) p.y = canvas.height;
 
-    // pulse (🔥 ini bikin hidup)
-    p.pulse += 0.03;
-    p.size = Math.max(0.5, p.baseSize + Math.sin(p.pulse) * 0.8);
-    
+    // PULSE HALUS
+    p.pulse += 0.025;
+    p.size = Math.max(0.4, p.baseSize + Math.sin(p.pulse) * 0.5);
+
+    // DRAW PARTICLE (🔥 NO HEAVY SHADOW)
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 
     ctx.fillStyle = getParticleColor();
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = getParticleColor();
-
     ctx.fill();
   });
 
-for(let i=0;i<particles.length;i++){
-  for(let j=i;j<particles.length;j++){
+  // ================= PARTICLES CONNECTION (DESKTOP ONLY) =================
+  if(!isMobile){
 
-    let dx = particles[i].x - particles[j].x;
-    let dy = particles[i].y - particles[j].y;
-    let dist = Math.sqrt(dx*dx + dy*dy);
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.5;
 
-    if(dist < 110){
-      let opacity = 1 - dist / 110;
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i + 1; j < particles.length; j++){
 
-      ctx.beginPath();
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = dx * dx + dy * dy;
 
-      // 🔥 gradient aktif
-      let gradient = ctx.createLinearGradient(
-        particles[i].x,
-        particles[i].y,
-        particles[j].x,
-        particles[j].y
-      );
+        if(dist < maxDistance * maxDistance){
 
-      gradient.addColorStop(0, `rgba(56,189,248,${opacity * 0.25})`);
-      gradient.addColorStop(1, `rgba(14,165,233,${opacity * 0.05})`);
+          ctx.beginPath();
 
-      ctx.strokeStyle = gradient;
+          ctx.strokeStyle = "rgba(56,189,248,0.2)";
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
 
-      ctx.globalAlpha = 0.6 + opacity * 0.4;
-
-      ctx.lineWidth = 0.6;
-
-      ctx.moveTo(particles[i].x, particles[i].y);
-      ctx.lineTo(particles[j].x, particles[j].y);
-      ctx.stroke();
-
-      ctx.globalAlpha = 1; // 🔥 WAJIB RESET
+          ctx.stroke();
+        }
+      }
     }
+
+    ctx.globalAlpha = 1; // reset
   }
-}
+
   requestAnimationFrame(animateParticles);
 }
+
 animateParticles();
 
 // ================= HERO ===================
