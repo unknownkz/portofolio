@@ -1667,13 +1667,13 @@ body.light-mode .nav-links{
   filter: blur(80px);
   opacity: 0.5;
 
-  animation: floatNode 12s ease-in-out infinite;
+  animation: glowPulse 6s ease-in-out infinite;
 }
 
 /* ========= PARTICLES FLOAT ANIMATION ========= */
-@keyframes floatNode{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-25px); }
+@keyframes glowPulse{
+  0%,100%{ opacity:0.4; }
+  50%{ opacity:0.6; }
 }
 
 /* ========= PARTICLES LAYER FIX (WAJIB BANGET) ========= */
