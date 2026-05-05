@@ -1648,16 +1648,17 @@ body.light-mode .nav-links{
   pointer-events: none;
 
   backface-visibility: hidden;
-  perspective: 1000px;
+  /* ❌ HAPUS perspective (biang glitch mobile) */
 
-  /* 🔥 FIX HILANG SAAT SCROLL */
   transform: translateZ(0);
   will-change: transform;
 
-  z-index: 0; /* JANGAN -1 */
+  isolation: isolate; /* 🔥 FIX UTAMA BLUR */
+
+  z-index: 0;
 }
 
-/* ========= PARTICLES GLOW BACKGROUND (SOFT CRYPTO LIGHT) ========= */
+/* ========= PARTICLES GLOW BACKGROUND ========= */
 #particles::after{
   content:'';
   position:absolute;
@@ -1667,19 +1668,19 @@ body.light-mode .nav-links{
     radial-gradient(circle at 20% 30%, rgba(56,189,248,0.12), transparent 60%),
     radial-gradient(circle at 80% 70%, rgba(14,165,233,0.12), transparent 60%);
 
-  filter: blur(80px);
+  filter: blur(40px); /* 🔥 dari 80 → 40 */
   opacity: 0.5;
 
   animation: glowPulse 6s ease-in-out infinite;
 }
 
-/* ========= PARTICLES FLOAT ANIMATION ========= */
+/* ========= GLOW ANIMATION ========= */
 @keyframes glowPulse{
   0%,100%{ opacity:0.4; }
   50%{ opacity:0.6; }
 }
 
-/* ========= PARTICLES LAYER FIX (WAJIB BANGET) ========= */
+/* ========= PARTICLES LAYER FIX ========= */
 .navbar,
 .hero,
 .container,
@@ -1688,32 +1689,41 @@ footer{
   z-index: 2;
 }
 
-/* ========= PARTICLES BODY FIX ========= */
+/* 🔥 TAMBAHAN KHUSUS NAVBAR (ANTI BLUR) */
+.navbar,
+.nav-links,
+.menu-toggle{
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  z-index: 10;
+}
+
+/* ========= BODY FIX ========= */
 body{
   position: relative;
   overflow-x: hidden;
 }
 
-/* ========= PARTICLES PERFORMANCE FIX ========= */
+/* ========= CANVAS PERFORMANCE ========= */
 canvas{
   image-rendering: optimizeSpeed;
 }
 
-/* ========= PARTICLES MOBILE OPTIMIZATION ========= */
+/* ========= MOBILE ========= */
 @media (max-width: 768px){
 
   #particles{
-    opacity: 0.6; /* lebih ringan */
+    opacity: 0.6;
   }
 
   #particles::after{
-    filter: blur(60px);
+    filter: blur(30px); /* 🔥 lebih ringan */
     opacity: 0.4;
   }
 
 }
 
-/* ========= PARTICLES EXTRA SMALL DEVICE ========= */
+/* ========= EXTRA SMALL ========= */
 @media (max-width: 480px){
 
   #particles{
@@ -1721,7 +1731,7 @@ canvas{
   }
 
   #particles::after{
-    display: none; /* 🔥 matikan glow berat */
+    display: none; /* tetap */
   }
 
 }
