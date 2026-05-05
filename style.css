@@ -958,7 +958,7 @@ body.light-mode .card:hover{
   opacity:0;
   transition:opacity 0.4s ease;
 
-  z-index:-1;
+  z-index:0;
 }
 
 @keyframes borderMove{
