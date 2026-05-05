@@ -217,10 +217,15 @@ function getColor(){
     : "56,189,248";
 }
 
-// ================= ANIMATION =================
+// ================= PARTICLES ANIMATION =================
 function animateParticles(){
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  if(scrolling){
+    requestAnimationFrame(animateParticles);
+    return;
+  }
 
   // ===== PARTICLES =====
   particles.forEach(p=>{
@@ -274,7 +279,7 @@ function animateParticles(){
     ctx.fill();
   });
 
-  // ===== CONNECTION (NODE NETWORK) =====
+  // ===== PARTICLES CONNECTION (NODE NETWORK) =====
   if(!isMobile){
 
     for(let i=0;i<particles.length;i++){
