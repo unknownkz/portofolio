@@ -1680,15 +1680,6 @@ body.light-mode .nav-links{
   50%{ opacity:0.6; }
 }
 
-/* ========= PARTICLES LAYER FIX ========= */
-.navbar,
-.hero,
-.container,
-footer{
-  position: relative;
-  z-index: 2;
-}
-
 /* 🔥 TAMBAHAN KHUSUS NAVBAR (ANTI BLUR) */
 .navbar,
 .nav-links,
