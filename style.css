@@ -1638,7 +1638,7 @@ body.light-mode .nav-links{
   color:var(--text) !important;
 }
 
-/* ========= PARTICLES CANVAS ========= */
+/* ========= PARTICLES BASE ========= */
 #particles{
   position: fixed;
   inset: 0;
@@ -1647,65 +1647,45 @@ body.light-mode .nav-links{
 
   pointer-events: none;
 
-  /* 🔥 GPU fix tanpa glitch */
   transform: translateZ(0);
   will-change: transform;
 
-  /* 🔥 ISOLATE biar blur nggak bocor */
-  isolation: isolate;
-
-  z-index: 0;
+  z-index: -1; /* 🔥 PINDAH KE BELAKANG TOTAL */
 }
 
-/* ========= SOFT CRYPTO GLOW BACKGROUND ========= */
+/* ========= SOFT CRYPTO GLOW ========= */
 #particles::after{
   content:'';
   position:absolute;
   inset:0;
 
   background:
-    radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 60%),
-    radial-gradient(circle at 80% 70%, rgba(14,165,233,0.12), transparent 60%);
+    radial-gradient(circle at 20% 30%, rgba(56,189,248,0.10), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(14,165,233,0.10), transparent 60%);
 
-  /* 🔥 jangan terlalu besar biar nggak blur UI */
-  filter: blur(40px);
+  filter: blur(100px);
+  opacity: 0.4;
 
-  opacity: 0.45;
+  pointer-events: none;
 
-  /* subtle breathing effect */
-  animation: glowPulse 8s ease-in-out infinite;
+  animation: glowMove 10s ease-in-out infinite;
 }
 
-/* ========= GLOW ANIMATION ========= */
-@keyframes glowPulse{
-  0%,100%{
-    opacity: 0.35;
-    transform: scale(1);
-  }
-  50%{
-    opacity: 0.55;
-    transform: scale(1.05);
-  }
+/* ========= ANIMATION ========= */
+@keyframes glowMove{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-20px); }
 }
 
-/* ========= LAYER FIX (CONTENT DI ATAS PARTICLES) ========= */
+/* ========= FIX LAYER UI ========= */
 .navbar,
 .hero,
 .container,
-footer{
-  position: relative;
-  z-index: 2;
-}
-
-/* 🔥 NAVBAR ANTI BLUR / ANTI GPU BUG */
-.navbar,
+footer,
 .nav-links,
-.menu-toggle{
+.nav-overlay{
   position: relative;
-  z-index: 10;
-
-  transform: translateZ(0);
-  backface-visibility: hidden;
+  z-index: 10; /* 🔥 pastikan di atas semua */
 }
 
 /* ========= BODY FIX ========= */
@@ -1714,28 +1694,25 @@ body{
   overflow-x: hidden;
 }
 
-/* ========= CANVAS PERFORMANCE ========= */
+/* ========= PERFORMANCE ========= */
 canvas{
   image-rendering: optimizeSpeed;
-  display: block;
 }
 
-/* ========= MOBILE OPTIMIZATION ========= */
-@media (max-width: 768px){
+/* ========= MOBILE ========= */
+@media (max-width:768px){
 
   #particles{
-    opacity: 0.6; /* reduce load */
+    opacity: 0.6;
   }
 
   #particles::after{
-    filter: blur(30px);
-    opacity: 0.35;
+    filter: blur(60px);
+    opacity: 0.3;
   }
-
 }
 
-/* ========= SMALL DEVICE ========= */
-@media (max-width: 480px){
+@media (max-width:480px){
 
   #particles{
     opacity: 0.5;
@@ -1744,7 +1721,6 @@ canvas{
   #particles::after{
     display: none; /* 🔥 matikan glow berat */
   }
-
 }
 
 /* hide loader */
