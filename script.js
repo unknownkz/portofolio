@@ -182,9 +182,6 @@ resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
 
-// device detect
-const isMobile = window.innerWidth < 768;
-
 // settings
 const PARTICLE_COUNT = isMobile ? 25 : 80;
 const CONNECT_DIST = isMobile ? 0 : 110;
