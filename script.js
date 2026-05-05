@@ -269,19 +269,120 @@ function animateParticles(){
         let dist = dx * dx + dy * dy;
 
         if(dist < maxDistance * maxDistance){
+// ============ SMOOTH SCROLL FIX ============
+let scrolling = false;
+let scrollTimeout;
+
+window.addEventListener("scroll", () => {
+  scrolling = true;
+
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    scrolling = false;
+  }, 80);
+});
+
+// ================= PARTICLES =================
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d", { alpha: true });
+
+if(canvas){
+  canvas.style.transform = "translateZ(0)";
+}
+
+// resize
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+// device
+const isMobile = window.innerWidth < 768;
+
+// settings
+const particleCount = isMobile ? 18 : 55;
+const maxDistance = isMobile ? 0 : 85;
+
+let particles = [];
+
+// init
+for(let i = 0; i < particleCount; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    baseSize: Math.random() * 1.2 + 0.4,
+    size: 0,
+    pulse: Math.random() * Math.PI * 2,
+    speedX: (Math.random() - 0.5) * 0.2,
+    speedY: (Math.random() - 0.5) * 0.2
+  });
+}
+
+// color
+function getParticleColor(){
+  return document.body.classList.contains("light-mode")
+    ? "rgba(14,165,233,0.9)"
+    : "rgba(56,189,248,0.7)";
+}
+
+// animate
+function animateParticles(){
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // skip draw saat scroll cepat (ANTI GLITCH)
+  if(scrolling){
+    requestAnimationFrame(animateParticles);
+    return;
+  }
+
+  // particles
+  particles.forEach(p => {
+
+    p.x += p.speedX;
+    p.y += p.speedY;
+
+    if(p.x > canvas.width) p.x = 0;
+    if(p.x < 0) p.x = canvas.width;
+    if(p.y > canvas.height) p.y = 0;
+    if(p.y < 0) p.y = canvas.height;
+
+    p.pulse += 0.025;
+    p.size = Math.max(0.4, p.baseSize + Math.sin(p.pulse) * 0.5);
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = getParticleColor();
+    ctx.fill();
+  });
+
+  // connection (desktop only)
+  if(!isMobile){
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.5;
+
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i + 1; j < particles.length; j++){
+
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = dx * dx + dy * dy;
+
+        if(dist < maxDistance * maxDistance){
 
           ctx.beginPath();
-
           ctx.strokeStyle = "rgba(56,189,248,0.2)";
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-
           ctx.stroke();
         }
       }
     }
 
-    ctx.globalAlpha = 1; // reset
+    ctx.globalAlpha = 1;
   }
 
   requestAnimationFrame(animateParticles);
