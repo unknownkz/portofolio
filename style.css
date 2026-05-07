@@ -1647,11 +1647,9 @@ body.light-mode .nav-links{
 
   pointer-events: none;
 
-  /* 🔥 FIX HILANG SAAT SCROLL */
-  transform: translateZ(0);
-  will-change: transform;
-
   z-index: -1;
+
+  isolation: isolate;
 }
 
 /* ========= PARTICLES GLOW BACKGROUND (SOFT CRYPTO LIGHT) ========= */
