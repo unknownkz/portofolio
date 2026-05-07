@@ -324,10 +324,10 @@ initParticles();
 const element = document.getElementById("typing");
 
 const parts = [
-  "Profesional Disiplin dengan Pengalaman ",
-  '<span class="highlight">Hospitality</span>',
-  " & Analisis ",
-  '<span class="highlight2">Web3 Analyst</span>'
+  '<span class="highlight">Web3 Enthusiast</span>',
+  " • ",
+  '<span class="highlight2">Digital Analyst</span>',
+  " • Future-Driven Hospitality"
 ];
 
 let partIndex = 0;
@@ -355,7 +355,6 @@ function typing(){
       charIndex = 0;
       setTimeout(typing, 100);
     }
-
   }
 }
 
