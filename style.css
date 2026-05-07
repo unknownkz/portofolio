@@ -914,20 +914,34 @@ body.light-mode .card:hover{
   position:relative;
   padding:20px;
   border-radius:16px;
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  /* 🔥 MOBILE FIX */
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+
   overflow:hidden;
 
   opacity:0;
-  transform:translateY(30px);
+
+  transform:translate3d(0,30px,0);
 
   transition:
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s ease,
     border-color 0.4s ease,
     opacity 0.6s ease;
-  will-change: transform, opacity;
+
+  will-change:auto;
+
+  /* 🔥 FIX BLANK BUG */
+  backface-visibility:hidden;
+  transform-style:preserve-3d;
+
+  contain:paint;
 }
 
 @media (max-width:768px){
