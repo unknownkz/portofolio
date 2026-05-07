@@ -759,22 +759,10 @@ header::before{
   position:relative;
 }
 
-.hero-img img{
-  width:100%;
-  max-width:260px;
-  border-radius:18px;
-  object-fit:cover;
-  position:relative;
-  z-index:2;
-
-  box-shadow:
-    0 10px 40px rgba(56,189,248,0.25);
-}
-
 .hero-photo{
   width:100%;
   max-width:260px;
-  aspect-ratio:1/1;
+  height:260px;
 
   border-radius:18px;
 
