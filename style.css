@@ -760,9 +760,8 @@ header::before{
 }
 
 .hero-photo{
-  width:100%;
-  max-width:260px;
-  height:260px;
+  width:260px;
+  height:320px;
 
   border-radius:18px;
 
@@ -804,6 +803,16 @@ header::before{
   background:radial-gradient(circle, rgba(56,189,248,0.25), transparent 70%);
   filter:blur(30px);
   z-index:1;
+}
+
+@media (max-width:768px){
+
+  .hero-photo{
+    width:180px;
+    height:220px;
+    margin:auto;
+  }
+
 }
 
 /* == HERO HIGHLIGHT == */
