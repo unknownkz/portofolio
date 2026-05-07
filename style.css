@@ -289,8 +289,9 @@ body.light-mode a{
   align-items:center;
   padding:14px 20px;
   background:rgba(15,23,42,0.75);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(56,189,248,0.2);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(56,189,248,0.08);
+  box-shadow:0 0 25px rgba(56,189,248,0.08);
   z-index:9999;
 }
 
@@ -469,6 +470,68 @@ body.light-mode a{
   .menu-toggle{
     display:none;
   }
+}
+
+/* ================= NAVBAR BORDER GLOW ================= */
+
+.navbar{
+  position:fixed;
+  overflow:hidden;
+}
+
+/* animated bottom glow */
+.navbar::before{
+  content:'';
+  position:absolute;
+
+  left:-40%;
+  bottom:0;
+
+  width:180%;
+  height:2px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(56,189,248,0.9),
+    rgba(14,165,233,1),
+    rgba(56,189,248,0.9),
+    transparent
+  );
+
+  animation:navbarGlow 6s linear infinite;
+
+  filter:blur(0.5px);
+
+  opacity:0.9;
+}
+
+/* soft ambient glow */
+.navbar::after{
+  content:'';
+  position:absolute;
+  inset:0;
+
+  background:linear-gradient(
+    180deg,
+    rgba(56,189,248,0.06),
+    transparent 70%
+  );
+
+  pointer-events:none;
+}
+
+/* animation */
+@keyframes navbarGlow{
+
+  0%{
+    transform:translateX(-20%);
+  }
+
+  100%{
+    transform:translateX(20%);
+  }
+
 }
 
 /* ================= LOGO (IMAGE BASED) ================= */
