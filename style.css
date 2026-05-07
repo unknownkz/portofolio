@@ -783,7 +783,7 @@ header::before{
 }
 
 .hero-photo::after{
-  content:"AXEL ALEXIUS LATUKOLAN";
+  content:"AXEL A.L";
 
   position:absolute;
   bottom:10px;
