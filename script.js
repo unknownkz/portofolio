@@ -560,6 +560,168 @@ if(e.key === "Escape"){
 }
 });
 
+// ================= LANGUAGE SYSTEM =================
+
+const langToggle = document.getElementById("langToggle");
+
+// ===== TRANSLATIONS =====
+const translations = {
+
+  en: {
+
+    navHome: "Home",
+    navAbout: "About Me",
+    navExperience: "Experience",
+    navSkills: "Skills",
+    navContact: "Contact",
+
+    contactBtn: "Contact Me",
+    downloadCv: "Download CV",
+
+    aboutTitle: "About Me",
+
+    aboutText: `
+      I have professional experience in the hospitality industry as a Housekeeping staff member and restaurant Waiter,
+      which has helped me develop strong discipline, attention to detail, and excellent customer service skills.
+      I am accustomed to working under high standards, managing time effectively, and collaborating efficiently within a team environment.
+      <br><br>
+      In addition, I have technical expertise in programming languages such as Python and PHP, along with database management using SQL.
+      I am capable of developing and managing web-based systems as well as handling structured and efficient data processing.
+    `,
+
+    experienceTitle: "Experience",
+    skillsTitle: "Skills",
+    contactTitle: "Contact",
+    socialTitle: "Social Media",
+
+    footerText:
+      "Copyright © 2026–present • Axel Alexius Latukolan. All Rights Reserved",
+
+    footerBuilt:
+      "Built with passion ⚡",
+
+    typingParts: [
+      "Web3 Enthusiast • ",
+      '<span class="highlight">Digital Analyst</span>',
+      " • ",
+      '<span class="highlight2">Future-Driven Hospitality</span>'
+    ]
+  },
+
+  id: {
+
+    navHome: "Beranda",
+    navAbout: "Tentang Saya",
+    navExperience: "Pengalaman",
+    navSkills: "Keahlian",
+    navContact: "Kontak",
+
+    contactBtn: "Hubungi Saya",
+    downloadCv: "Unduh CV",
+
+    aboutTitle: "Tentang Saya",
+
+    aboutText: `
+      Saya memiliki pengalaman kerja di bidang perhotelan sebagai Housekeeping dan restoran sebagai Waiter,
+      yang membentuk saya menjadi pribadi yang disiplin, teliti, dan memiliki kemampuan pelayanan yang baik.
+      Terbiasa bekerja dengan standar tinggi, manajemen waktu yang baik, serta mampu bekerja sama dalam tim.
+      <br><br>
+      Selain itu, saya memiliki keahlian di bidang teknologi dengan penguasaan bahasa pemrograman Python dan PHP,
+      serta pengelolaan database menggunakan SQL.
+      Saya mampu membuat dan mengelola sistem berbasis web maupun pengolahan data secara terstruktur dan efisien.
+    `,
+
+    experienceTitle: "Pengalaman",
+    skillsTitle: "Keahlian",
+    contactTitle: "Kontak",
+    socialTitle: "Media Sosial",
+
+    footerText:
+      "Hak Cipta © 2026–sekarang • Axel Alexius Latukolan. Seluruh Hak Dilindungi",
+
+    footerBuilt:
+      "Dibuat dengan passion ⚡",
+
+    typingParts: [
+      "Antusias Web3 • ",
+      '<span class="highlight">Analis Digital</span>',
+      " • ",
+      '<span class="highlight2">Hospitality Berorientasi Masa Depan</span>'
+    ]
+  }
+
+};
+
+// ===== CHANGE LANGUAGE =====
+function setLanguage(lang){
+
+  localStorage.setItem("language", lang);
+
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll("[data-id]").forEach(el=>{
+
+    const key = el.getAttribute("data-id");
+
+    if(translations[lang][key]){
+      el.innerHTML = translations[lang][key];
+    }
+
+  });
+
+  // ===== RESET TYPING =====
+  if(typeof element !== "undefined"){
+
+    element.innerHTML = "";
+
+    parts.length = 0;
+
+    translations[lang].typingParts.forEach(item=>{
+      parts.push(item);
+    });
+
+    partIndex = 0;
+    charIndex = 0;
+
+    typing();
+  }
+
+  // ===== BUTTON LABEL =====
+  langToggle.innerText =
+    lang === "en"
+      ? "ID"
+      : "EN";
+
+  // ===== GLOW EFFECT =====
+  langToggle.classList.add("switching");
+
+  setTimeout(()=>{
+    langToggle.classList.remove("switching");
+  }, 300);
+
+}
+
+// ===== INIT =====
+const savedLang =
+  localStorage.getItem("language") || "id";
+
+setLanguage(savedLang);
+
+// ===== TOGGLE =====
+if(langToggle){
+
+  langToggle.addEventListener("click", ()=>{
+
+    const current =
+      document.documentElement.lang === "en"
+        ? "id"
+        : "en";
+
+    setLanguage(current);
+
+  });
+}
+
 // ================= INIT =================
 window.addEventListener("scroll", activeNav);
 window.addEventListener("load", activeNav);
