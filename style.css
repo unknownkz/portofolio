@@ -1031,176 +1031,123 @@ header::before{
 
 }
 
-/* ================= TYPING PREMIUM WEB3 UI ================= */
+/* ================= HERO TYPING FINAL WEB3 UI ================= */
 
 .typing{
   position:relative;
 
   font-size:1.05rem;
-  font-weight:500;
   line-height:1.8;
+  font-weight:500;
 
   color:#cbd5e1;
 
-  letter-spacing:0.6px;
-
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.03);
+  letter-spacing:0.5px;
 
   margin-top:12px;
 
   min-height:32px;
 
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:4px;
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.03);
+
+  transition:0.3s ease;
 }
 
-/* ===== CYBER LINE ===== */
-.typing::before{
-  content:'';
-
-  position:absolute;
-  left:0;
-  bottom:-8px;
-
-  width:120px;
-  height:1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(56,189,248,0.9),
-      rgba(14,165,233,0)
-    );
-
-  box-shadow:
-    0 0 10px rgba(56,189,248,0.4);
-
-  animation:typingLine 3s linear infinite;
-}
-
-@keyframes typingLine{
-  0%{
-    opacity:0.4;
-    width:80px;
-  }
-
-  50%{
-    opacity:1;
-    width:140px;
-  }
-
-  100%{
-    opacity:0.4;
-    width:80px;
-  }
-}
-
-/* ================= HIGHLIGHT 1 ================= */
+/* ================= TYPING CYAN GLOW ================= */
 
 .typing .highlight{
-
-  position:relative;
 
   color:#38bdf8 !important;
 
   font-weight:700;
 
   text-shadow:
-    0 0 6px rgba(56,189,248,0.8),
-    0 0 14px rgba(56,189,248,0.5),
-    0 0 24px rgba(56,189,248,0.25);
+    0 0 8px rgba(56,189,248,0.8),
+    0 0 18px rgba(56,189,248,0.4);
 
-  animation:cryptoGlow1 3s ease-in-out infinite;
+  animation:cyanGlow 3s ease-in-out infinite;
 }
 
-/* animated glow */
-@keyframes cryptoGlow1{
+@keyframes cyanGlow{
 
   0%,100%{
     text-shadow:
-      0 0 6px rgba(56,189,248,0.7),
-      0 0 16px rgba(56,189,248,0.4);
+      0 0 8px rgba(56,189,248,0.7),
+      0 0 18px rgba(56,189,248,0.35);
   }
 
   50%{
     text-shadow:
-      0 0 10px rgba(56,189,248,1),
-      0 0 24px rgba(56,189,248,0.7),
-      0 0 40px rgba(56,189,248,0.3);
+      0 0 14px rgba(56,189,248,1),
+      0 0 28px rgba(56,189,248,0.6);
   }
 
 }
 
-/* ================= HIGHLIGHT 2 ================= */
+/* ================= TYPING GREEN GLOW ================= */
 
-.typing .highlight2{
+.typing .highlight-green{
 
-  position:relative;
-
-  color:#0ea5e9 !important;
+  color:#22c55e !important;
 
   font-weight:700;
 
   text-shadow:
-    0 0 6px rgba(14,165,233,0.8),
-    0 0 14px rgba(14,165,233,0.5),
-    0 0 24px rgba(14,165,233,0.25);
+    0 0 8px rgba(34,197,94,0.8),
+    0 0 18px rgba(34,197,94,0.4);
 
-  animation:cryptoGlow2 4s ease-in-out infinite;
+  animation:greenGlow 3s ease-in-out infinite;
 }
 
-@keyframes cryptoGlow2{
+@keyframes greenGlow{
 
   0%,100%{
     text-shadow:
-      0 0 6px rgba(14,165,233,0.7),
-      0 0 16px rgba(14,165,233,0.4);
+      0 0 8px rgba(34,197,94,0.7),
+      0 0 18px rgba(34,197,94,0.35);
   }
 
   50%{
     text-shadow:
-      0 0 10px rgba(14,165,233,1),
-      0 0 24px rgba(14,165,233,0.7),
-      0 0 40px rgba(14,165,233,0.3);
+      0 0 14px rgba(34,197,94,1),
+      0 0 28px rgba(34,197,94,0.6);
   }
 
 }
 
-/* ================= CURSOR EFFECT ================= */
+/* ================= TYPING WHITE GLOW ================= */
 
-.typing::after{
-  content:'';
+.typing .highlight-white{
 
-  width:2px;
-  height:20px;
+  color:#f8fafc !important;
 
-  background:#38bdf8;
+  font-weight:600;
 
-  margin-left:4px;
+  text-shadow:
+    0 0 8px rgba(255,255,255,0.5),
+    0 0 18px rgba(255,255,255,0.15);
 
-  box-shadow:
-    0 0 8px rgba(56,189,248,0.8),
-    0 0 16px rgba(56,189,248,0.4);
-
-  animation:typingCursor 0.8s infinite;
+  animation:whiteGlow 4s ease-in-out infinite;
 }
 
-@keyframes typingCursor{
+@keyframes whiteGlow{
 
-  0%,50%{
-    opacity:1;
+  0%,100%{
+    text-shadow:
+      0 0 8px rgba(255,255,255,0.35),
+      0 0 18px rgba(255,255,255,0.1);
   }
 
-  51%,100%{
-    opacity:0;
+  50%{
+    text-shadow:
+      0 0 14px rgba(255,255,255,0.6),
+      0 0 28px rgba(255,255,255,0.2);
   }
 
 }
 
-/* ================= LIGHT MODE ================= */
+/* ================= TYPING LIGHT MODE ================= */
 
 body.light-mode .typing{
   color:#0f172a;
@@ -1210,43 +1157,38 @@ body.light-mode .typing .highlight{
   color:#0284c7 !important;
 }
 
-body.light-mode .typing .highlight2{
-  color:#0369a1 !important;
+body.light-mode .typing .highlight-green{
+  color:#16a34a !important;
 }
 
-/* ================= MOBILE OPTIMIZATION ================= */
+body.light-mode .typing .highlight-white{
+  color:#0f172a !important;
+
+  text-shadow:none;
+}
+
+/* ================= TYPING MOBILE OPTIMIZATION ================= */
 
 @media (max-width:768px){
 
   .typing{
 
     font-size:0.95rem;
-
     line-height:1.7;
-
-    justify-content:center;
 
     text-align:center;
 
     min-height:48px;
   }
 
-  .typing::before{
-    left:50%;
-    transform:translateX(-50%);
-  }
-
 }
 
-/* ================= EXTRA SMALL DEVICE ================= */
+/* ================= TYPING EXTRA SMALL DEVICE ================= */
 
 @media (max-width:480px){
 
   .typing{
-
     font-size:0.88rem;
-
-    padding:0 6px;
   }
 
 }
