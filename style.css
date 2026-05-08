@@ -1982,6 +1982,14 @@ canvas{
 }
 
 /* ================= LANGUAGE BUTTON (WEB3 UI) ================= */
+
+.lang-switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-right:12px;
+}
+
 .lang-btn{
   position:relative;
 
@@ -2002,12 +2010,6 @@ canvas{
       rgba(30,41,59,0.82)
     );
 
-  color:#e2e8f0;
-
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:1px;
-
   cursor:pointer;
 
   overflow:hidden;
@@ -2027,6 +2029,22 @@ canvas{
     inset 0 0 10px rgba(255,255,255,0.02);
 
   z-index:5;
+}
+
+/* FLAG */
+.lang-btn img{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  object-fit:cover;
+
+  position:relative;
+  z-index:2;
+
+  pointer-events:none;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.15);
 }
 
 /* glow border */
@@ -2052,7 +2070,7 @@ canvas{
 
   opacity:0;
 
-  z-index:-1;
+  z-index:1;
 
   animation:langGlow 5s linear infinite;
 
@@ -2073,6 +2091,19 @@ canvas{
   opacity:1;
 }
 
+/* ACTIVE */
+.lang-btn.active{
+  border-color:rgba(56,189,248,0.7);
+
+  box-shadow:
+    0 0 20px rgba(56,189,248,0.35),
+    0 0 40px rgba(56,189,248,0.15);
+}
+
+.lang-btn.active::before{
+  opacity:1;
+}
+
 /* click */
 .lang-btn:active{
   transform:scale(0.96);
@@ -2090,7 +2121,6 @@ canvas{
 
 /* LIGHT MODE */
 body.light-mode .lang-btn{
-
   background:
     linear-gradient(
       145deg,
@@ -2098,36 +2128,36 @@ body.light-mode .lang-btn{
       rgba(241,245,249,0.9)
     );
 
-  color:#0f172a;
-
   border-color:rgba(14,165,233,0.2);
-
   box-shadow:
     0 0 12px rgba(14,165,233,0.08);
 }
 
-/* MOBILE OPTIMIZATION */
+/* MOBILE */
 @media (max-width:768px){
-
+  .lang-switch{
+    gap:8px;
+    margin-right:8px;
+  }
   .lang-btn{
     width:40px;
     height:40px;
-
-    font-size:11px;
-
     border-radius:12px;
   }
-
+  .lang-btn img{
+    width:20px;
+    height:20px;
+  }
 }
 
 /* EXTRA SMALL */
 @media (max-width:480px){
-
   .lang-btn{
     width:38px;
     height:38px;
-
-    font-size:10px;
   }
-
+  .lang-btn img{
+    width:18px;
+    height:18px;
+  }
 }
