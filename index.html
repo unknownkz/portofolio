@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
 <meta name="description" content="Web3 Analyst, Data Processing, dan Hospitality Experience">
- <meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://www.axelal.my.id">
 
@@ -14,10 +14,10 @@
 <meta property="og:description" content="Mengubah data menjadi insight. Web3 Analyst dengan pengalaman di automation, data processing, dan hospitality.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.axelal.my.id/">
- <meta property="og:image" content="https://www.axelal.my.id/preview.png">
+<meta property="og:image" content="https://www.axelal.my.id/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
- 
+
 <title>Axel Alexius Latukolan — Web3 Analyst & Data Specialist</title>
 
 <link rel="stylesheet" href="style.css?v=999">
@@ -25,11 +25,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
- 
+
 <body id="body" class="cursor-enabled">
 
 <!-- ================= LOADER ================= -->
- <div class="loader">
+<div class="loader">
   <div class="loader-inner">
 
     <div class="loader-logo">
@@ -50,46 +50,51 @@
 
   </div>
 </div>
- 
+
 <div class="nav-overlay"></div>
 <canvas id="particles"></canvas>
- 
+
 <!-- NAVBAR -->
 <nav class="navbar">
  <div class="navbar-inner">
 
   <!-- LOGO -->
   <div class="logo">
-  <div class="logo-wrap">
+    <div class="logo-wrap">
 
-    <img src="logo-a.png" alt="Logo A" class="logo-img">
+      <img src="logo-a.png" alt="Logo A" class="logo-img">
 
-    <!-- ORBIT 1 -->
-    <div class="orbit">
-      <span></span>
-      <span></span>
+      <!-- ORBIT 1 -->
+      <div class="orbit">
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- ORBIT 2 -->
+      <div class="orbit orbit2">
+        <span></span>
+        <span></span>
+      </div>
+
     </div>
-
-    <!-- ORBIT 2 -->
-    <div class="orbit orbit2">
-      <span></span>
-      <span></span>
-    </div>
-
   </div>
-</div>
 
   <!-- MENU -->
   <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About Me</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skill</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#home" data-id="navHome">Beranda</a></li>
+    <li><a href="#about" data-id="navAbout">Tentang Saya</a></li>
+    <li><a href="#experience" data-id="navExperience">Pengalaman</a></li>
+    <li><a href="#skills" data-id="navSkills">Keahlian</a></li>
+    <li><a href="#contact" data-id="navContact">Kontak</a></li>
   </ul>
 
-  <!-- RIGHT SIDE (WAJIB) -->
+  <!-- RIGHT SIDE -->
   <div class="nav-right">
+
+    <!-- LANGUAGE -->
+    <button id="langToggle" class="lang-btn">
+      ID
+    </button>
     
     <!-- THEME -->
     <button id="themeToggle" class="theme-btn">
@@ -105,27 +110,29 @@
   </div>
  </div>
 </nav>
- 
+
 <!-- HERO -->
 <header id="home" class="hero">
   <div class="hero-inner">
 
     <div class="hero-text reveal-left">
       <h1>
-        Axel Alexius 
+        Axel Alexius
         <span class="glow-text">Latukolan</span>
       </h1>
 
-     <!-- Typing -->
+      <!-- Typing -->
       <p id="typing" class="typing"></p>
 
       <div class="buttons">
         <a href="https://wa.me/6281517018046" target="_blank" class="btn wa-btn">
-          <i class="fab fa-whatsapp"></i> Contact Me
+          <i class="fab fa-whatsapp"></i>
+          <span data-id="contactBtn">Hubungi Saya</span>
         </a>
 
         <a href="cv.pdf" download class="btn-outline">
-          <i class="fas fa-download"></i> Download CV
+          <i class="fas fa-download"></i>
+          <span data-id="downloadCv">Unduh CV</span>
         </a>
       </div>
     </div>
@@ -141,19 +148,21 @@
 <main class="container">
 
 <section id="about" class="card reveal">
-  <h2>About Me</h2>
-  <p>
-    I have professional experience in the hospitality industry as a Housekeeping staff member and restaurant Waiter,
-    which has helped me develop strong discipline, attention to detail, and excellent customer service skills.
-    I am accustomed to working under high standards, managing time effectively, and collaborating efficiently within a team environment.
+  <h2 data-id="aboutTitle">Tentang Saya</h2>
+
+  <p data-id="aboutText">
+    Saya memiliki pengalaman kerja di bidang perhotelan sebagai Housekeeping dan restoran sebagai Waiter,
+    yang membentuk saya menjadi pribadi yang disiplin, teliti, dan memiliki kemampuan pelayanan yang baik.
+    Terbiasa bekerja dengan standar tinggi, manajemen waktu yang baik, serta mampu bekerja sama dalam tim.
     <br><br>
-    In addition, I have technical expertise in programming languages such as Python and PHP, along with database management using SQL.
-    I am capable of developing and managing web-based systems as well as handling structured and efficient data processing.
+    Selain itu, saya memiliki keahlian di bidang teknologi dengan penguasaan bahasa pemrograman Python dan PHP,
+    serta pengelolaan database menggunakan SQL.
+    Saya mampu membuat dan mengelola sistem berbasis web maupun pengolahan data secara terstruktur dan efisien.
   </p>
 </section>
 
 <section id="experience" class="card reveal">
-  <h2>Experience</h2>
+  <h2 data-id="experienceTitle">Pengalaman</h2>
 
   <div class="timeline">
     <div class="timeline-item">
@@ -179,7 +188,7 @@
 </section>
 
 <section id="skills" class="card reveal">
-  <h2>Skills</h2>
+  <h2 data-id="skillsTitle">Keahlian</h2>
 
   <div class="skills-grid">
 
@@ -239,59 +248,63 @@
 
   </div>
 </section>
- 
+
 <section id="contact" class="card reveal">
-  <h2>Contact</h2>
+  <h2 data-id="contactTitle">Kontak</h2>
+
   <div class="contact-box">
 
-  <a href="tel:+6281517018046" class="contact-btn phone cursor-hover">
-    <i class="fas fa-phone"></i>
-    <span>+62 815-1701-8046</span>
-  </a>
+    <a href="tel:+6281517018046" class="contact-btn phone cursor-hover">
+      <i class="fas fa-phone"></i>
+      <span>+62 815-1701-8046</span>
+    </a>
 
-  <a href="mailto:axelalexiusl@gmail.com" class="contact-btn email cursor-hover">
-    <i class="fas fa-envelope"></i>
-    <span>axelalexiusl@gmail.com</span>
-  </a>
+    <a href="mailto:axelalexiusl@gmail.com" class="contact-btn email cursor-hover">
+      <i class="fas fa-envelope"></i>
+      <span>axelalexiusl@gmail.com</span>
+    </a>
 
-</div>
+  </div>
 </section>
 
 <!-- ================= SOCIAL MEDIA ================= -->
 <section id="social" class="card reveal">
-  <h2>Social Media</h2>
+  <h2 data-id="socialTitle">Media Sosial</h2>
+
   <div class="contact-box">
 
-  <a href="https://github.com/unknownkz" target="_blank" class="social-btn github cursor-hover">
-    <i class="fab fa-github"></i>
-    <span>Github</span>
-  </a>
+    <a href="https://github.com/unknownkz" target="_blank" class="social-btn github cursor-hover">
+      <i class="fab fa-github"></i>
+      <span>Github</span>
+    </a>
 
-  <a href="https://instagram.com/xelyours" target="_blank" class="social-btn instagram cursor-hover">
-    <i class="fab fa-instagram"></i>
-    <span>Instagram</span>
-  </a>
+    <a href="https://instagram.com/xelyours" target="_blank" class="social-btn instagram cursor-hover">
+      <i class="fab fa-instagram"></i>
+      <span>Instagram</span>
+    </a>
 
-</div>
+  </div>
 </section>
 
 </main>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
-  <p>Copyright © 2026–present • Axel Alexius Latukolan.
-   All Rights Reserved
+  <p data-id="footerText">
+    Copyright © 2026–present • Axel Alexius Latukolan.
+    All Rights Reserved
   </p>
-  <p style="font-size:11px; opacity:0.5;">
+
+  <p style="font-size:11px; opacity:0.5;" data-id="footerBuilt">
     Built with passion ⚡
   </p>
 </footer>
 
- <!-- ======= Cursor ======= -->
+<!-- ======= Cursor ======= -->
 <div class="cursor-glow"></div>
 <div class="cursor-aura"></div>
 <div class="cursor-trail"></div>
- 
+
 <script src="script.js?v=999"></script>
 </body>
 </html>
