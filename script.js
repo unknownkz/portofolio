@@ -602,10 +602,11 @@ const translations = {
       "Built with passion ⚡",
 
     typingParts: [
-      "Web3 Enthusiast • ",
-      '<span class="highlight">Digital Analyst</span>',
+      '<span class="highlight">Web3 Enthusiast</span>',
       " • ",
-      '<span class="highlight2">Future-Driven Hospitality</span>'
+      '<span class="highlight-green">Digital Analyst</span>',
+      " • ",
+      '<span class="highlight-white">Future-Driven Hospitality</span>'
     ]
   },
 
@@ -644,11 +645,11 @@ const translations = {
       "Dibuat dengan passion ⚡",
 
     typingParts: [
-      '<span class="highlight">Web3 Enthusiast</span>',
+      '<span class="highlight">Antusias Web3</span>',
       " • ",
-      '<span class="highlight-green">Digital Analyst</span>',
+      '<span class="highlight-green">Analis Digital</span>',
       " • ",
-      '<span class="highlight-white">Future-Driven Hospitality</span>'
+      '<span class="highlight-white">Hospitality Berorientasi Masa Depan</span>'
     ]
   }
 
