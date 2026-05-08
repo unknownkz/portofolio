@@ -644,10 +644,11 @@ const translations = {
       "Dibuat dengan passion ⚡",
 
     typingParts: [
-      "Antusias Web3 • ",
-      '<span class="highlight">Analis Digital</span>',
+      '<span class="highlight">Web3 Enthusiast</span>',
       " • ",
-      '<span class="highlight2">Hospitality Berorientasi Masa Depan</span>'
+      '<span class="highlight-green">Digital Analyst</span>',
+      " • ",
+      '<span class="highlight-white">Future-Driven Hospitality</span>'
     ]
   }
 
