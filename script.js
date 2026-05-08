@@ -562,7 +562,8 @@ if(e.key === "Escape"){
 
 // ================= LANGUAGE SYSTEM =================
 
-const langToggle = document.getElementById("langToggle");
+const idBtn = document.getElementById("idBtn");
+const enBtn = document.getElementById("enBtn");
 
 // ===== TRANSLATIONS =====
 const translations = {
@@ -669,7 +670,17 @@ function setLanguage(lang){
 
   });
 
-  // ===== RESET TYPING =====
+  // ===== LANGUAGE ACTIVE BUTTON =====
+  idBtn.classList.remove("active");
+  enBtn.classList.remove("active");
+
+  if(lang === "id"){
+    idBtn.classList.add("active");
+  }else{
+    enBtn.classList.add("active");
+  }
+
+  // ===== LANGUAGE RESET TYPING =====
   if(typeof element !== "undefined"){
 
     element.innerHTML = "";
@@ -686,41 +697,22 @@ function setLanguage(lang){
     typing();
   }
 
-  // ===== BUTTON LABEL =====
-  langToggle.innerText =
-    lang === "en"
-      ? "ID"
-      : "EN";
-
-  // ===== GLOW EFFECT =====
-  langToggle.classList.add("switching");
-
-  setTimeout(()=>{
-    langToggle.classList.remove("switching");
-  }, 300);
-
 }
 
-// ===== INIT =====
+// ===== INIT LANGUAGE =====
 const savedLang =
   localStorage.getItem("language") || "id";
 
 setLanguage(savedLang);
 
-// ===== TOGGLE =====
-if(langToggle){
+// ===== BUTTON CLICK =====
+idBtn.addEventListener("click", ()=>{
+  setLanguage("id");
+});
 
-  langToggle.addEventListener("click", ()=>{
-
-    const current =
-      document.documentElement.lang === "en"
-        ? "id"
-        : "en";
-
-    setLanguage(current);
-
-  });
-}
+enBtn.addEventListener("click", ()=>{
+  setLanguage("en");
+});
 
 // ================= INIT =================
 window.addEventListener("scroll", activeNav);
