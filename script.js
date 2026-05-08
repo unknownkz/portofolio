@@ -721,3 +721,26 @@ window.addEventListener("scroll", activeNav);
 window.addEventListener("load", activeNav);
 
 activeNav();
+
+// ================= SERVICE WORKER =================
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener("load", ()=>{
+
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then(()=>{
+
+        console.log("Service Worker Active");
+
+      })
+      .catch(err=>{
+
+        console.log("SW Failed", err);
+
+      });
+
+  });
+
+}
