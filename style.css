@@ -1183,6 +1183,48 @@ body.light-mode .typing .highlight-white{
 
 }
 
+/* ================= TYPING CURSOR ================= */
+
+.typing::after{
+  content:'';
+
+  display:inline-block;
+
+  width:2px;
+  height:18px;
+
+  margin-left:6px;
+
+  background:#38bdf8;
+
+  border-radius:10px;
+
+  vertical-align:middle;
+
+  box-shadow:
+    0 0 8px rgba(56,189,248,0.7);
+
+  animation:cursorBlink 0.9s ease infinite;
+  background:
+    linear-gradient(
+      180deg,
+      #38bdf8,
+      #22c55e
+    );
+}
+
+@keyframes cursorBlink{
+
+  0%,50%{
+    opacity:1;
+  }
+
+  51%,100%{
+    opacity:0;
+  }
+
+}
+
 /* ================= TYPING EXTRA SMALL DEVICE ================= */
 
 @media (max-width:480px){
