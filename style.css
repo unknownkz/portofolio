@@ -1063,31 +1063,35 @@ header::before{
 
 /* ================= HERO TYPING PREMIUM ================= */
 .typing{
-  opacity:0;
-  position:relative;
-  margin-top:14px;
+  opacity: 1; /* jangan pakai fade conflict */
+  position: relative;
 
-  line-height:1.9;
-  letter-spacing:0.4px;
+  margin-top: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.4px;
 
-  font-size:1rem;
-  font-weight:500;
+  font-size: 1rem;
+  font-weight: 500;
 
-  color:#cbd5e1;
-  text-shadow:
-    0 0 8px rgba(255,255,255,0.03);
-
-  transform:translateY(12px);
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
-
-  will-change:contents;
+  color: #cbd5e1;
+  text-shadow: 0 0 8px rgba(255,255,255,0.03);
+  animation: typingFade 0.5s ease;
 }
 
 .typing.show{
   opacity:1;
   transform:translateY(0);
+}
+
+@keyframes typingFade{
+  from{
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ================= TYPING HERO BREAK LINE ================= */
