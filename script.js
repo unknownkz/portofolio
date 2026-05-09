@@ -521,43 +521,45 @@ if(e.key === "Escape"){
 });
 
 // ================= HERO TYPING PREMIUM =================
-
 const typingElement =
   document.getElementById("typing");
 
-let typingTimeout;
-
 function startTyping(lang){
-
-  clearTimeout(typingTimeout);
-
-  const fullText =
-    translations[lang].typingText;
-
-  let index = 0;
-
   typingElement.innerHTML = "";
 
-  function type(){
+  const text =
+    translations[lang].typingText;
 
-    typingElement.innerHTML =
-      fullText.slice(0, index);
+  const lines = text.split("||");
 
-    index++;
+  let lineIndex = 0;
 
-    if(index <= fullText.length){
+  function showLine(){
 
-      typingTimeout =
-        setTimeout(type, 16);
+    if(lineIndex >= lines.length) return;
 
+    const line =
+      document.createElement("div");
+
+    line.classList.add("typing-line");
+
+    // line pertama
+    if(lineIndex === 0){
+      line.classList.add("typing-top");
+    }else{
+      line.classList.add("typing-bottom");
     }
 
+    line.innerHTML =
+      lines[lineIndex];
+
+    typingElement.appendChild(line);
+
+    lineIndex++;
+    setTimeout(showLine, 350);
   }
-
-  type();
-
+  showLine();
 }
-
 // ================= LANGUAGE SYSTEM =================
 
 const idBtn = document.getElementById("idBtn");
