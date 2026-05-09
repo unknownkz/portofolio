@@ -601,25 +601,23 @@ const translations = {
     footerBuilt:
       "Built with passion ⚡",
 
-    typingText: [
-      `
-      <span class="highlight">
-        Web3 Enthusiast
-      </span>
+typingText: `
+  <span class="highlight">
+    Web3 Enthusiast
+  </span>
 
-      •
+  •
 
-      <span class="highlight-green">
-        Digital Analyst
-      </span>
-      `,
+  <span class="highlight-green">
+    Digital Analyst
+  </span>
 
-      `
-      <span class="highlight-white">
-        Future-Driven Hospitality
-      </span>
-      `
-    ]
+  <br>
+
+  <span class="highlight-white">
+    Future-Driven Hospitality
+  </span>
+`
   },
 
   id: {
@@ -656,25 +654,23 @@ const translations = {
     footerBuilt:
       "Dibuat dengan passion ⚡",
 
-    typingText: [
-      `
-      <span class="highlight">
-        Antusias Web3
-      </span>
+typingText: `
+  <span class="highlight">
+    Antusias Web3
+  </span>
 
-      •
+  •
 
-      <span class="highlight-green">
-        Analis Digital
-      </span>
-      `,
+  <span class="highlight-green">
+    Analis Digital
+  </span>
 
-      `
-      <span class="highlight-white">
-        Hospitality Berorientasi Masa Depan
-      </span>
-      `
-    ]
+  <br>
+
+  <span class="highlight-white">
+    Hospitality Berorientasi Masa Depan
+  </span>
+`
   }
 
 };
