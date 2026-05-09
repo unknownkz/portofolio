@@ -2079,9 +2079,9 @@ body.light-mode .btn-outline:hover{
   color:#fff;
 }
 
-body.light-mode .hero-text span{
+body.light-mode .hero-title span{
   -webkit-text-fill-color:unset;
-  color:#0ea5e9;
+  color: var(--accent);
 }
 
 /* ================= CINEMATIC REVEAL ================= */
