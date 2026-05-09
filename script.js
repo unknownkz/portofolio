@@ -320,46 +320,6 @@ function initParticles(){
 
 initParticles();
 
-// ================= HERO ===================
-const element = document.getElementById("typing");
-
-const parts = [
-  '<span class="highlight">Web3 Enthusiast</span>',
-  " • ",
-  '<span class="highlight2">Digital Analyst</span>',
-  " • Future-Driven Hospitality"
-];
-
-let partIndex = 0;
-let charIndex = 0;
-
-function typing(){
-  if(partIndex < parts.length){
-
-    // kalau bagian span → langsung tampil
-    if(parts[partIndex].includes("<span")){
-      element.innerHTML += parts[partIndex];
-      partIndex++;
-      charIndex = 0;
-      setTimeout(typing, 150);
-      return;
-    }
-
-    // ketik normal
-    if(charIndex < parts[partIndex].length){
-      element.innerHTML += parts[partIndex].charAt(charIndex);
-      charIndex++;
-      setTimeout(typing, 60);
-    }else{
-      partIndex++;
-      charIndex = 0;
-      setTimeout(typing, 100);
-    }
-  }
-}
-
-typing();
-
 // ================= PARALLAX =================
 window.addEventListener("scroll", ()=>{
 const scrolled = window.scrollY;
