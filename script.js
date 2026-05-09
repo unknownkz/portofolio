@@ -506,13 +506,10 @@ const translations = {
     footerText: "Copyright © 2026–present • Axel Alexius Latukolan. All Rights Reserved",
     footerBuilt: "Built with passion ⚡",
 
-    typingText: `
-      <span class="highlight">Web3 Enthusiast</span>
-      •
-      <span class="highlight-green">Digital Analyst</span>
-      <br>
-      <span class="highlight-white">Future-Driven Hospitality</span>
-    `
+    // 🔥 HYBRID TYPING TEXT (3 baris)
+    typingText1: "Web3 Enthusiast",
+    typingText2: "• Digital Analyst",
+    typingText3: "Future-Driven Hospitality"
   },
 
   id: {
@@ -545,74 +542,13 @@ const translations = {
     footerText: "Hak Cipta © 2026–sekarang • Axel Alexius Latukolan. Seluruh Hak Dilindungi",
     footerBuilt: "Dibuat dengan passion ⚡",
 
-    typingText: `
-      <span class="highlight">Antusias Web3</span>
-      •
-      <span class="highlight-green">Analis Digital</span>
-      <br>
-      <span class="highlight-white">Hospitality Berorientasi Masa Depan</span>
-    `
+    // 🔥 HYBRID TYPING TEXT (3 baris)
+    typingText1: "Antusias Web3",
+    typingText2: "• Analis Digital",
+    typingText3: "Hospitality Berorientasi Masa Depan"
   }
 
 };
-
-// ============ TYPING HERO (PREMIUM - NEW) ===============
-const typingElement = document.getElementById("typing");
-let typingInterval = null;
-
-function typeEffect(element, text, speed = 50, callback = null) {
-  // Hentikan typing sebelumnya
-  if (typingInterval) clearInterval(typingInterval);
-
-  // Ambil teks polos (tanpa HTML)
-  const temp = document.createElement("div");
-  temp.innerHTML = text;
-  const plainText = temp.textContent || temp.innerText;
-
-  element.textContent = "";
-  element.style.opacity = "1";
-
-  let i = 0;
-
-  typingInterval = setInterval(() => {
-    if (i < plainText.length) {
-      element.textContent += plainText.charAt(i);
-      i++;
-    } else {
-      clearInterval(typingInterval);
-      typingInterval = null;
-
-      setTimeout(() => {
-        element.innerHTML = text;
-        element.querySelectorAll(".highlight, .highlight-green, .highlight-white").forEach(el => {
-          el.style.opacity = "1";
-        });
-      }, 100);
-
-      if (callback) callback();
-    }
-  }, speed);
-}
-
-function startTyping(lang) {
-  if (!typingElement) return;
-
-  // Reset dulu
-  typingElement.style.opacity = "0";
-  typingElement.style.transition = "none";
-  typingElement.textContent = "";
-
-  const rawText = translations[lang].typingText;
-
-  // Tunggu sebentar lalu mulai typing
-  setTimeout(() => {
-    typingElement.style.transition = "opacity 0.3s ease";
-    typingElement.style.opacity = "1";
-
-    // Mulai efek ketik
-    typeEffect(typingElement, rawText, 40);
-  }, 300);
-}
 
 // ===== CHANGE LANGUAGE =====
 function setLanguage(lang) {
@@ -636,8 +572,30 @@ function setLanguage(lang) {
     enBtn.classList.add("active");
   }
 
-  // 🔥 JALANKAN TYPING
-  startTyping(lang);
+  // 🔥 RESET TYPING ANIMATION (HYBRID CSS)
+  const wrapper = document.getElementById("typingWrapper");
+  if (wrapper) {
+    const oldTyping = document.getElementById("typing");
+    const newTyping = oldTyping.cloneNode(true);
+
+    // Update teks sesuai bahasa
+    const lines = newTyping.querySelectorAll("span");
+    if (lines.length >= 3) {
+      lines[0].textContent = translations[lang].typingText1;
+      lines[1].textContent = translations[lang].typingText2;
+      lines[2].textContent = translations[lang].typingText3;
+    }
+
+    // Ganti elemen lama dengan yang baru (reset animasi CSS)
+    oldTyping.parentNode.replaceChild(newTyping, oldTyping);
+
+    // Trigger reflow agar animasi restart
+    void newTyping.offsetWidth;
+    newTyping.style.animation = "none";
+    setTimeout(() => {
+      newTyping.style.animation = "";
+    }, 10);
+  }
 }
 
 // ===== INIT LANGUAGE =====
@@ -670,4 +628,4 @@ if ("serviceWorker" in navigator) {
         console.log("SW Failed", err);
       });
   });
-        }
+}
