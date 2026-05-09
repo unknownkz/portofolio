@@ -1061,34 +1061,37 @@ header::before{
   }
 }
 
-/* ================= HERO TYPING PREMIUM (PURE CSS) ================= */
+/* ================= HERO TYPING PREMIUM (HYBRID CSS) ================= */
+#typingWrapper {
+  margin-top: 14px;
+  min-height: 90px;
+}
+
 .typing {
   position: relative;
   display: inline-block;
-
-  margin-top: 14px;
 
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.9;
   letter-spacing: 0.4px;
-
   color: #cbd5e1;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.03);
 
-  white-space: pre-line;
-
+  /* ANIMASI MULTI-BARIS */
   overflow: hidden;
+  white-space: nowrap;
   border-right: 2px solid transparent;
   width: 0;
   animation:
-    typingLine1 1.5s steps(18) forwards,
-    typingLine2 1.5s steps(19) 1.5s forwards,
-    typingLine3 1.5s steps(21) 3s forwards,
-    typingWidth 4.5s steps(1) forwards;
+    typingBaris1 1.4s steps(17, end) forwards,
+    typingBaris2 1.4s steps(17, end) 1.5s forwards,
+    typingBaris3 1.4s steps(21, end) 3s forwards,
+    showAll 0s 4.5s forwards;
+  max-height: 1.9em;
 }
 
-/* ===== BARIS 1: CYAN ===== */
+/* ===== TYPING COLUMN ===== */
 .typing .line1 {
   display: block;
   color: #38bdf8;
@@ -1099,7 +1102,6 @@ header::before{
   animation: cyanGlow 3s ease-in-out infinite 1.5s;
 }
 
-/* ===== BARIS 2: GREEN ===== */
 .typing .line2 {
   display: block;
   color: #22c55e;
@@ -1110,7 +1112,6 @@ header::before{
   animation: greenGlow 3s ease-in-out infinite 3s;
 }
 
-/* ===== BARIS 3: WHITE ===== */
 .typing .line3 {
   display: block;
   color: #f8fafc;
@@ -1120,75 +1121,67 @@ header::before{
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
 }
 
-/* ===== TYPING KEYFRAMES ===== */
-@keyframes typingLine1 {
+/* ===== TYPING KEYFRAMES TYPING ===== */
+@keyframes typingBaris1 {
   from { width: 0; }
-  to { width: 18ch; } /* "Web3 Enthusiast •" */
+  to { width: 17ch; }
 }
-
-@keyframes typingLine2 {
+@keyframes typingBaris2 {
   from { width: 0; }
-  to { width: 19ch; } /* "Digital Analyst •" */
+  to { width: 17ch; }
 }
-
-@keyframes typingLine3 {
+@keyframes typingBaris3 {
   from { width: 0; }
-  to { width: 21ch; } /* "Future-Driven..." */
+  to { width: 24ch; }
 }
-
-@keyframes typingWidth {
-  0%, 33% { max-height: 1.9em; }
-  34%, 66% { max-height: 3.8em; }
-  67%, 100% { max-height: 5.7em; }
+@keyframes showAll {
+  from { max-height: 1.9em; }
+  to { 
+    max-height: 6em;
+    white-space: normal;
+    width: auto;
+    overflow: visible;
+    border-right: none;
+  }
 }
 
 /* ===== TYPING GLOW ANIMATIONS ===== */
 @keyframes cyanGlow {
   0%, 100% {
-    text-shadow:
-      0 0 8px rgba(56, 189, 248, 0.7),
-      0 0 18px rgba(56, 189, 248, 0.35);
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 18px rgba(56, 189, 248, 0.35);
   }
   50% {
-    text-shadow:
-      0 0 14px rgba(56, 189, 248, 1),
-      0 0 28px rgba(56, 189, 248, 0.55);
+    text-shadow: 0 0 14px rgba(56, 189, 248, 1), 0 0 28px rgba(56, 189, 248, 0.55);
   }
 }
-
 @keyframes greenGlow {
   0%, 100% {
-    text-shadow:
-      0 0 8px rgba(34, 197, 94, 0.7),
-      0 0 18px rgba(34, 197, 94, 0.35);
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.7), 0 0 18px rgba(34, 197, 94, 0.35);
   }
   50% {
-    text-shadow:
-      0 0 14px rgba(34, 197, 94, 1),
-      0 0 28px rgba(34, 197, 94, 0.55);
+    text-shadow: 0 0 14px rgba(34, 197, 94, 1), 0 0 28px rgba(34, 197, 94, 0.55);
   }
 }
 
-/* ===== TYPING CURSOR BLINK ===== */
+/* ===== TYPING CURSOR ===== */
 .typing::after {
   content: '';
   position: absolute;
-  right: -8px;
-  top: 0;
+  right: -6px;
+  top: 5px;
   width: 2px;
-  height: 1.2em;
+  height: 1.1em;
   border-radius: 10px;
   background: linear-gradient(180deg, #38bdf8, #22c55e);
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
   animation: cursorBlink 1s infinite;
 }
-
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-/* ================= TYPING HERO LIGHT MODE ================= */
+/* ================= TYPING LIGHT MODE ================= */
 body.light-mode .typing {
   color: #0f172a;
 }
@@ -1205,21 +1198,19 @@ body.light-mode .typing .line3 {
   text-shadow: none;
 }
 
-/* ================= TYPING HERO MOBILE ================= */
+/* ================= TYPING MOBILE ================= */
 @media (max-width: 768px) {
   .typing {
     font-size: 0.95rem;
     line-height: 1.8;
-    margin-top: 12px;
     text-align: center;
   }
   .typing::after {
-    top: 0;
+    top: 4px;
     right: -4px;
     height: 1em;
   }
 }
-
 @media (max-width: 480px) {
   .typing {
     font-size: 0.86rem;
