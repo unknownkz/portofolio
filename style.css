@@ -1063,7 +1063,7 @@ header::before{
 
 /* ================= HERO TYPING PREMIUM ================= */
 .typing{
-  opacity: 1; /* jangan pakai fade conflict */
+  opacity: 1;
   position: relative;
 
   margin-top: 14px;
@@ -1075,23 +1075,8 @@ header::before{
 
   color: #cbd5e1;
   text-shadow: 0 0 8px rgba(255,255,255,0.03);
-  animation: typingFade 0.5s ease;
-}
-
-.typing.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-@keyframes typingFade{
-  from{
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to{
-    opacity: 1;
-    transform: translateY(0);
-  }
+  transition: opacity 0.4s ease;
+  will-change: opacity;
 }
 
 /* ================= TYPING HERO BREAK LINE ================= */
