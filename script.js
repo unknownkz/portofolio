@@ -520,23 +520,6 @@ if(e.key === "Escape"){
 }
 });
 
-// ============ TYPING HERO ===============
-function startTyping(lang){
-
-  if(!typingElement) return;
-
-  const newContent = translations[lang].typingText;
-
-  typingElement.innerHTML = newContent;
-
-  typingElement.style.opacity = "0";
-
-  requestAnimationFrame(() => {
-    typingElement.style.transition = "opacity 0.4s ease";
-    typingElement.style.opacity = "1";
-  });
-
-}
 // ================= LANGUAGE SYSTEM =================
 const idBtn = document.getElementById("idBtn");
 const enBtn = document.getElementById("enBtn");
@@ -650,6 +633,78 @@ typingText: `
   }
 
 };
+
+// ============ TYPING HERO (PREMIUM) ===============
+const typingElement = document.getElementById("typing");
+let typingInterval = null;
+
+function typeEffect(element, text, speed = 50, callback = null) {
+  if (typingInterval) clearInterval(typingInterval);
+
+  element.innerHTML = "";
+  element.style.opacity = "1";
+
+  let i = 0;
+
+  typingInterval = setInterval(() => {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(typingInterval);
+      typingInterval = null;
+      if (callback) callback();
+    }
+  }, speed);
+}
+
+function startTyping(lang) {
+  if (!typingElement) return;
+
+  typingElement.style.opacity = "0";
+  typingElement.style.transition = "none";
+
+  const rawText = translations[lang].typingText;
+
+  setTimeout(() => {
+    typingElement.style.transition = "opacity 0.3s ease";
+    typingElement.style.opacity = "1";
+
+    typeEffect(typingElement, rawText, 40);
+  }, 300);
+}
+
+function typeEffect(element, text, speed = 50, callback = null) {
+  if (typingInterval) clearInterval(typingInterval);
+
+  element.innerHTML = "";
+  element.style.opacity = "1";
+
+  const temp = document.createElement("div");
+  temp.innerHTML = text;
+  const plainText = temp.textContent || temp.innerText;
+
+  let i = 0;
+
+  typingInterval = setInterval(() => {
+    if (i < plainText.length) {
+      element.textContent += plainText.charAt(i);
+      i++;
+    } else {
+      clearInterval(typingInterval);
+      typingInterval = null;
+ 
+      setTimeout(() => {
+        element.innerHTML = text;
+        element.querySelectorAll(".highlight, .highlight-green, .highlight-white").forEach(el => {
+          el.style.opacity = "1";
+        });
+      }, 100);
+
+      if (callback) callback();
+    }
+  }, speed);
+}
 
 // ===== CHANGE LANGUAGE =====
 function setLanguage(lang){
