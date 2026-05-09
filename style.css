@@ -963,27 +963,30 @@ header::before{
 /* ================= HERO PHOTO LIGHT REFLECTION ================= */
 .hero-photo::after{
   content:'';
+
   position:absolute;
 
-  top:-30%;
-  left:-60%;
+  top:0;
+  left:-120%;
 
-  width:60%;
-  height:180%;
+  width:55%;
+  height:100%;
 
   background:
     linear-gradient(
-      to right,
+      90deg,
       transparent,
-      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.22),
       transparent
     );
 
-  transform:rotate(18deg);
+  transform:skewX(-18deg);
 
-  animation:shineMove 6s linear infinite;
+  animation:shineMove 5s linear infinite;
 
   pointer-events:none;
+
+  z-index:3;
 }
 
 /* ================= HERO PHOTO GLOW BACKGROUND ================= */
@@ -1048,11 +1051,10 @@ header::before{
 /* ================= HERO PHOTO SHINE ================= */
 @keyframes shineMove{
   0%{
-    left:-70%;
+    left:-120%;
   }
-
   100%{
-    left:140%;
+    left:160%;
   }
 }
 
