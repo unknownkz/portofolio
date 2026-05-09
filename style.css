@@ -878,6 +878,11 @@ header::before{
   color:#fff;
 }
 
+body.light-mode .btn wa-btn{
+  color:#fff;
+  background:transparent;
+}
+
 /* ================= HERO PHOTO IMAGE CONTAINER ================= */
 .hero-img{
   flex:1;
