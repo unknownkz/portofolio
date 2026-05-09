@@ -878,10 +878,6 @@ header::before{
   color:#fff;
 }
 
-body.light-mode .btn{
-  color:#fff;
-}
-
 /* ================= HERO PHOTO IMAGE CONTAINER ================= */
 .hero-img{
   flex:1;
@@ -2085,7 +2081,7 @@ body.light-mode .btn-outline:hover{
 
 body.light-mode .hero-text span{
   -webkit-text-fill-color:unset;
-  color:var(--accent);
+  color:#0ea5e9;
 }
 
 /* ================= CINEMATIC REVEAL ================= */
