@@ -1061,10 +1061,10 @@ header::before{
   }
 }
 
-/* ================= HERO TYPING (HYBRID CSS) ================= */
+/* ================= HERO TYPING PREMIUM (FINAL - NO BUG) ================= */
 #typingWrapper {
   margin-top: 14px;
-  min-height: 95px;
+  min-height: 70px;
 }
 
 .typing {
@@ -1080,88 +1080,62 @@ header::before{
 
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid transparent;
   width: 0;
-  animation:
-    typingBaris1 2s steps(36, end) forwards,
-    typingBaris2 2s steps(36, end) 2.1s forwards,
-    typingBaris3 2.5s steps(40, end) 4.2s forwards,
-    showAll 0s 6.8s forwards;
   max-height: 1.9em;
+
+  animation:
+    typingBaris1 2.5s steps(44, end) forwards,
+    lineBreak 0s 2.6s forwards,
+    typingBaris2 2.5s steps(44, end) 2.6s forwards,
+    finishTyping 0s 5.2s forwards;
 }
 
-/* ===== TYPING COLUMN ===== */
+/* ===== ISI BARIS ===== */
 .typing .line1,
-.typing .line2,
-.typing .line3 {
-  display: block;
-}
-
-.typing .line1 {
-  color: #38bdf8;
-  font-weight: 700;
-  text-shadow:
-    0 0 8px rgba(56, 189, 248, 0.75),
-    0 0 18px rgba(56, 189, 248, 0.35);
-  animation: cyanGlow 3s ease-in-out infinite 2.1s;
-}
-
 .typing .line2 {
-  color: #22c55e;
-  font-weight: 700;
-  text-shadow:
-    0 0 8px rgba(34, 197, 94, 0.75),
-    0 0 18px rgba(34, 197, 94, 0.35);
-  animation: greenGlow 3s ease-in-out infinite 4.2s;
-}
-
-.typing .line3 {
+  display: block;
   color: #f8fafc;
   font-weight: 500;
-  letter-spacing: 0.3px;
-  opacity: 0.9;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
 }
 
-/* ===== KEYFRAMES TYPING ===== */
+.typing .line2 {
+  letter-spacing: 0.3px;
+  opacity: 0.9;
+}
+
+/* ===== KEYFRAMES ===== */
 @keyframes typingBaris1 {
   from { width: 0; }
-  to { width: 36ch; }
+  to { width: 44ch; }
 }
-@keyframes typingBaris2 {
-  from { width: 0; }
-  to { width: 36ch; }
-}
-@keyframes typingBaris3 {
-  from { width: 0; }
-  to { width: 42ch; }
-}
-@keyframes showAll {
-  from { max-height: 1.9em; }
-  to { 
-    max-height: 6em;
+
+@keyframes lineBreak {
+  from {
+    max-height: 1.9em;
+    white-space: nowrap;
+  }
+  to {
+    max-height: 3.8em;
     white-space: normal;
     width: auto;
-    overflow: visible;
-    border-right: none;
   }
 }
 
-/* ===== TYPING GLOW ANIMATIONS ===== */
-@keyframes cyanGlow {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(56, 189, 248, 0.7), 0 0 18px rgba(56, 189, 248, 0.35);
-  }
-  50% {
-    text-shadow: 0 0 14px rgba(56, 189, 248, 1), 0 0 28px rgba(56, 189, 248, 0.55);
-  }
+@keyframes typingBaris2 {
+  from { width: 0; }
+  to { width: 44ch; }
 }
-@keyframes greenGlow {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(34, 197, 94, 0.7), 0 0 18px rgba(34, 197, 94, 0.35);
+
+@keyframes finishTyping {
+  from {
+    overflow: hidden;
   }
-  50% {
-    text-shadow: 0 0 14px rgba(34, 197, 94, 1), 0 0 28px rgba(34, 197, 94, 0.55);
+  to {
+    overflow: visible;
+    white-space: normal;
+    width: auto;
+    border-right: none;
   }
 }
 
@@ -1178,69 +1152,95 @@ header::before{
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
   animation: cursorBlink 1s infinite;
 }
+
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
 /* ================= TYPING LIGHT MODE ================= */
-body.light-mode .typing {
-  color: #0f172a;
-}
-body.light-mode .typing .line1 {
-  color: #0284c7;
-  text-shadow: 0 0 10px rgba(2, 132, 199, 0.25);
-}
+body.light-mode .typing,
+body.light-mode .typing .line1,
 body.light-mode .typing .line2 {
-  color: #16a34a;
-  text-shadow: 0 0 10px rgba(22, 163, 74, 0.2);
-}
-body.light-mode .typing .line3 {
   color: #0f172a;
   text-shadow: none;
 }
 
-/* ================= TYPING MOBILE ================= */
-@media (max-width: 768px) {
+body.light-mode .typing::after {
+  background: linear-gradient(180deg, #0ea5e9, #38bdf8);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.6);
+}
+
+/* ================= RESPONSIVE TABLET (≤1024px) ================= */
+@media (max-width: 1024px) {
   .typing {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
+    line-height: 1.85;
+  }
+  @keyframes typingBaris1 {
+    from { width: 0; }
+    to { width: 40ch; }
+  }
+  @keyframes typingBaris2 {
+    from { width: 0; }
+    to { width: 40ch; }
+  }
+}
+
+/* ================= TYPING RESPONSIVE MOBILE (≤768px) ================= */
+@media (max-width: 768px) {
+  #typingWrapper {
+    margin-top: 12px;
+    min-height: 60px;
+  }
+
+  .typing {
+    font-size: 0.92rem;
     line-height: 1.8;
     text-align: center;
   }
+
   .typing::after {
     top: 4px;
     right: -4px;
     height: 1em;
   }
-  /* Reset animasi mobile */
+
   @keyframes typingBaris1 {
     from { width: 0; }
-    to { width: 30ch; }
+    to { width: 34ch; }
   }
   @keyframes typingBaris2 {
-    from { width: 0; }
-    to { width: 30ch; }
-  }
-  @keyframes typingBaris3 {
     from { width: 0; }
     to { width: 34ch; }
   }
 }
+
+/* ================= TYPING RESPONSIVE SMALL MOBILE (≤480px) ================= */
 @media (max-width: 480px) {
+  #typingWrapper {
+    margin-top: 10px;
+    min-height: 55px;
+  }
+
   .typing {
     font-size: 0.82rem;
     line-height: 1.75;
     letter-spacing: 0.2px;
   }
+
+  .typing::after {
+    top: 3px;
+    right: -3px;
+    height: 0.9em;
+    width: 1.5px;
+  }
+
   @keyframes typingBaris1 {
     from { width: 0; }
-    to { width: 26ch; }
+    to { width: 28ch; }
   }
   @keyframes typingBaris2 {
-    from { width: 0; }
-    to { width: 26ch; }
-  }
-  @keyframes typingBaris3 {
     from { width: 0; }
     to { width: 28ch; }
   }
