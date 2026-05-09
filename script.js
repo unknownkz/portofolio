@@ -506,10 +506,8 @@ const translations = {
     footerText: "Copyright © 2026–present • Axel Alexius Latukolan. All Rights Reserved",
     footerBuilt: "Built with passion ⚡",
 
-    // 🔥 HYBRID TYPING TEXT (3 baris)
-    typingText1: "Web3 Enthusiast",
-    typingText2: "• Digital Analyst",
-    typingText3: "Future-Driven Hospitality"
+    typingText1: "Web3 Enthusiast • Digital Analyst",
+    typingText2: "Future-Driven Hospitality"
   },
 
   id: {
@@ -542,10 +540,8 @@ const translations = {
     footerText: "Hak Cipta © 2026–sekarang • Axel Alexius Latukolan. Seluruh Hak Dilindungi",
     footerBuilt: "Dibuat dengan passion ⚡",
 
-    // 🔥 HYBRID TYPING TEXT (3 baris)
-    typingText1: "Antusias Web3",
-    typingText2: "• Analis Digital",
-    typingText3: "Hospitality Berorientasi Masa Depan"
+    typingText1: "Antusias Web3 • Analis Digital",
+    typingText2: "Hospitality Berorientasi Masa Depan"
   }
 
 };
@@ -580,10 +576,9 @@ function setLanguage(lang) {
 
     // Update teks sesuai bahasa
     const lines = newTyping.querySelectorAll("span");
-    if (lines.length >= 3) {
+    if (lines.length >= 2) {
       lines[0].textContent = translations[lang].typingText1;
       lines[1].textContent = translations[lang].typingText2;
-      lines[2].textContent = translations[lang].typingText3;
     }
 
     // Ganti elemen lama dengan yang baru (reset animasi CSS)
