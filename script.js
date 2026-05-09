@@ -560,6 +560,44 @@ if(e.key === "Escape"){
 }
 });
 
+// ================= HERO TYPING PREMIUM =================
+
+const typingElement =
+  document.getElementById("typing");
+
+let typingTimeout;
+
+function startTyping(lang){
+
+  clearTimeout(typingTimeout);
+
+  const fullText =
+    translations[lang].typingText;
+
+  let index = 0;
+
+  typingElement.innerHTML = "";
+
+  function type(){
+
+    typingElement.innerHTML =
+      fullText.slice(0, index);
+
+    index++;
+
+    if(index <= fullText.length){
+
+      typingTimeout =
+        setTimeout(type, 16);
+
+    }
+
+  }
+
+  type();
+
+}
+
 // ================= LANGUAGE SYSTEM =================
 
 const idBtn = document.getElementById("idBtn");
@@ -601,13 +639,23 @@ const translations = {
     footerBuilt:
       "Built with passion ⚡",
 
-    typingParts: [
-      '<span class="highlight">Web3 Enthusiast</span>',
-      " • ",
-      '<span class="highlight-green">Digital Analyst</span>',
-      " • ",
-      '<span class="highlight-white">Future-Driven Hospitality</span>'
-    ]
+    typingText: `
+  <span class="highlight">
+    Web3 Enthusiast
+  </span>
+
+  •
+
+  <span class="highlight-green">
+    Digital Analyst
+  </span>
+
+  •
+
+  <span class="highlight-white">
+    Future-Driven Hospitality
+  </span>
+`
   },
 
   id: {
@@ -644,13 +692,23 @@ const translations = {
     footerBuilt:
       "Dibuat dengan passion ⚡",
 
-    typingParts: [
-      '<span class="highlight">Antusias Web3</span>',
-      " • ",
-      '<span class="highlight-green">Analis Digital</span>',
-      " • ",
-      '<span class="highlight-white">Hospitality Berorientasi Masa Depan</span>'
-    ]
+    typingText: `
+  <span class="highlight">
+    Antusias Web3
+  </span>
+
+  •
+
+  <span class="highlight-green">
+    Analis Digital
+  </span>
+
+  •
+
+  <span class="highlight-white">
+    Hospitality Berorientasi Masa Depan
+  </span>
+`
   }
 
 };
@@ -682,22 +740,8 @@ function setLanguage(lang){
     enBtn.classList.add("active");
   }
 
-  // ===== LANGUAGE RESET TYPING =====
-  if(typeof element !== "undefined"){
-
-    element.innerHTML = "";
-
-    parts.length = 0;
-
-    translations[lang].typingParts.forEach(item=>{
-      parts.push(item);
-    });
-
-    partIndex = 0;
-    charIndex = 0;
-
-    typing();
-  }
+  // ===== START PREMIUM TYPING =====
+  startTyping(lang);
 
 }
 
