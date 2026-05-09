@@ -520,25 +520,23 @@ if(e.key === "Escape"){
 }
 });
 
-// ================= HERO SUBTITLE TYPING =================
-const typingElement =
-  document.getElementById("typing");
-
+// ============ TYPING HERO ===============
 function startTyping(lang){
 
   if(!typingElement) return;
-  typingElement.classList.remove("show");
 
-  setTimeout(()=>{
-    typingElement.innerHTML =
-      translations[lang].typingText;
+  const newContent = translations[lang].typingText;
 
-    requestAnimationFrame(()=>{
-      typingElement.classList.add("show");
-    });
-  }, 120);
+  typingElement.innerHTML = newContent;
+
+  typingElement.style.opacity = "0";
+
+  requestAnimationFrame(() => {
+    typingElement.style.transition = "opacity 0.4s ease";
+    typingElement.style.opacity = "1";
+  });
+
 }
-
 // ================= LANGUAGE SYSTEM =================
 const idBtn = document.getElementById("idBtn");
 const enBtn = document.getElementById("enBtn");
