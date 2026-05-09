@@ -520,48 +520,26 @@ if(e.key === "Escape"){
 }
 });
 
-// ================= HERO TYPING PREMIUM =================
+// ================= HERO SUBTITLE TYPING =================
 const typingElement =
   document.getElementById("typing");
 
 function startTyping(lang){
-  typingElement.innerHTML = "";
 
-  const text =
-    translations[lang].typingText;
+  if(!typingElement) return;
+  typingElement.classList.remove("show");
 
-  const lines = text.split("||");
+  setTimeout(()=>{
+    typingElement.innerHTML =
+      translations[lang].typingText;
 
-  let lineIndex = 0;
-
-  function showLine(){
-
-    if(lineIndex >= lines.length) return;
-
-    const line =
-      document.createElement("div");
-
-    line.classList.add("typing-line");
-
-    // line pertama
-    if(lineIndex === 0){
-      line.classList.add("typing-top");
-    }else{
-      line.classList.add("typing-bottom");
-    }
-
-    line.innerHTML =
-      lines[lineIndex];
-
-    typingElement.appendChild(line);
-
-    lineIndex++;
-    setTimeout(showLine, 350);
-  }
-  showLine();
+    requestAnimationFrame(()=>{
+      typingElement.classList.add("show");
+    });
+  }, 120);
 }
-// ================= LANGUAGE SYSTEM =================
 
+// ================= LANGUAGE SYSTEM =================
 const idBtn = document.getElementById("idBtn");
 const enBtn = document.getElementById("enBtn");
 
