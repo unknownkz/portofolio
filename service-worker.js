@@ -1,6 +1,6 @@
 // ================= CACHE VERSION =================
 
-const CACHE_NAME = "axelal-cache-v2026.2.10";
+const CACHE_NAME = "axelal-cache-v2026.2.11";
 
 // ================= FILES =================
 
@@ -8,8 +8,8 @@ const urlsToCache = [
 
   "/",
   "/index.html",
-  "/style.css?v=999",
-  "/script.js?v=999",
+  "/style.css",
+  "/script.js",
 
   "/profile.png",
   "/logo-a.png",
@@ -22,6 +22,8 @@ const urlsToCache = [
 // ================= INSTALL =================
 
 self.addEventListener("install", event => {
+
+  self.skipWaiting();
 
   event.waitUntil(
 
@@ -42,14 +44,22 @@ self.addEventListener("fetch", event => {
 
       .then(response => {
 
-        const responseClone = response.clone();
+        const responseClone =
+          response.clone();
 
-        caches.open(CACHE_NAME)
-          .then(cache => {
+        if(event.request.method === "GET"){
 
-            cache.put(event.request, responseClone);
+          caches.open(CACHE_NAME)
+            .then(cache => {
 
-          });
+              cache.put(
+                event.request,
+                responseClone
+              );
+
+            });
+
+        }
 
         return response;
 
@@ -68,6 +78,8 @@ self.addEventListener("fetch", event => {
 // ================= ACTIVATE =================
 
 self.addEventListener("activate", event => {
+
+  self.clients.claim();
 
   event.waitUntil(
 
