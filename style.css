@@ -2088,7 +2088,10 @@ body.light-mode .hero-title span{
 .reveal{
   opacity:0;
   transform:translateY(60px) scale(0.98);
-  transition: all 0.8s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
   will-change:transform, opacity;
 }
 .no-js .reveal{
