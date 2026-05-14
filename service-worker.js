@@ -1,6 +1,6 @@
 // ================= CACHE VERSION =================
 
-const CACHE_NAME = "axelal-cache-v2026.2.12";
+const CACHE_NAME = "axelal-cache-v2026.2.13";
 
 // ================= FILES =================
 
@@ -13,9 +13,7 @@ const urlsToCache = [
 
   "/profile.webp",
   "/logo-a.png",
-  "/preview.png",
-
-  "/cv.pdf"
+  "/preview.png"
 
 ];
 
