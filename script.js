@@ -118,7 +118,6 @@ function activeNav(){
 }
 
 // ================= NAVBAR SCROLL =================
-const navbar = document.querySelector(".navbar");
 let lastScroll = 0;
 
 window.addEventListener("scroll", ()=>{
@@ -396,26 +395,47 @@ setTimeout(()=> waBtn.style.transform = "scale(1)", 300);
 }
 
 // ================= DARK MODE =================
+
 if(localStorage.getItem("theme") === "light"){
-document.body.classList.add("light-mode");
+  document.body.classList.add("light-mode");
+
+  if(themeBtn){
+    themeBtn.innerHTML =
+      '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';
+  }
+}
+
 if(themeBtn){
-themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';
-}
-}
 
-if(themeBtn){
-themeBtn.addEventListener("click", ()=>{
-document.body.classList.toggle("light-mode");
+  themeBtn.addEventListener("click", ()=>{
 
-if(document.body.classList.contains("light-mode")){  
-  localStorage.setItem("theme", "light");  
-  themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';  
-}else{  
-  localStorage.setItem("theme", "dark");  
-  themeBtn.innerHTML = '<span class="toggle-circle"></span><i class="fas fa-moon"></i>';  
-}
+    document.body.classList.add("theme-switching");
 
-});
+    // toggle theme
+    document.body.classList.toggle("light-mode");
+
+    // save theme
+    if(document.body.classList.contains("light-mode")){
+
+      localStorage.setItem("theme", "light");
+
+      themeBtn.innerHTML =
+        '<span class="toggle-circle"></span><i class="fas fa-sun"></i>';
+
+    }else{
+
+      localStorage.setItem("theme", "dark");
+
+      themeBtn.innerHTML =
+        '<span class="toggle-circle"></span><i class="fas fa-moon"></i>';
+    }
+
+    setTimeout(()=>{
+      document.body.classList.remove("theme-switching");
+    }, 50);
+
+  });
+
 }
 
 // ================= CURSOR =================
@@ -512,52 +532,49 @@ if(footer){
 
 // ================= ESC CLOSE MENU =================
 document.addEventListener("keydown", (e)=>{
-if(e.key === "Escape"){
-  nav.classList.remove("active");
-  overlay.classList.remove("active");
-  toggle.classList.remove("active");
-  document.body.classList.remove("menu-open");
-}
+  if(e.key === "Escape"){
+
+    nav.classList.remove("active");
+
+    if(overlay){
+      overlay.classList.remove("active");
+    }
+
+    toggle.classList.remove("active");
+    document.body.classList.remove("menu-open");
+  }
 });
 
 // ================= HERO TYPING PREMIUM =================
-
 const typingElement =
   document.getElementById("typing");
 
 let typingTimeout;
-
 function startTyping(lang){
 
+  // 🔥 cek element dulu
+  if(!typingElement) return;
   clearTimeout(typingTimeout);
 
   const fullText =
     translations[lang].typingText;
 
   let index = 0;
-
   typingElement.innerHTML = "";
 
   function type(){
-
     typingElement.innerHTML =
       fullText.slice(0, index);
 
     index++;
 
     if(index <= fullText.length){
-
       typingTimeout =
         setTimeout(type, 16);
-
     }
-
   }
-
   type();
-
 }
-
 // ================= LANGUAGE SYSTEM =================
 
 const idBtn = document.getElementById("idBtn");
