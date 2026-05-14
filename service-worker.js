@@ -11,7 +11,7 @@ const urlsToCache = [
   "/style.css",
   "/script.js",
 
-  "/profile.png",
+  "/profile.webp",
   "/logo-a.png",
   "/preview.png",
 
