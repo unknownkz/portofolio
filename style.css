@@ -900,7 +900,7 @@ header::before{
   border-radius:22px;
   overflow:hidden;
 
-  background-image:url("profile.png");
+  background-image:url("profile.webp");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
