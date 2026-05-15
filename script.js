@@ -102,6 +102,7 @@ if(toggle && nav){
     });
   });
 }
+
 // ================= OVERLAY =================
 if(overlay){
   overlay.addEventListener("click", ()=>{
@@ -161,7 +162,6 @@ if(current > lastScroll && current > 100){
 }  
 
 lastScroll = current;
-
 }
 });
 
@@ -392,7 +392,6 @@ window.addEventListener("scroll", ()=>{
 
 // ================= SKILL STAGGER (NEW) =================
 const skillCards = document.querySelectorAll(".skill-card");
-
 const skillCardObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -465,7 +464,6 @@ setTimeout(()=> waBtn.style.transform = "scale(1)", 300);
 }
 
 // ================= DARK MODE =================
-
 if(localStorage.getItem("theme") === "light"){
   document.body.classList.add("light-mode");
 
@@ -503,9 +501,7 @@ if(themeBtn){
     setTimeout(()=>{
       document.body.classList.remove("theme-switching");
     }, 50);
-
   });
-
 }
 
 // ================= CURSOR =================
@@ -558,7 +554,6 @@ function animateCursor(){
 
   requestAnimationFrame(animateCursor);
 }
-
 animateCursor();
 
 /* hover effect */
@@ -586,12 +581,10 @@ window.addEventListener("click", e=>{
 
   setTimeout(()=> ripple.remove(), 600);
 });
-
 }
 
 // ================= FOOTER =================
 const footer = document.querySelector(".footer");
-
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -649,8 +642,8 @@ function startTyping(lang){
   }
   type();
 }
-// ================= LANGUAGE SYSTEM =================
 
+// ================= LANGUAGE SYSTEM =================
 const idBtn = document.getElementById("idBtn");
 const enBtn = document.getElementById("enBtn");
 
@@ -766,11 +759,9 @@ const translations = {
 
 // ===== CHANGE LANGUAGE =====
 function setLanguage(lang){
-
   localStorage.setItem("language", lang);
 
   document.documentElement.lang = lang;
-
   document.querySelectorAll("[data-id]").forEach(el=>{
 
     const key = el.getAttribute("data-id");
@@ -827,24 +818,80 @@ if(
   );
 }
 
+// ================= BASIC CONTENT PROTECTION =================
+// BLOCK RIGHT CLICK
+document.addEventListener("contextmenu", (e)=>{
+  e.preventDefault();
+});
+
+// BLOCK CERTAIN KEYS
+document.addEventListener("keydown", (e)=>{
+
+  // F12
+  if(e.key === "F12"){
+    e.preventDefault();
+  }
+
+  // CTRL + SHIFT + I
+  if(
+    e.ctrlKey &&
+    e.shiftKey &&
+    e.key.toLowerCase() === "i"
+  ){
+    e.preventDefault();
+  }
+
+  // CTRL + SHIFT + J
+  if(
+    e.ctrlKey &&
+    e.shiftKey &&
+    e.key.toLowerCase() === "j"
+  ){
+    e.preventDefault();
+  }
+
+  // CTRL + U
+  if(
+    e.ctrlKey &&
+    e.key.toLowerCase() === "u"
+  ){
+    e.preventDefault();
+  }
+});
+
+// BLOCK IMAGE DRAG
+document.querySelectorAll("img").forEach(img=>{
+  img.setAttribute("draggable", false);
+  img.addEventListener("dragstart", (e)=>{
+    e.preventDefault();
+  });
+});
+
+// REMOVE TARGET BLANK
+document.querySelectorAll("a").forEach(link=>{
+  link.removeAttribute("target");
+});
+
+// BLOCK MIDDLE CLICK
+document.addEventListener("mousedown", (e)=>{
+
+  // Mouse wheel click
+  if(e.button === 1){
+    e.preventDefault();
+  }
+});
+
 // ================= SERVICE WORKER =================
 
 if("serviceWorker" in navigator){
-
   window.addEventListener("load", ()=>{
-
     navigator.serviceWorker
       .register("/service-worker.js")
       .then(()=>{
-
         console.log("Service Worker Active");
-
       })
       .catch(err=>{
-
         console.log("SW Failed", err);
-
       });
-
   });
 }
