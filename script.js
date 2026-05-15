@@ -49,12 +49,23 @@ function fakeLoad(){
     progressBar.style.width = "100%";
 
     setTimeout(()=>{
-      const loader = document.querySelector(".loader");
+      const loader =
+        document.querySelector(".loader");
       loader.classList.add("hide");
-      loader.style.display = "none"; // 🔥 ini penting
-      document.body.classList.remove("loading");
-    }, 400);
 
+      // SHOW INTRO FX
+      document.body.classList.add("intro-active");
+
+      setTimeout(()=>{
+        loader.style.display = "none";
+        document.body.classList.remove(
+          "loading"
+        );
+        document.body.classList.remove(
+          "intro-active"
+        );
+      }, 1400);
+    }, 400);
     return;
   }
 
@@ -119,7 +130,6 @@ const links = document.querySelectorAll(".nav-links a");
 
 function activeNav(){
   let current = "";
-  const navbar = document.querySelector(".navbar");
   const navHeight = navbar ? navbar.offsetHeight : 80;
 
   sections.forEach(sec=>{
@@ -234,7 +244,7 @@ function initParticles(){
     : isMobile
       ? 0
       : 140;
-  const MOUSE_RADIUS = 160;
+  const MOUSE_RADIUS = lowEndDevice ? 0 : 160;
 
   let particles = [];
 
@@ -457,10 +467,17 @@ el.style.transform = "translate(0,0) scale(1)";
 const waBtn = document.querySelector(".wa-btn");
 
 if(waBtn){
-setInterval(()=>{
-waBtn.style.transform = "scale(1.05)";
-setTimeout(()=> waBtn.style.transform = "scale(1)", 300);
-}, 2000);
+  let waInterval;
+  function startWAAnimation(){
+    waInterval = setInterval(()=>{
+      if(document.hidden) return;
+      waBtn.style.transform = "scale(1.05)";
+      setTimeout(()=>{
+        waBtn.style.transform = "scale(1)";
+      }, 300);
+    }, 2000);
+  }
+  startWAAnimation();
 }
 
 // ================= DARK MODE =================
@@ -520,7 +537,14 @@ if(
   trail?.remove();
 }
 
-if(!isMobile && glow && aura && trail){
+if(
+  !isMobile &&
+  !lowEndDevice &&
+  !prefersReducedMotion &&
+  glow &&
+  aura &&
+  trail
+){
 
 let mouseX = 0, mouseY = 0;
 let glowX = 0, glowY = 0;
@@ -637,7 +661,10 @@ function startTyping(lang){
 
     if(index <= fullText.length){
       typingTimeout =
-        setTimeout(type, 16);
+        setTimeout(
+          type,
+          lowEndDevice ? 28 : 18
+        );
     }
   }
   type();
