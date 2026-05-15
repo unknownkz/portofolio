@@ -1,6 +1,6 @@
 // ================= CACHE VERSION =================
 
-const CACHE_NAME = "axelal-cache-v2026.2.14";
+const CACHE_NAME = "axelal-cache-v2026.2.15";
 
 // ================= FILES =================
 
