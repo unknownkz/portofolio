@@ -4,13 +4,37 @@ const nav = document.getElementById("navLinks");
 const themeBtn = document.getElementById("themeToggle");
 const cursor = document.querySelector(".cursor-glow");
 const overlay = document.querySelector(".nav-overlay");
+
 // DETECT DEVICE
 const isMobile = window.innerWidth < 768;
+
+// ================= DEVICE PERFORMANCE DETECTION =================
+const cpuCores =
+  navigator.hardwareConcurrency || 4;
+const ram =
+  navigator.deviceMemory || 4;
+const lowEndDevice =
+  cpuCores <= 4 || ram <= 4;
+const ultraLowEnd =
+  cpuCores <= 2 || ram <= 2;
+const prefersReducedMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+console.log({
+  cpuCores,
+  ram,
+  lowEndDevice,
+  ultraLowEnd,
+  prefersReducedMotion
+});
 
 // ================= WEB3 LOADER =================
 const progressBar = document.querySelector(".loader-progress");
 const percentText = document.getElementById("loadPercent");
 
+// =========== FAKE LOADER ============
 let progress = 0;
 
 function fakeLoad(){
@@ -177,6 +201,15 @@ function initParticles(){
   canvas.style.willChange = "transform";
 
   const ctx = canvas.getContext("2d");
+  
+  let particlesRunning = true;
+  document.addEventListener(
+    "visibilitychange",
+    ()=>{
+      particlesRunning =
+        !document.hidden;
+    }
+  );
 
   function resizeCanvas(){
     canvas.width = window.innerWidth;
@@ -187,8 +220,20 @@ function initParticles(){
 
   const isMobile = window.innerWidth < 768;
 
-  const PARTICLE_COUNT = isMobile ? 25 : 85;
-  const CONNECT_DIST = isMobile ? 0 : 140;
+  const PARTICLE_COUNT =
+  ultraLowEnd
+    ? 10
+    : lowEndDevice
+      ? 18
+      : isMobile
+        ? 25
+        : 85;
+  const CONNECT_DIST =
+  lowEndDevice
+    ? 0
+    : isMobile
+      ? 0
+      : 140;
   const MOUSE_RADIUS = 160;
 
   let particles = [];
@@ -219,9 +264,14 @@ function initParticles(){
   }
 
   function animateParticles(){
+    if(!particlesRunning){
+      requestAnimationFrame(
+        animateParticles
+      );
+      return;
+    }
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
     const [r,g,b] = getColor();
 
     // ===== PARTICLES =====
@@ -309,21 +359,36 @@ function initParticles(){
           }
         }
       }
+    } 
+    if(lowEndDevice){
+      setTimeout(()=>{
+        requestAnimationFrame(
+          animateParticles
+        );
+      }, 40);
+    }else{
+      requestAnimationFrame(
+        animateParticles
+      );
     }
-
-    requestAnimationFrame(animateParticles);
   }
-
   animateParticles();
 }
-
 initParticles();
 
 // ================= PARALLAX =================
+if(
+  !lowEndDevice &&
+  !prefersReducedMotion
+){
 window.addEventListener("scroll", ()=>{
-const scrolled = window.scrollY;
-document.body.style.setProperty("--bg-y", `${scrolled * 0.2}px`);
-});
+  const scrolled = window.scrollY;
+  document.body.style.setProperty(
+    "--bg-y",
+    `${scrolled * 0.2}px`
+  );
+}, { passive:true });
+}
 
 // ================= SKILL STAGGER (NEW) =================
 const skillCards = document.querySelectorAll(".skill-card");
@@ -367,6 +432,10 @@ revealElements.forEach(el=>{
 });
 
 // ================= MAGNETIC BUTTON =================
+if(
+  !lowEndDevice &&
+  !prefersReducedMotion
+){
 const magnets = document.querySelectorAll(".btn, .contact-btn, .social-btn");
 
 magnets.forEach(el=>{
@@ -383,6 +452,7 @@ el.addEventListener("mouseleave", ()=>{
 el.style.transform = "translate(0,0) scale(1)";
 });
 });
+}
 
 // ================= WA BUTTON =================
 const waBtn = document.querySelector(".wa-btn");
@@ -444,7 +514,11 @@ const aura = document.querySelector(".cursor-aura");
 const trail = document.querySelector(".cursor-trail");
 
 /* 🔥 MOBILE OFF */
-if(isMobile){
+if(
+  isMobile ||
+  lowEndDevice ||
+  prefersReducedMotion
+){
   glow?.remove();
   aura?.remove();
   trail?.remove();
@@ -742,6 +816,16 @@ window.addEventListener("scroll", activeNav);
 window.addEventListener("load", activeNav);
 
 activeNav();
+
+// ================= LOW-END OPTIMIZATION =================
+if(
+  lowEndDevice ||
+  prefersReducedMotion
+){
+  document.body.classList.add(
+    "reduce-motion"
+  );
+}
 
 // ================= SERVICE WORKER =================
 
