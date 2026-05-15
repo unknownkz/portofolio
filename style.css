@@ -197,9 +197,160 @@ body.loading nav{
   pointer-events:none;
 }
 
+/* ================= BINANCE / WEB3 INTRO FX ================= */
+.intro-fx{
+  position:fixed;
+  inset:0;
+  z-index:99998;
+
+  pointer-events:none;
+  opacity:0;
+
+  background:
+    radial-gradient(circle at center,
+      rgba(56,189,248,0.15),
+      transparent 70%);
+
+  backdrop-filter:blur(0px);
+
+  transition:
+    opacity 1.2s ease,
+    backdrop-filter 1.4s ease;
+}
+
+/* ACTIVE */
+body.intro-active .intro-fx{
+  opacity:1;
+  backdrop-filter:blur(12px);
+}
+
+/* HOLOGRAM SCAN */
+.intro-fx::before{
+  content:'';
+  position:absolute;
+  inset:-50%;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(56,189,248,0.15),
+      transparent
+    );
+
+  transform:translateY(-100%);
+}
+
+/* ACTIVATE SCAN */
+body.intro-active .intro-fx::before{
+  animation:
+    introScan 1.2s ease forwards;
+}
+
+/* CYBER FLASH */
+.intro-fx::after{
+  content:'';
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(circle,
+      rgba(56,189,248,0.2),
+      transparent 70%);
+
+  opacity:0;
+}
+
+/* FLASH */
+body.intro-active .intro-fx::after{
+  animation:
+    introFlash 1s ease;
+}
+
+/* HERO REVEAL */
+body.intro-active .hero-content,
+body.intro-active .hero-visual,
+body.intro-active .navbar{
+
+  animation:
+    heroReveal 1.4s ease;
+
+}
+
+/* ================= ANIMATION ================= */
+@keyframes introScan{
+  0%{
+    transform:translateY(-120%);
+  }
+
+  100%{
+    transform:translateY(120%);
+  }
+}
+
+@keyframes introFlash{
+  0%{
+    opacity:0;
+  }
+
+  30%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+  }
+}
+
+@keyframes heroReveal{
+  0%{
+    opacity:0;
+    transform:
+      translateY(40px)
+      scale(0.98);
+    filter:
+      blur(12px);
+  }
+
+  100%{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+    filter:
+      blur(0);
+  }
+}
+
+/* ================= MOBILE OPTIMIZATION ================= */
+@media(max-width:768px){
+  .intro-fx{
+    backdrop-filter:none;
+  }
+
+  body.intro-active .hero-content,
+  body.intro-active .hero-visual,
+  body.intro-active .navbar{
+
+    animation:
+      heroRevealMobile .8s ease;
+
+  }
+
+  @keyframes heroRevealMobile{
+    from{
+      opacity:0;
+      transform:translateY(20px);
+    }
+    to{
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+}
+
 /* ================= LOADER MOBILE OPTIMIZATION ================= */
 @media(max-width:768px){
-
   .loader::before{
     animation:none;
     opacity:0.1;
@@ -218,7 +369,6 @@ body.loading nav{
   .loader-init{
     font-size:10px;
   }
-
 }
 
 @media(max-width:768px){
