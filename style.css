@@ -2756,19 +2756,17 @@ body.reduce-motion .contact-btn{
   backdrop-filter:none !important;
 }
 
-/* ================= GPU BOOST ================= */
-.navbar,
-.skill-card,
-.btn,
-.contact-btn,
-.social-btn,
-#particles{
+/* ============== GLOBAL ==================
+/* GPU OPTIMIZATION */
+#particles,
+.cursor-glow,
+.cursor-aura{
   transform:translateZ(0);
   backface-visibility:hidden;
   will-change:transform;
 }
 
-/* ================= CONTENT PROTECTION ================= */
+/* CONTENT PROTECTION */
 img{
   -webkit-user-drag:none;
   user-select:none;
@@ -2778,7 +2776,7 @@ body{
   -webkit-touch-callout:none;
 }
 
-/* ================= MOBILE GPU FIX ================= */
+/* MOBILE GPU */
 @media(max-width:768px){
   .skill-card,
   .btn,
@@ -2788,4 +2786,20 @@ body{
     backdrop-filter:none !important;
     -webkit-backdrop-filter:none !important;
   }
+}
+
+/* RENDER */
+.skill-card,
+.btn,
+.contact-btn,
+.social-btn{
+  transform:none !important;
+  will-change:auto !important;
+}
+
+/* REVEAL */
+.reveal,
+.reveal-left,
+.reveal-right{
+  contain:layout paint;
 }
