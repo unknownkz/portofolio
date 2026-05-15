@@ -445,6 +445,9 @@ body.light-mode a{
   border-bottom:1px solid rgba(56,189,248,0.08);
   box-shadow:0 0 25px rgba(56,189,248,0.08);
   z-index:9999;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  will-change:transform;
 }
 
 /* animated bottom glow */
@@ -513,6 +516,41 @@ body.light-mode a{
   box-shadow:
     0 8px 30px rgba(56,189,248,0.15);
 }
+
+/* ====== NAVBAR LIGHT MODE ====== */
+body.light-mode .navbar{
+  background:rgba(255,255,255,0.96);
+  border:1px solid rgba(0,0,0,0.05);
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.06);
+
+  /* FIX LAG */
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+
+/* glow off light mode */
+body.light-mode .navbar::before,
+body.light-mode .navbar::after{
+  display:none;
+}
+
+/* logo text */
+body.light-mode .logo-text{
+  color:#0f172a;
+  font-weight:600;
+}
+
+/* nav */
+body.light-mode .nav-links a{
+  color:#0f172a;
+}
+
+/* hover */
+body.light-mode .nav-links a:hover{
+  color:var(--accent);
+}
+
 /* ================= NAV OVERLAY ================= */
 .nav-overlay{
   position:fixed;
@@ -2280,30 +2318,6 @@ body.light-mode .hero-title span{
 .reveal:nth-child(2){ transition-delay:0.2s; }
 .reveal:nth-child(3){ transition-delay:0.3s; }
 .reveal:nth-child(4){ transition-delay:0.4s; }
-
-/* ================= FIX NAVBAR LIGHT MODE ================= */
-body.light-mode .navbar{
-  background:rgba(255,255,255,0.7);
-  border:1px solid rgba(0,0,0,0.05);
-  box-shadow:0 8px 20px rgba(0,0,0,0.1);
-}
-
-/* logo text biar jelas */
-body.light-mode .logo-text{
-  color:#0f172a; /* hitam gelap */
-  font-weight:600;
-}
-
-/* nav menu biar jelas */
-body.light-mode .nav-links a{
-  color:#0f172a;
-}
-
-/* hover tetap biru */
-body.light-mode .nav-links a:hover{
-  color:var(--accent);
-}
-
 
 /* ================= FOOTER CRYPTO ================= */
 .footer{
