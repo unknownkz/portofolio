@@ -53,18 +53,27 @@ function fakeLoad(){
         document.querySelector(".loader");
       loader.classList.add("hide");
 
-      // SHOW INTRO FX
-      document.body.classList.add("intro-active");
+      // ACTIVATE WEB3 INTRO
+      document.body.classList.add(
+        "intro-active"
+      );
 
       setTimeout(()=>{
         loader.style.display = "none";
         document.body.classList.remove(
           "loading"
         );
+
+      }, 800);
+
+      // REMOVE FX
+      setTimeout(()=>{
         document.body.classList.remove(
           "intro-active"
         );
-      }, 1400);
+
+      }, 1800);
+
     }, 400);
     return;
   }
