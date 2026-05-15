@@ -2616,3 +2616,13 @@ body.reduce-motion .contact-btn{
   backface-visibility:hidden;
   will-change:transform;
 }
+
+/* ================= CONTENT PROTECTION ================= */
+img{
+  -webkit-user-drag:none;
+  user-select:none;
+  pointer-events:auto;
+}
+body{
+  -webkit-touch-callout:none;
+}
