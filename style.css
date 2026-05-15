@@ -1088,7 +1088,6 @@ header::before{
 }
 
 /* ================= PREMIUM HERO TYPING ================= */
-
 .typing{
 
   position:relative;
@@ -1509,6 +1508,8 @@ body.light-mode .typing .highlight-white{
 /* ================= SECTION SPACING ================= */
 section{
   margin-bottom: var(--space-xl);
+  content-visibility:auto;
+  contain-intrinsic-size:1000px;
 }
 
 /* ================= CARD ================= */
@@ -2575,10 +2576,43 @@ body.light-mode .lang-btn{
 }
 
 /* ================= FIX THEME SWITCH LAG ================= */
-
 body.theme-switching *,
 body.theme-switching *::before,
 body.theme-switching *::after{
   transition:none !important;
   animation:none !important;
+}
+
+/* ================= RESPONSIVE ================= */
+/* responsive mobile */
+/* ================= LOW-END PERFORMANCE ================= */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after{
+  animation-duration: .4s !important;
+  transition-duration: .2s !important;
+}
+
+body.reduce-motion .cursor-glow,
+body.reduce-motion .cursor-aura,
+body.reduce-motion .cursor-trail{
+  display:none !important;
+}
+
+body.reduce-motion .skill-card,
+body.reduce-motion .btn,
+body.reduce-motion .contact-btn{
+  backdrop-filter:none !important;
+}
+
+/* ================= GPU BOOST ================= */
+.navbar,
+.skill-card,
+.btn,
+.contact-btn,
+.social-btn,
+#particles{
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  will-change:transform;
 }
