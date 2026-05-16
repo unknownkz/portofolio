@@ -165,23 +165,20 @@ function activeNav(){
 let lastScroll = 0;
 
 window.addEventListener("scroll", ()=>{
-let current = window.scrollY;
 
-if(navbar){
-if(current > 50){
-navbar.classList.add("scrolled");
-}else{
-navbar.classList.remove("scrolled");
-}
+  let current = window.scrollY;
 
-if(current > lastScroll && current > 100){  
-  navbar.style.transform = "translateY(-100%)";  
-}else{  
-  navbar.style.transform = "translateY(0)";  
-}  
+  if(navbar){
 
-lastScroll = current;
-}
+    if(current > 50){
+      navbar.classList.add("scrolled");
+    }else{
+      navbar.classList.remove("scrolled");
+    }
+
+    lastScroll = current;
+  }
+
 });
 
 // ================= NAVBAR OFFSET =================
