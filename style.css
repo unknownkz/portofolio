@@ -2167,12 +2167,10 @@ body.light-mode .hero-title span{
 /* ================= CINEMATIC REVEAL ================= */
 .reveal{
   opacity:0.01;
-  transform:translateY(25px) scale(0.90);
+  transform:none;
   transition:
     background-color 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
-  will-change:transform, opacity;
+    color 0.3s ease;
 }
 .no-js .reveal{
   opacity:1;
@@ -2181,26 +2179,24 @@ body.light-mode .hero-title span{
 .reveal.active{
   opacity:1;
   transition-delay:0.1s;
-  transform:translateY(0) scale(1);
+  transform:none;
 }
 .reveal-left{
   opacity:0;
-  transform:translateX(-40px);
+  transform:none;
   transition:0.8s ease;
-  will-change:transform, opacity;
 }
 
 .reveal-right{
   opacity:0;
-  transform:translateX(40px);
+  transform:none;
   transition:0.8s ease;
-  will-change:transform, opacity;
 }
 
 .reveal-left.active,
 .reveal-right.active{
   opacity:1;
-  transform:translateX(0);
+  transform:none;
 }
 
 .reveal:nth-child(2){ transition-delay:0.2s; }
@@ -2349,13 +2345,16 @@ body.light-mode .nav-links{
   background:#ffffff; /* putih solid */
   color:#0f172a;
 }
+
 body.light-mode .nav-links a{
   color:#0f172a;
 }
+
 body.light-mode .nav-overlay{
   background:rgba(0,0,0,0.2);
   backdrop-filter:blur(4px);
 }
+
 body.light-mode .nav-links{
   box-shadow: -10px 0 30px rgba(0,0,0,0.1);
 }
@@ -2374,9 +2373,7 @@ body.light-mode .nav-links{
   height: 100%;
 
   pointer-events: none;
-
   z-index: -1;
-
   isolation: isolate;
 }
 
@@ -2392,7 +2389,6 @@ body.light-mode .nav-links{
 
   filter: blur(30px);
   opacity: 0.5;
-
   animation: glowPulse 6s ease-in-out infinite;
 }
 
@@ -2409,35 +2405,27 @@ canvas{
 
 /* ========= PARTICLES MOBILE OPTIMIZATION ========= */
 @media (max-width: 768px){
-
   #particles{
     opacity: 0.6; /* lebih ringan */
   }
-
   #particles::after{
     filter: blur(20px);
     opacity: 0.4;
   }
-
 }
 
 /* ========= PARTICLES EXTRA SMALL DEVICE ========= */
 @media (max-width: 480px){
-
   #particles{
     opacity: 0.5;
   }
-
   #particles::after{
     display: none; /* 🔥 matikan glow berat */
   }
-
 }
-
   #particles::after{
     display: none; /* 🔥 biar ringan */
   }
-
 }
 
 /* hide loader */
@@ -2448,7 +2436,6 @@ canvas{
 }
 
 /* ================= LANGUAGE BUTTON (WEB3 UI) ================= */
-
 .lang-switch{
   display:flex;
   align-items:center;
@@ -2458,7 +2445,6 @@ canvas{
 
 .lang-btn{
   position:relative;
-
   width:44px;
   height:44px;
 
@@ -2468,7 +2454,6 @@ canvas{
 
   border-radius:14px;
   border:1px solid rgba(56,189,248,0.18);
-
   background:
     linear-gradient(
       145deg,
@@ -2477,9 +2462,7 @@ canvas{
     );
 
   cursor:pointer;
-
   overflow:hidden;
-
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
 
@@ -2506,9 +2489,7 @@ canvas{
 
   position:relative;
   z-index:2;
-
   pointer-events:none;
-
   box-shadow:
     0 0 10px rgba(255,255,255,0.15);
 }
@@ -2516,10 +2497,8 @@ canvas{
 /* glow border */
 .lang-btn::before{
   content:'';
-
   position:absolute;
   inset:-1px;
-
   border-radius:inherit;
 
   background:
@@ -2533,21 +2512,15 @@ canvas{
     );
 
   background-size:300% 300%;
-
   opacity:0;
-
   z-index:1;
-
   animation:langGlow 5s linear infinite;
-
   transition:opacity 0.3s ease;
 }
 
 .lang-btn:hover{
   transform:translateY(-2px) scale(1.03);
-
   border-color:rgba(56,189,248,0.45);
-
   box-shadow:
     0 0 15px rgba(56,189,248,0.25),
     0 0 30px rgba(56,189,248,0.12);
@@ -2560,7 +2533,6 @@ canvas{
 /* ACTIVE */
 .lang-btn.active{
   border-color:rgba(56,189,248,0.7);
-
   box-shadow:
     0 0 20px rgba(56,189,248,0.35),
     0 0 40px rgba(56,189,248,0.15);
@@ -2679,7 +2651,6 @@ body.reduce-motion .contact-btn{
 }
 
 /* LIGHT MODE FIX */
-
 body.light-mode .navbar{
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
