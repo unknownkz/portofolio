@@ -63,9 +63,6 @@ body.light-mode{
   --text:#0f172a;
   --accent:#0ea5e9;
   --accent2:#38bdf8;
-  overflow-x:hidden;
-  /* compositing stabil */
-  transform:none !important;
 }
 
 /* ================= LOADER WEB3 ================= */
