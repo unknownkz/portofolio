@@ -448,7 +448,6 @@ body.light-mode a{
   border-bottom:1px solid rgba(56,189,248,0.08);
   box-shadow:0 0 25px rgba(56,189,248,0.08);
   z-index:9999;
-  backface-visibility:hidden;
   transition:
     background .3s ease,
     border-color .3s ease,
@@ -2604,89 +2603,4 @@ body.light-mode .lang-btn{
     width:18px;
     height:18px;
   }
-}
-
-/* ================= FIX THEME SWITCH LAG ================= */
-body.theme-switching *,
-body.theme-switching *::before,
-body.theme-switching *::after{
-  transition:none !important;
-  animation:none !important;
-}
-
-/* ================= RESPONSIVE ================= */
-/* responsive mobile */
-/* ================= LOW-END PERFORMANCE ================= */
-body.reduce-motion *,
-body.reduce-motion *::before,
-body.reduce-motion *::after{
-  animation-duration: .4s !important;
-  transition-duration: .2s !important;
-}
-
-body.reduce-motion .cursor-glow,
-body.reduce-motion .cursor-aura,
-body.reduce-motion .cursor-trail{
-  display:none !important;
-}
-
-body.reduce-motion .skill-card,
-body.reduce-motion .btn,
-body.reduce-motion .contact-btn{
-  backdrop-filter:none !important;
-}
-
-/* ============== GLOBAL ==================
-/* GPU SAFE */
-#particles{
-  transform:translateZ(0);
-  will-change:transform;
-}
-
-.navbar{
-  backface-visibility:hidden;
-}
-
-.skill-card,
-.btn,
-.contact-btn,
-.social-btn{
-  transform:none;
-  will-change:auto;
-  backface-visibility:visible;
-}
-
-/* LIGHT MODE FIX */
-body.light-mode .navbar{
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
-
-  background:rgba(255,255,255,0.96);
-}
-
-body.light-mode .skill-card,
-body.light-mode .contact-card,
-body.light-mode .social-btn{
-  backdrop-filter:none !important;
-  -webkit-backdrop-filter:none !important;
-}
-
-
-*{
-  transform:none !important;
-  filter:none !important;
-  backdrop-filter:none !important;
-  transition:none !important;
-  animation:none !important;
-}
-
-#particles{
-  display:none !important;
-}
-
-.reveal,
-.reveal-left,
-.reveal-right{
-  opacity:1 !important;
-  transform:none !important;
 }
