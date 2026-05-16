@@ -449,6 +449,10 @@ body.light-mode a{
   box-shadow:0 0 25px rgba(56,189,248,0.08);
   z-index:9999;
   backface-visibility:hidden;
+  transition:
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
 }
 
 /* animated bottom glow */
@@ -2009,6 +2013,7 @@ body.light-mode .social-btn:hover{
 .menu-toggle.active i{
   transform:rotate(90deg);
 }
+
 /* ================ Dark/Light Button =============== */
 .theme-btn{
   width:52px;
@@ -2019,6 +2024,7 @@ body.light-mode .social-btn:hover{
   background:rgba(255,255,255,0.1);
   position:relative;
 }
+
 /* ================= FIX TOGGLE LIGHT MODE ================= */
 body.light-mode .theme-btn{
   background:linear-gradient(135deg,#0ea5e9,#38bdf8);
@@ -2367,7 +2373,7 @@ body.light-mode .nav-links{
 
 /* ========= PARTICLES BASE ========= */
 #particles{
-  position: fixed;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
