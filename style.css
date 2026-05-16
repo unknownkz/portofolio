@@ -513,18 +513,36 @@ body.light-mode a{
 
 /* ====== NAVBAR LIGHT MODE ====== */
 body.light-mode .navbar{
-  background:rgba(255,255,255,0.96);
-  border:1px solid rgba(0,0,0,0.05);
-  box-shadow:
-    0 4px 14px rgba(0,0,0,0.06);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.92),
+      rgba(248,250,252,0.88)
+    );
 
-  /* FIX LAG */
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
+  border-bottom:
+    1px solid rgba(56,189,248,0.18);
+  box-shadow:
+    0 4px 18px rgba(14,165,233,0.08);
+}
+
+/* LIGHT MODE NEON */
+body.light-mode .navbar::before{
+  opacity:1;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(14,165,233,0.9),
+    rgba(56,189,248,1),
+    rgba(14,165,233,0.9),
+    transparent
+  );
+  box-shadow:
+    0 0 12px rgba(56,189,248,0.8),
+    0 0 24px rgba(14,165,233,0.5);
 }
 
 /* glow off light mode */
-body.light-mode .navbar::before,
 body.light-mode .navbar::after{
   display:none;
 }
@@ -2348,6 +2366,11 @@ body.light-mode .nav-links{
 
 body.light-mode .nav-links a{
   color:#0f172a;
+  text-shadow:none;
+}
+
+body.light-mode .nav-links a:hover{
+  color:#0ea5e9;
 }
 
 body.light-mode .nav-overlay{
@@ -2371,7 +2394,6 @@ body.light-mode .nav-links{
   inset: 0;
   width: 100%;
   height: 100%;
-
   pointer-events: none;
   z-index: -1;
 }
