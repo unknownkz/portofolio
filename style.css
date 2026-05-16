@@ -26,14 +26,12 @@
 
 html{
   scroll-behavior:smooth;
-  overflow-x:hidden;
   height:100%;
 }
 
 body{
   font-family:'Poppins',sans-serif;
   color:var(--text);
-  overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
   background:var(--bg);
