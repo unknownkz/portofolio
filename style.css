@@ -34,6 +34,8 @@ body{
   font-family:'Poppins',sans-serif;
   color:var(--text);
   overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
   background:var(--bg);
   transition:
     background-color 0.25s ease,
@@ -468,7 +470,7 @@ body.light-mode a{
   );
 
   animation:navbarGlow 6s linear infinite;
-  filter:blur(0.5px);
+  filter:none;
   opacity:0.9;
 }
 
@@ -1655,6 +1657,7 @@ body.light-mode .card:hover{
   position:relative;
   padding:20px;
   border-radius:16px;
+  isolation:isolate;
 
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.06);
@@ -2163,8 +2166,8 @@ body.light-mode .hero-title span{
 
 /* ================= CINEMATIC REVEAL ================= */
 .reveal{
-  opacity:0;
-  transform:translateY(60px) scale(0.98);
+  opacity:0.01;
+  transform:translateY(25px) scale(0.90);
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
@@ -2656,77 +2659,37 @@ body.reduce-motion .contact-btn{
 }
 
 /* ============== GLOBAL ==================
-/* GPU OPTIMIZATION */
-#particles,
-.cursor-glow,
-.cursor-aura{
+/* GPU SAFE */
+#particles{
   transform:translateZ(0);
-  backface-visibility:hidden;
   will-change:transform;
 }
 
-/* CONTENT PROTECTION */
-img{
-  -webkit-user-drag:none;
-  user-select:none;
-  pointer-events:auto;
-}
-body{
-  -webkit-touch-callout:none;
+.navbar{
+  backface-visibility:hidden;
 }
 
-/* MOBILE GPU */
-@media(max-width:768px){
-  .skill-card,
-  .btn,
-  .contact-btn,
-  .social-btn,
-  .navbar{
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
-  }
-}
-
-/* RENDER */
 .skill-card,
 .btn,
 .contact-btn,
 .social-btn{
-  transform:none !important;
-  will-change:auto !important;
+  transform:none;
+  will-change:auto;
+  backface-visibility:visible;
 }
 
-/* REVEAL */
-.reveal,
-.reveal-left,
-.reveal-right{
-  contain:layout paint;
+/* LIGHT MODE FIX */
+
+body.light-mode .navbar{
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+
+  background:rgba(255,255,255,0.96);
 }
 
-/* ANDROID GHOST FIX */
-.hero,
-.about,
-.skills,
-.contact,
-.skill-card,
-.contact-card,
-.social-card,
-.profile-card,
-section{
-  position:relative;
-  z-index:2;
-  isolation:isolate;
-}
-
-/* particles dibelakang total */
-#particles{
-  z-index:0 !important;
-  pointer-events:none;
-
-}
-
-/* body layer */
-body{
-  position:relative;
-  z-index:1;
+body.light-mode .skill-card,
+body.light-mode .contact-card,
+body.light-mode .social-btn{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
 }
