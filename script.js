@@ -837,8 +837,9 @@ const Protection = (() => {
       const isCtrlShiftI = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i';
       const isCtrlShiftJ = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j';
       const isCtrlU      = e.ctrlKey && e.key.toLowerCase() === 'u';
+      const isCtrlC      = e.ctrlKey && e.key.toLowerCase() === 'c';
 
-      if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU) {
+      if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU || isCtrlC) {
         e.preventDefault();
       }
     });
