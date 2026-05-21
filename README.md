@@ -22,7 +22,7 @@ Website ini dibuat dengan tampilan modern yang profesional, ramah mobile, dan fi
 ---
 
 ## Preview
-Cek langsung website portofolio saya di [DEMO LINK](https://unknownkz.github.io/portofolio/)
+Cek langsung website portofolio saya di [PRODUCTION](https://axelal.my.id)
 
 ---
 
