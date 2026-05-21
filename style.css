@@ -1751,7 +1751,7 @@ canvas { image-rendering: optimizeSpeed; }
   left: 50%;
   bottom: 48px;
   transform: translateX(-50%) scale(0.96);
-  z-index: 99999;
+  z-index: var(--z-nav);
   font-size: 15px;
   box-shadow: 0 8px 32px #2231;
   opacity: 0;
@@ -1771,7 +1771,7 @@ canvas { image-rendering: optimizeSpeed; }
   pointer-events: auto;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .copy-toast {
     font-size: 13px;
     padding: 12px 16px;
