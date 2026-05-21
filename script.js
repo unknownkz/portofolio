@@ -827,6 +827,20 @@ const Language = (() => {
    16. CONTENT PROTECTION
    ========================================================================== */
 const Protection = (() => {
+   // Custom Toast Notification for Copy Block
+  function showCopyToast(message = 'Akses Copy telah diblokir!') {
+    let toast = document.querySelector('.copy-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'copy-toast';
+      document.body.appendChild(toast);
+    }
+    toast.innerText = message;
+    toast.classList.add('show');
+    clearTimeout(toast._timeoutId);
+    toast._timeoutId = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+   
   function init() {
     // Block right-click context menu
     document.addEventListener('contextmenu', e => e.preventDefault());
@@ -842,6 +856,12 @@ const Protection = (() => {
       if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU || isCtrlC) {
         e.preventDefault();
       }
+    });
+
+    // Block copy event (CTRL+C, right-click > Copy, browser menu, dll)
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      showCopyToast();
     });
 
     // Block image drag
