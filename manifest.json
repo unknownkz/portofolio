@@ -1,16 +1,47 @@
 {
   "name": "Axel Alexius Latukolan",
-  "short_name": "Axel AL",
+  "short_name": "Axel A. L",
+  "description": "Web3 Analyst, Data Processing, dan Hospitality Experience",
+  "lang": "id",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
-  "description": "Web3 Analyst, Data Processing, dan Hospitality Experience",
+  "categories": ["portfolio", "business"],
   "icons": [
     {
       "src": "/logo-a.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-a.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/logo-a.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-a.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/preview.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "Axel A. Latukolan Portfolio"
     }
   ]
 }
