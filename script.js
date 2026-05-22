@@ -848,7 +848,10 @@ const Protection = (() => {
    
   function init() {
     // Block right-click context menu
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('contextmenu', e => {
+      e.preventDefault());
+      showCopyToast('Sorry, right-click access has been blocked!');
+    }
 
     // Block DevTools shortcuts
     document.addEventListener('keydown', e => {
@@ -882,7 +885,7 @@ const Protection = (() => {
     document.addEventListener('mousedown', e => {
       if (e.button === 1) {
          e.preventDefault();
-         showCopyToast('Sorry, access to Open a new tab is blocked!');
+         showCopyToast('Sorry, access to Open a new tab has been blocked!');
       }
     });
   }
