@@ -947,7 +947,7 @@ const SW = (() => {
   Cursor.init();
   Language.init();
   Protection.init();
-  SW.init();
+  UpdateManager.init();
 })();
 
 /* ==========================================================================
