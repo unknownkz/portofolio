@@ -827,7 +827,7 @@ const Language = (() => {
    16. CONTENT PROTECTION
    ========================================================================== */
 const Protection = (() => {
-   // Custom Toast Notification for Copy Block
+   // Custom Toast Notification for Copy Block.
   function showCopyToast(message = 'Akses Copy telah diblokir!') {
     let toast = document.querySelector('.copy-toast');
     if (!toast) {
