@@ -828,7 +828,7 @@ const Language = (() => {
    ========================================================================== */
 const Protection = (() => {
    // Custom Toast Notification for Copy Block.
-  function showCopyToast(message = 'Sorry, copy access has been blocked!') {
+  function showCopyToast(message = '') {
     let toast = document.querySelector('.copy-toast');
     if (!toast) {
       toast = document.createElement('div');
@@ -837,8 +837,13 @@ const Protection = (() => {
     }
     toast.innerText = message;
     toast.classList.add('show');
-    clearTimeout(toast._timeoutId);
-    toast._timeoutId = setTimeout(() => toast.classList.remove('show'), 1800);
+    // Clear existing timeout
+    if (toast._timeoutId) clearTimeout(toast._timeoutId);
+    
+    // Set new timeout
+    toast._timeoutId = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 1800);
   }
    
   function init() {
@@ -847,20 +852,21 @@ const Protection = (() => {
 
     // Block DevTools shortcuts
     document.addEventListener('keydown', e => {
-      const isF12  = e.key === 'F12';
+      const isF12 = e.key === 'F12';
       const isCtrlShiftI = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i';
       const isCtrlShiftJ = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j';
       const isCtrlU      = e.ctrlKey && e.key.toLowerCase() === 'u';
 
       if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU) {
         e.preventDefault();
+        showCopyToast('Sorry, DevTools access has been blocked!');
       }
     });
 
-    // Block copy event (CTRL+C, right-click > Copy, browser menu, dll)
+    // Block copy event (CTRL+C, right-click > Copy, browser menu, etc)
     document.addEventListener('copy', e => {
       e.preventDefault();
-      showCopyToast();
+      showCopyToast('Sorry, copy access has been blocked!');
     });
 
     // Block image drag
@@ -874,7 +880,10 @@ const Protection = (() => {
 
     // Block middle-click (open in new tab)
     document.addEventListener('mousedown', e => {
-      if (e.button === 1) e.preventDefault();
+      if (e.button === 1) {
+         e.preventDefault();
+         showCopyToast('Sorry, access to Open a new tab is blocked!');
+      }
     });
   }
 
