@@ -1741,25 +1741,25 @@ canvas { image-rendering: optimizeSpeed; }
    24. CONTENT PROTECTION — Toast Notification
    ========================================================================== */
 .copy-toast {
-  min-width: 220px;
+  min-width: 222px;
   max-width: 90vw;
   background: #232842f1;
   color: #fff;
-  border-radius: var(--radius-sm, 8px);
-  padding: 14px 32px;
+  border-radius: var(--radius-sm, 10px);
+  padding: 16px 34px;
   position: fixed;
   left: 50%;
-  bottom: 48px;
+  bottom: 44px;
   transform: translateX(-50%) scale(0.96);
   z-index: var(--z-nav);
-  font-size: 15px;
-  box-shadow: 0 8px 32px #2231;
+  font-size: 17px;
+  box-shadow: 0 10px 36px #2231;
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity var(--transition-base, 0.3s ease),
-    transform var(--transition-base, 0.3s cubic-bezier(.39,.58,.57,1));
-  letter-spacing: 0.2px;
+    opacity var(--transition-base, 0.5s ease),
+    transform var(--transition-base, 0.5s cubic-bezier(.39,.58,.57,1));
+  letter-spacing: 0.3px;
   font-family: var(--font-base, 'Poppins', sans-serif);
   text-align: center;
   user-select: none;
@@ -1767,15 +1767,15 @@ canvas { image-rendering: optimizeSpeed; }
 
 .copy-toast.show {
   opacity: 1;
-  transform: translateX(-50%) scale(1.03);
+  transform: translateX(-50%) scale(1.07);
   pointer-events: auto;
 }
 
 @media (max-width: 768px) {
   .copy-toast {
-    font-size: 13px;
-    padding: 12px 16px;
-    bottom: 24px;
+    font-size: 15px;
+    padding: 14px 18px;
+    bottom: 22px;
   }
 }
 
