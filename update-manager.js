@@ -37,7 +37,7 @@ const UpdateManager = (() => {
       </div>
       <div class="update-toast__body">
         <strong class="update-toast__title">Update Tersedia</strong>
-        <span class="update-toast__desc">Versi baru Axel AL siap dipasang.</span>
+        <span class="update-toast__desc">Versi baru Axel A. L siap dipasang.</span>
       </div>
       <div class="update-toast__actions">
         <button class="update-toast__btn update-toast__btn--update" id="swUpdateBtn">
