@@ -909,30 +909,7 @@ const Performance = (() => {
 
 
 /* ==========================================================================
-   18. SERVICE WORKER
-   ========================================================================== */
-const SW = (() => {
-  function init() {
-    if (!('serviceWorker' in navigator)) return;
-
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(() => {
-          // Service Worker registered successfully
-        })
-        .catch(() => {
-          // Service Worker registration failed — site still works normally
-        });
-    });
-  }
-
-  return { init };
-})();
-
-
-/* ==========================================================================
-   19. BOOTSTRAP — Initialize all modules
+   18. BOOTSTRAP — Initialize all modules
    ========================================================================== */
 (function bootstrap() {
   Performance.init();
