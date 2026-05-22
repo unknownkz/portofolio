@@ -828,7 +828,7 @@ const Language = (() => {
    ========================================================================== */
 const Protection = (() => {
    // Custom Toast Notification for Copy Block.
-  function showCopyToast(message = 'Akses Copy telah diblokir!') {
+  function showCopyToast(message = 'Sorry, copy access has been blocked!') {
     let toast = document.querySelector('.copy-toast');
     if (!toast) {
       toast = document.createElement('div');
@@ -851,9 +851,8 @@ const Protection = (() => {
       const isCtrlShiftI = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i';
       const isCtrlShiftJ = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j';
       const isCtrlU      = e.ctrlKey && e.key.toLowerCase() === 'u';
-      const isCtrlC      = e.ctrlKey && e.key.toLowerCase() === 'c';
 
-      if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU || isCtrlC) {
+      if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU) {
         e.preventDefault();
       }
     });
