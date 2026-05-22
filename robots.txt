@@ -1,4 +1,15 @@
+# ============================================================
+# robots.txt - Axel Alexius Latukolan Portfolio
+# https://www.axelal.my.id/
+# ============================================================
+
 User-agent: *
 Allow: /
 
-Sitemap: https://axelal.my.id/sitemap.xml
+# Block technical/config files from crawlers
+Disallow: /service-worker.js
+Disallow: /manifest.json
+Disallow: /vercel.json
+
+# Sitemap (consistent with www canonical)
+Sitemap: https://www.axelal.my.id/sitemap.xml
