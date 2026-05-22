@@ -843,7 +843,7 @@ const Protection = (() => {
     // Set new timeout
     toast._timeoutId = setTimeout(() => {
       toast.classList.remove('show');
-    }, 1800);
+    }, 2800);
   }
    
   function init() {
