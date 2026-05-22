@@ -849,9 +849,9 @@ const Protection = (() => {
   function init() {
     // Block right-click context menu
     document.addEventListener('contextmenu', e => {
-      e.preventDefault());
+      e.preventDefault();
       showCopyToast('Sorry, right-click access has been blocked!');
-    }
+    });
 
     // Block DevTools shortcuts
     document.addEventListener('keydown', e => {
