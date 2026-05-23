@@ -7,7 +7,7 @@
 /* ==========================================================================
    1. CONFIG
    ========================================================================== */
-const SW_VERSION   = 'axelal-v4.3';
+const SW_VERSION   = 'axelal-v4.4';
 const CACHE_STATIC = `${SW_VERSION}-static`;
 const CACHE_PAGES  = `${SW_VERSION}-pages`;
 const ALL_CACHES   = [CACHE_STATIC, CACHE_PAGES];
