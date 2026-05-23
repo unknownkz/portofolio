@@ -7,7 +7,7 @@
 /* ==========================================================================
    1. CONFIG
    ========================================================================== */
-const SW_VERSION   = 'axelal-v4';
+const SW_VERSION   = 'Axel A. L - v4.1';
 const CACHE_STATIC = `${SW_VERSION}-static`;
 const CACHE_PAGES  = `${SW_VERSION}-pages`;
 const ALL_CACHES   = [CACHE_STATIC, CACHE_PAGES];
@@ -31,18 +31,26 @@ const OPTIONAL_ASSETS = [
 
 
 /* ==========================================================================
-   2. INSTALL — Pre-cache assets, then notify clients update is ready
+   2. INSTALL — Pre-cache assets, then notify waiting clients of new version
    ========================================================================== */
 self.addEventListener('install', event => {
-  // Do NOT skipWaiting here — let UpdateManager control when to activate.
-  // This ensures the old SW keeps serving until user confirms update.
+  // Do NOT skipWaiting here — UpdateManager controls when to activate
 
   event.waitUntil(
     caches.open(CACHE_STATIC).then(async cache => {
+      // Critical assets must all succeed
       await cache.addAll(CRITICAL_ASSETS);
 
+      // Optional assets — silent per-file failure
       await Promise.allSettled(
         OPTIONAL_ASSETS.map(url => cache.add(url).catch(() => null))
+      );
+
+      // Notify ALL open clients that a new version is waiting
+      // This is how UpdateManager knows the version number BEFORE activation
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach(client =>
+        client.postMessage({ type: 'SW_WAITING', version: SW_VERSION })
       );
     })
   );
@@ -57,7 +65,7 @@ self.addEventListener('activate', event => {
 
   event.waitUntil(
     Promise.all([
-      // Delete old caches
+      // Delete stale caches
       caches.keys().then(keys =>
         Promise.all(
           keys
@@ -65,7 +73,7 @@ self.addEventListener('activate', event => {
             .map(key => caches.delete(key))
         )
       ),
-      // Notify all open tabs that update is now active → trigger reload
+      // Notify all tabs that this version is now fully active → trigger reload
       self.clients.matchAll({ type: 'window' }).then(clients => {
         clients.forEach(client =>
           client.postMessage({ type: 'SW_ACTIVATED', version: SW_VERSION })
@@ -96,12 +104,17 @@ self.addEventListener('fetch', event => {
 
 
 /* ==========================================================================
-   5. MESSAGE — Listen for commands from UpdateManager in script.js
+   5. MESSAGE — SKIP_WAITING + GET_VERSION
    ========================================================================== */
 self.addEventListener('message', event => {
-  // UpdateManager sends this when user clicks "Update"
+  // UpdateManager user clicks "Update" → activate new SW immediately
   if (event.data?.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  }
+
+  // UpdateManager queries version on page load (Case 1: SW already waiting)
+  if (event.data?.type === 'GET_VERSION' && event.ports[0]) {
+    event.ports[0].postMessage({ version: SW_VERSION });
   }
 });
 
@@ -169,3 +182,4 @@ async function _offlineFallback(request) {
 /* ==========================================================================
    END OF FILE
    ========================================================================== */
+     
