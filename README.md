@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo-a.png" alt="Axel AL Logo" width="80" height="80" />
+<img src="logo-a.png" alt="Axel AL Logo" width="128" height="128" />
 
 # Axel Alexius Latukolan
 
