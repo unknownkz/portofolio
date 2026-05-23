@@ -2195,8 +2195,6 @@ body.light-mode .update-toast__btn--dismiss:hover {
     gap: 10px;
     padding: 12px 14px;
   }
-
-  .update-toast__desc { display: none; } /* Save space on small screens */
 }
 /* ==========================================================================
    END OF FILE
