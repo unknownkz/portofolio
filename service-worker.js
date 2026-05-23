@@ -27,6 +27,14 @@ const OPTIONAL_ASSETS = [
   '/cv.pdf',
   '/picture/flag/id.png',
   '/picture/flag/gb.png',
+  '/picture/icons/icon-48.png',
+  '/picture/icons/icon-72.png',
+  '/picture/icons/icon-96.png',
+  '/picture/icons/icon-128.png',
+  '/picture/icons/icon-192.png',
+  '/picture/icons/icon-512.png',
+  '/picture/icons/icon-maskable.png',
+  
 ];
 
 
