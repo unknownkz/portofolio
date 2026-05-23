@@ -2057,6 +2057,9 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   right: 24px;
   z-index: 99999;
 
+  /* Needed so dismiss btn can use position:absolute on mobile */
+  isolation: isolate;
+
   display: flex;
   align-items: center;
   gap: 14px;
@@ -2130,7 +2133,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   );
 }
 
-
 /* TOAST ICON */
 .update-toast__icon {
   flex-shrink: 0;
@@ -2161,7 +2163,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   40%           { transform: rotate(360deg); }
 }
 
-
 /* TOAST BODY */
 .update-toast__body {
   flex: 1;
@@ -2187,7 +2188,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 
 /* TOAST BUTTONS */
 .update-toast__actions {
@@ -2295,8 +2295,7 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   transform: scale(1.1);
 }
 
-
-/* REINSTALL MODAL */
+/* REINSTALL MODAL  */
 .reinstall-modal {
   position: fixed;
   inset: 0;
@@ -2371,7 +2370,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   border-radius: 24px 24px 0 0;
 }
 
-
 /* MODAL HEADER */
 .reinstall-modal__header {
   text-align: center;
@@ -2405,7 +2403,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   color: rgba(226, 232, 240, 0.55);
   line-height: 1.5;
 }
-
 
 /* MODAL STEPS */
 .reinstall-modal__steps {
@@ -2462,7 +2459,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   text-align: center;
   margin-bottom: 20px;
 }
-
 
 /* MODAL BUTTONS */
 .reinstall-modal__actions {
@@ -2526,7 +2522,6 @@ body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
   color: #f8fafc;
 }
 
-
 /* LIGHT MODE */
 body.light-mode .update-toast {
   background: rgba(255, 255, 255, 0.94);
@@ -2581,82 +2576,113 @@ body.light-mode .update-toast--manifest .update-toast__btn--update {
   color: rgba(15, 23, 42, 0.5);
 }
 
+/* MOBILE  (max-width: 768px) */
+@media (max-width: 768px) {
 
-/* MOBILE */
-@media (max-width: 480px){
-  .update-toast{
-    left:12px;
-    right:12px;
-    bottom:16px;
-    min-width:auto;
-    max-width:none;
-    padding:14px;
-    gap:12px;
-    align-items:flex-start;
-    border-radius:18px;
-    /* Mobile Performance */
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
+  /* ── Toast container ──────────────────────────────────────────────────── */
+  .update-toast {
+    left: 12px;
+    right: 12px;
+    bottom: 16px;
+    min-width: unset;
+    max-width: unset;
+    padding: 14px;
+    gap: 12px;
+
+    /* Stack icon + body vertically for more readable layout */
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 18px;
+
+    /* Reduce blur cost on mobile GPU */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
-  /* icon small */
-  .update-toast__icon{
-    width:34px;
-    height:34px;
-    font-size:14px;
+
+  /* Top row: icon + title + dismiss in one line */
+  .update-toast__top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  /* body flexible */
-  .update-toast__body{
-    gap:4px;
+
+  /* ── Icon ──────────────────────────────────────────────────────────────── */
+  .update-toast__icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    flex-shrink: 0;
   }
-  .update-toast__title{
-    font-size:13px;
-    line-height:1.35;
+
+  /* ── Body ──────────────────────────────────────────────────────────────── */
+  .update-toast__body {
+    flex: 1;
+    gap: 4px;
   }
-  .update-toast__desc{
-    display:block;
-    font-size:11px;
-    line-height:1.45;
-    white-space:normal;
-    overflow:visible;
-    text-overflow:unset;
-    max-width:100%;
-    color:rgba(226,232,240,0.72);
+
+  .update-toast__title {
+    font-size: 13px;
+    line-height: 1.35;
   }
-  /* Button compact */
-  .update-toast__actions{
-    margin-top:6px;
-    gap:6px;
+
+  /* DESC — visible on mobile, wraps naturally */
+  .update-toast__desc {
+    display: block;
+    font-size: 11px;
+    line-height: 1.5;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-width: 100%;
+    color: rgba(226, 232, 240, 0.72);
   }
-  .update-toast__btn--update{
-    padding:7px 12px;
-    font-size:11px;
-  }
-  .update-toast__btn--dismiss{
-    width:26px;
-    height:26px;
-  }
-  /* 🔥 LIGHT MODE MOBILE */
-  body.light-mode .update-toast__desc{
-    color:rgba(15,23,42,0.68);
-  }
+
+  /* ── Actions — full width column ─────────────────────────────────────── */
   .update-toast__actions {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-    gap: 6px;
+    gap: 7px;
+    margin-top: 2px;
   }
+
   .update-toast__btn--reinstall,
   .update-toast__btn--update {
     width: 100%;
     justify-content: center;
-    padding: 9px 12px;
+    padding: 10px 12px;
+    font-size: 12px;
   }
+
+  /* Dismiss — small absolute top-right */
+  .update-toast__btn--dismiss {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  /* ── Reinstall modal ──────────────────────────────────────────────────── */
   .reinstall-modal {
     padding: 0 12px 16px;
     align-items: flex-end;
   }
+
   .reinstall-modal__box {
     padding: 22px 18px 20px;
+  }
+
+  .reinstall-modal__title   { font-size: 15px; }
+  .reinstall-modal__subtitle { font-size: 12px; }
+}
+
+/* ── Light mode desc on mobile — outside @media to avoid browser compat issues */
+@media (max-width: 480px) {
+  body.light-mode .update-toast__desc {
+    color: rgba(15, 23, 42, 0.68);
   }
 }
 
