@@ -1754,7 +1754,7 @@ canvas { image-rendering: optimizeSpeed; }
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
+  gap:14px;
   padding:14px 22px;
   /* GLASSMORPHISM DARK */
   background:rgba(15,23,42,0.88);
@@ -1818,23 +1818,17 @@ canvas { image-rendering: optimizeSpeed; }
 /* ICON */
 .copy-toast::after{
   content:'⚠';
-
   position:absolute;
   left:14px;
-
   font-size:14px;
   opacity:.9;
 }
 
 /* LIGHT MODE */
 body.light-mode .copy-toast{
-
   background:rgba(255,255,255,0.92);
-
   border:1px solid rgba(239,68,68,0.22);
-
   color:#0f172a;
-
   box-shadow:
     0 8px 28px rgba(0,0,0,0.12),
     0 0 0 1px rgba(239,68,68,0.08),
