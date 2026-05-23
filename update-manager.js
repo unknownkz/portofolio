@@ -13,7 +13,7 @@ const UpdateTranslations = {
     /* -- Toast: content update -------------------------------------------- */
     contentTitle:      'Pembaruan Tersedia',
     contentDesc:       (ver) => `Versi baru ${ver} siap dipasang.`,
-    contentBtn:        'Perbarui',
+    contentBtn:        'Perbarui Sekarang',
 
     /* -- Toast: manifest update (icon/nama app) ---------------------------- */
     manifestTitle:     'Pembaruan App Tersedia',
@@ -43,7 +43,7 @@ const UpdateTranslations = {
     /* -- Toast: content update -------------------------------------------- */
     contentTitle:      'Update Available',
     contentDesc:       (ver) => `Version ${ver} is ready to install.`,
-    contentBtn:        'Update',
+    contentBtn:        'Update Now',
 
     /* -- Toast: manifest update ------------------------------------------- */
     manifestTitle:     'App Update Available',
@@ -109,6 +109,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      3. INSTALL PROMPT — Capture browser install prompt for reinstall flow
      ======================================================================== */
+
   function _initInstallPrompt() {
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault();           // Suppress automatic prompt
@@ -125,6 +126,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      4. TOAST UI
      ======================================================================== */
+
   function _createToast() {
     if (_toastEl) return _toastEl;
 
@@ -321,31 +323,79 @@ const UpdateManager = (() => {
     if (e.key === 'Escape') _dismissModal();
   }
 
-  /** Trigger browser install prompt, or open site in browser as fallback */
+  /**
+   * Trigger reinstall flow:
+   * 1. Clear all old caches via SW message
+   * 2. Wait for CACHE_CLEARED confirmation
+   * 3. Trigger browser install prompt (or fallback)
+   * 4. On accept → reload for fresh start
+   */
   async function _triggerInstall() {
     const btn = document.getElementById('modalInstallBtn');
     const s   = _t();
 
     if (btn) { btn.textContent = s.btnLoading; btn.disabled = true; }
 
-    if (_deferredPrompt) {
-      // Browser supports install prompt (Chrome Android / Edge)
-      await _deferredPrompt.prompt();
-      const { outcome } = await _deferredPrompt.userChoice;
-      _deferredPrompt = null;
+    // Step 1: Clear all old caches before installing
+    await _clearCachesViaSW();
 
-      if (outcome === 'accepted') {
-        _dismissModal();
-        _dismissToast();
-      } else {
-        // User dismissed prompt — re-enable button
-        if (btn) { btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`; btn.disabled = false; }
+    // Step 2: Trigger install prompt or fallback
+    if (_deferredPrompt) {
+      // Chrome Android / Edge — native install prompt
+      try {
+        await _deferredPrompt.prompt();
+        const { outcome } = await _deferredPrompt.userChoice;
+        _deferredPrompt = null;
+
+        if (outcome === 'accepted') {
+          // User accepted — reload to get fresh clean state
+          _dismissModal();
+          _dismissToast();
+          setTimeout(() => window.location.reload(), 800);
+        } else {
+          // User dismissed — re-enable button
+          if (btn) {
+            btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`;
+            btn.disabled = false;
+          }
+        }
+      } catch {
+        if (btn) {
+          btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`;
+          btn.disabled = false;
+        }
       }
     } else {
-      // Fallback: open site in browser tab — user can install from browser menu
+      // Fallback: open in browser tab — user installs from browser menu
       window.open(window.location.origin, '_blank', 'noopener,noreferrer');
       _dismissModal();
+      _dismissToast();
     }
+  }
+
+  /**
+   * Send CLEAR_CACHE message to active SW.
+   * Uses MessageChannel to wait for CACHE_CLEARED reply.
+   * Resolves after 2s timeout if SW doesn't reply (safety net).
+   */
+  function _clearCachesViaSW() {
+    return new Promise(resolve => {
+      const sw = navigator.serviceWorker.controller;
+      if (!sw) { resolve(); return; }
+
+      // Safety timeout — resolve even if SW doesn't reply
+      const timeout = setTimeout(resolve, 2000);
+
+      const channel = new MessageChannel();
+      channel.port1.onmessage = event => {
+        if (event.data?.type === 'CACHE_CLEARED') {
+          clearTimeout(timeout);
+          resolve();
+        }
+      };
+
+      sw.postMessage({ type: 'CLEAR_CACHE' }, [channel.port2]);
+    });
   }
 
   function _updateModalText() {
@@ -368,6 +418,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      6. LANGUAGE SYNC
      ======================================================================== */
+
   function _syncLanguage() {
     const onSwitch = () => {
       setTimeout(() => {
@@ -384,6 +435,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      7. UPDATE LOGIC
      ======================================================================== */
+
   function _applyUpdate() {
     if (_isReloading) return;
     _isReloading = true;
@@ -425,6 +477,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      8. SW LIFECYCLE LISTENERS
      ======================================================================== */
+
   function _listenForMessages() {
     navigator.serviceWorker.addEventListener('message', event => {
       const { type, version, updateType } = event.data ?? {};
@@ -459,6 +512,7 @@ const UpdateManager = (() => {
   /* ========================================================================
      9. INIT
      ======================================================================== */
+
   async function init() {
     if (!('serviceWorker' in navigator)) return;
 
@@ -508,15 +562,17 @@ const UpdateManager = (() => {
   /* ========================================================================
      10. CLEANUP
      ======================================================================== */
+
   function destroy() {
     clearInterval(_checkInterval);
     _checkInterval = null;
     _dismissToast();
     _dismissModal();
   }
-  return { init, destroy };
-})();
 
+  return { init, destroy };
+
+})();
 
 /* ==========================================================================
    END OF FILE
