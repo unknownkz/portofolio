@@ -850,7 +850,7 @@ const Protection = (() => {
     // Block right-click context menu
     document.addEventListener('contextmenu', e => {
       e.preventDefault();
-      showCopyToast('Sorry, right-click access has been blocked!');
+      showCopyToast('⚠ Sorry, right-click access has been blocked!');
     });
 
     // Block DevTools shortcuts
@@ -862,14 +862,14 @@ const Protection = (() => {
 
       if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU) {
         e.preventDefault();
-        showCopyToast('Sorry, DevTools access has been blocked!');
+        showCopyToast('⚠ Sorry, DevTools access has been blocked!');
       }
     });
 
     // Block copy event (CTRL+C, right-click > Copy, browser menu, etc)
     document.addEventListener('copy', e => {
       e.preventDefault();
-      showCopyToast('Sorry, copy access has been blocked!');
+      showCopyToast('⚠ Sorry, copy access has been blocked!');
     });
 
     // Block image drag
@@ -885,7 +885,7 @@ const Protection = (() => {
     document.addEventListener('mousedown', e => {
       if (e.button === 1) {
          e.preventDefault();
-         showCopyToast('Sorry, access to Open a new tab has been blocked!');
+         showCopyToast('⚠ Sorry, access to Open a new tab has been blocked!');
       }
     });
   }
