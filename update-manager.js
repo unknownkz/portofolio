@@ -43,7 +43,7 @@ function _t() {
 
 /**
  * Format a raw SW_VERSION string into a human-readable label.
- * e.g. "axelal-v4" → "v4"  |  "axelal-v4.1" → "v4.1"
+ * e.g. "axelal-v4" → "axelalv4.1"  |  "axelal-v4.1" → "v4.2"
  * Falls back to the raw string if pattern doesn't match.
  */
 function _formatVersion(raw = '') {
