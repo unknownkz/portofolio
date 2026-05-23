@@ -788,7 +788,7 @@ const Translations = (() => {
 
 
 /* ==========================================================================
-   15. LANGUAGE SYSTEM
+   15. LANGUAGE SYSTEM ( ID & EN )
    ========================================================================== */
 const Language = (() => {
 
@@ -824,7 +824,7 @@ const Language = (() => {
 
 
 /* ==========================================================================
-   16. CONTENT PROTECTION
+   16. CONTENT PROTECTION ( Protection System + Popup Notification )
    ========================================================================== */
 const Protection = (() => {
    // Custom Toast Notification for Copy Block.
