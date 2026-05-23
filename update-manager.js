@@ -1,72 +1,154 @@
 /* ==========================================================================
    PORTOFOLIO — Axel Alexius Latukolan
    update-manager.js  |  Production Build
-   Handles PWA auto-update detection and toast notification
+   PWA Auto-Update detector + bilingual toast with version display
+   Synced with: Translations & Language modules in script.js
    ========================================================================== */
 
 /* ==========================================================================
-   1. UPDATE MANAGER MODULE
+   1. TRANSLATIONS — Bilingual toast strings (ID / EN)
+      Pattern mirrors Translations module in script.js
+   ========================================================================== */
+const UpdateTranslations = {
+  id: {
+    title:          'Pembaruan Tersedia',
+    desc:           (ver) => `Versi baru ${ver} siap dipasang.`,
+    btnUpdate:      'Perbarui Sekarang',
+    btnLoading:     'Memuat...',
+    btnDismiss:     'Tutup notifikasi',
+  },
+  en: {
+    title:          'Update Available',
+    desc:           (ver) => `Version ${ver} is ready to install.`,
+    btnUpdate:      'Update Now',
+    btnLoading:     'Loading...',
+    btnDismiss:     'Close notification',
+  },
+};
+
+/**
+ * Read active language — same localStorage key & fallback as Language module.
+ */
+function _getCurrentLang() {
+  return localStorage.getItem('language') || 'id';
+}
+
+/**
+ * Get translation object for current language.
+ */
+function _t() {
+  const lang = _getCurrentLang();
+  return UpdateTranslations[lang] ?? UpdateTranslations.id;
+}
+
+/**
+ * Format a raw SW_VERSION string into a human-readable label.
+ * e.g. "axelal-v4" → "v4"  |  "axelal-v4.1" → "v4.1"
+ * Falls back to the raw string if pattern doesn't match.
+ */
+function _formatVersion(raw = '') {
+  const match = raw.match(/v[\d.]+$/i);
+  return match ? match[0] : raw;
+}
+
+
+/* ==========================================================================
+   2. UPDATE MANAGER MODULE
    ========================================================================== */
 const UpdateManager = (() => {
 
-  /* -- Config -------------------------------------------------------------- */
-  const CHECK_INTERVAL_MS = 60 * 1000; // Check for new SW every 60 seconds
-  const TOAST_DURATION_MS = 0;         // 0 = toast stays until user acts
+  /* -- Config --------------------------------------------------------------- */
+  const CHECK_INTERVAL_MS = 60 * 1000; // Poll for new SW every 60s (active tab only)
 
-  /* -- State --------------------------------------------------------------- */
-  let _pendingSW     = null; // The waiting SW registration
-  let _toastEl       = null;
-  let _checkInterval = null;
-  let _isReloading   = false;
+  /* -- State ---------------------------------------------------------------- */
+  let _pendingSW     = null;  // The waiting ServiceWorker instance
+  let _newVersion    = null;  // Raw version string received from SW message
+  let _toastEl       = null;  // Cached toast DOM reference
+  let _checkInterval = null;  // setInterval ID for periodic checks
+  let _isReloading   = false; // Guard against double-reload
 
 
   /* ========================================================================
-     2. TOAST UI
+     3. TOAST UI
      ======================================================================== */
 
+  /**
+   * Build and mount the toast element.
+   * Uses _newVersion to show the exact version string in the description.
+   */
   function _createToast() {
     if (_toastEl) return _toastEl;
 
-    const toast = document.createElement('div');
-    toast.className   = 'update-toast';
-    toast.setAttribute('role', 'status');
+    const strings = _t();
+    const ver     = _formatVersion(_newVersion);
+    const toast   = document.createElement('div');
+
+    toast.className = 'update-toast';
+    toast.setAttribute('role',      'status');
     toast.setAttribute('aria-live', 'polite');
+    toast.setAttribute('lang',      _getCurrentLang());
+
     toast.innerHTML = `
       <div class="update-toast__icon" aria-hidden="true">
         <i class="fas fa-arrow-rotate-right"></i>
       </div>
       <div class="update-toast__body">
-        <strong class="update-toast__title">Update Tersedia</strong>
-        <span class="update-toast__desc">Versi baru Axel A. L siap dipasang.</span>
+        <strong class="update-toast__title">${strings.title}</strong>
+        <span class="update-toast__desc">${strings.desc(ver)}</span>
       </div>
       <div class="update-toast__actions">
-        <button class="update-toast__btn update-toast__btn--update" id="swUpdateBtn">
-          Update
-        </button>
-        <button class="update-toast__btn update-toast__btn--dismiss" id="swDismissBtn" aria-label="Tutup notifikasi">
-          <i class="fas fa-xmark" aria-hidden="true"></i>
-        </button>
+        <button
+          class="update-toast__btn update-toast__btn--update"
+          id="swUpdateBtn"
+        >${strings.btnUpdate}</button>
+        <button
+          class="update-toast__btn update-toast__btn--dismiss"
+          id="swDismissBtn"
+          aria-label="${strings.btnDismiss}"
+        ><i class="fas fa-xmark" aria-hidden="true"></i></button>
       </div>
     `;
 
     document.body.appendChild(toast);
     _toastEl = toast;
 
-    // Wire up buttons
-    document.getElementById('swUpdateBtn')?.addEventListener('click', _applyUpdate);
+    document.getElementById('swUpdateBtn')?.addEventListener('click',  _applyUpdate);
     document.getElementById('swDismissBtn')?.addEventListener('click', _dismissToast);
 
     return toast;
   }
 
+  /**
+   * Re-render toast text in the newly selected language.
+   * Preserves button disabled state if update is in progress.
+   */
+  function _updateToastText() {
+    if (!_toastEl) return;
+
+    const strings = _t();
+    const ver     = _formatVersion(_newVersion);
+    const title   = _toastEl.querySelector('.update-toast__title');
+    const desc    = _toastEl.querySelector('.update-toast__desc');
+    const btn     = document.getElementById('swUpdateBtn');
+    const dismiss = document.getElementById('swDismissBtn');
+
+    if (title)              title.textContent               = strings.title;
+    if (desc)               desc.textContent                = strings.desc(ver);
+    if (btn && !btn.disabled) btn.textContent               = strings.btnUpdate;
+    if (dismiss)            dismiss.setAttribute('aria-label', strings.btnDismiss);
+
+    _toastEl.setAttribute('lang', _getCurrentLang());
+  }
+
+  /** Slide toast into view. */
   function _showToast() {
     const toast = _createToast();
-    // Force reflow before adding active class for CSS transition
     requestAnimationFrame(() => {
       requestAnimationFrame(() => toast.classList.add('update-toast--visible'));
     });
   }
 
+  /** Slide toast out and remove from DOM. */
   function _dismissToast() {
     _toastEl?.classList.remove('update-toast--visible');
     setTimeout(() => {
@@ -77,29 +159,40 @@ const UpdateManager = (() => {
 
 
   /* ========================================================================
-     3. UPDATE LOGIC
+     4. LANGUAGE SYNC
+     Listens to the same ID/EN buttons as the Language module in script.js.
+     50ms delay ensures localStorage is written before we read it.
      ======================================================================== */
 
-  /**
-   * Tell the waiting SW to activate, then reload all clients.
-   */
+  function _syncLanguage() {
+    const onSwitch = () => setTimeout(_updateToastText, 50);
+
+    document.getElementById('idBtn')?.addEventListener('click', onSwitch);
+    document.getElementById('enBtn')?.addEventListener('click', onSwitch);
+  }
+
+
+  /* ========================================================================
+     5. UPDATE LOGIC
+     ======================================================================== */
+
+  /** Send SKIP_WAITING to the new SW, then wait for SW_ACTIVATED to reload. */
   function _applyUpdate() {
     if (_isReloading) return;
     _isReloading = true;
 
-    // Show loading state on button
-    const btn = document.getElementById('swUpdateBtn');
+    const btn     = document.getElementById('swUpdateBtn');
+    const strings = _t();
+
     if (btn) {
-      btn.textContent = 'Memuat...';
+      btn.textContent = strings.btnLoading;
       btn.disabled    = true;
     }
 
     if (_pendingSW) {
-      // Tell the waiting SW to skip waiting and activate
       _pendingSW.postMessage({ type: 'SKIP_WAITING' });
 
-      // SW will send SW_ACTIVATED message back → reload triggered there
-      // Fallback: reload after 3s in case message is missed
+      // Fallback: reload after 3s if SW_ACTIVATED message is never received
       setTimeout(() => {
         if (_isReloading) window.location.reload();
       }, 3000);
@@ -108,35 +201,28 @@ const UpdateManager = (() => {
     }
   }
 
-  /**
-   * Called when a new SW is found waiting to activate.
-   */
+  /** Track the installing SW and show toast when it reaches 'installed'. */
   function _onUpdateFound(registration) {
     const newSW = registration.installing;
     if (!newSW) return;
 
     newSW.addEventListener('statechange', () => {
       if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-        // New SW is installed and waiting — old SW still active
         _pendingSW = newSW;
+        // _newVersion already set via SW_WAITING message from install event
         _showToast();
       }
     });
   }
 
-  /**
-   * Periodically check for SW updates (active tab only).
-   */
+  /** Periodic background check — only when tab is active. */
   function _startPeriodicCheck(registration) {
     _checkInterval = setInterval(() => {
       if (!document.hidden) {
-        registration.update().catch(() => {
-          // Network unavailable — silently skip
-        });
+        registration.update().catch(() => {});
       }
     }, CHECK_INTERVAL_MS);
 
-    // Also check when tab becomes visible again
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
         registration.update().catch(() => {});
@@ -146,23 +232,42 @@ const UpdateManager = (() => {
 
 
   /* ========================================================================
-     4. SW LIFECYCLE LISTENERS
+     6. SW LIFECYCLE LISTENERS
      ======================================================================== */
 
+  /**
+   * Handle messages from the Service Worker:
+   *
+   * SW_WAITING   — new SW installed & waiting, contains version string
+   *                → store version, mark pending SW, show toast
+   *
+   * SW_ACTIVATED — new SW took control
+   *                → reload page to serve fresh content
+   */
   function _listenForMessages() {
     navigator.serviceWorker.addEventListener('message', event => {
-      if (event.data?.type === 'SW_ACTIVATED') {
-        // New SW has activated — reload to get fresh content
-        if (!_isReloading) {
-          _isReloading = true;
-          window.location.reload();
+      const { type, version } = event.data ?? {};
+
+      if (type === 'SW_WAITING') {
+        // Store version from SW before toast is created
+        _newVersion = version ?? null;
+
+        if (navigator.serviceWorker.controller) {
+          // Only show if there's an existing controller (not first install)
+          _pendingSW = navigator.serviceWorker.controller;
+          _showToast();
         }
+      }
+
+      if (type === 'SW_ACTIVATED' && !_isReloading) {
+        _isReloading = true;
+        window.location.reload();
       }
     });
   }
 
   /**
-   * Handle edge case: SW controller changed in another tab.
+   * Handle controller change from another tab (multi-tab scenario).
    */
   function _listenForControllerChange() {
     let _refreshing = false;
@@ -175,7 +280,7 @@ const UpdateManager = (() => {
 
 
   /* ========================================================================
-     5. INIT
+     7. INIT
      ======================================================================== */
 
   async function init() {
@@ -184,33 +289,48 @@ const UpdateManager = (() => {
     try {
       const registration = await navigator.serviceWorker.register('/service-worker.js');
 
-      // Case 1: SW already waiting (e.g. user had tab open for a long time)
+      // Case 1: SW already waiting on page load (stale/long-open tab)
       if (registration.waiting && navigator.serviceWorker.controller) {
         _pendingSW = registration.waiting;
-        _showToast();
+        // Ask waiting SW for its version via postMessage
+        const channel = new MessageChannel();
+        channel.port1.onmessage = event => {
+          _newVersion = event.data?.version ?? null;
+          _showToast();
+        };
+        registration.waiting.postMessage({ type: 'GET_VERSION' }, [channel.port2]);
+
+        // Fallback: show toast without version if no reply in 500ms
+        setTimeout(() => {
+          if (!_toastEl) _showToast();
+        }, 500);
       }
 
       // Case 2: New SW found during this session
       registration.addEventListener('updatefound', () => _onUpdateFound(registration));
 
-      // Case 3: Listen for messages from SW (SW_ACTIVATED)
+      // Case 3: Messages from SW (SW_WAITING, SW_ACTIVATED)
       _listenForMessages();
 
-      // Case 4: Controller changed (multi-tab scenario)
+      // Case 4: Controller swapped (multi-tab)
       _listenForControllerChange();
 
-      // Periodic background check
+      // Case 5: Periodic background polling
       _startPeriodicCheck(registration);
 
+      // Sync toast language when user switches ID ↔ EN
+      _syncLanguage();
+
     } catch {
-      // SW registration failed — site still works normally without update feature
+      // SW registration failed — app still works, toast simply won't appear
     }
   }
 
 
   /* ========================================================================
-     6. CLEANUP (for SPA / future use)
+     8. CLEANUP
      ======================================================================== */
+
   function destroy() {
     clearInterval(_checkInterval);
     _checkInterval = null;
