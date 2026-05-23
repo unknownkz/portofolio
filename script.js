@@ -827,27 +827,34 @@ const Language = (() => {
    16. CONTENT PROTECTION ( Protection System + Popup Notification )
    ========================================================================== */
 const Protection = (() => {
-   // Custom Toast Notification for Copy Block.
+  let toastCooldown = false;
+// Custom Toast Notification for Copy Block.
   function showCopyToast(message = '') {
+    if (toastCooldown) return;
+    toastCooldown = true;
+
     let toast = document.querySelector('.copy-toast');
     if (!toast) {
+
       toast = document.createElement('div');
       toast.className = 'copy-toast';
+
       document.body.appendChild(toast);
     }
     toast.innerText = message;
     toast.classList.add('show');
-    // Clear existing timeout
-    if (toast._timeoutId) clearTimeout(toast._timeoutId);
-    
-    // Set new timeout
+    /* Clear Previous Timeout */
+    if (toast._timeoutId) {
+      clearTimeout(toast._timeoutId);
+    }
     toast._timeoutId = setTimeout(() => {
       toast.classList.remove('show');
+      toastCooldown = false;
     }, 2800);
-  }
+  }}
    
   function init() {
-    // Block right-click context menu
+    // Block right-click Context Menu
     document.addEventListener('contextmenu', e => {
       e.preventDefault();
       showCopyToast('⚠ Sorry, right-click access has been blocked!');
@@ -881,13 +888,30 @@ const Protection = (() => {
     // Remove target="_blank" (keep navigation in same tab)
     DOM.allLinks.forEach(link => link.removeAttribute('target'));
 
-    // Block middle-click (open in new tab)
+    // Block Middle Mouse - Modern Browser (Chrome / Edge / Brave / Opera)
+    document.addEventListener('auxclick', e => {
+      /* Target Link */
+      const link = e.target.closest('a');
+      if (!link) return;
+   
+      /* Button 1 = Middle Mouse */
+      if (e.button === 1) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        showCopyToast('⚠ Sorry, opening a new tab is blocked!');
+      }
+    }, { passive:false });
+
+    // Block Middle Mouse - Fallback Old Browser
     document.addEventListener('mousedown', e => {
       if (e.button === 1) {
-         e.preventDefault();
-         showCopyToast('⚠ Sorry, access to Open a new tab has been blocked!');
+        e.preventDefault();
+        e.stopPropagation();
+        showCopyToast('⚠ Sorry, opening a new tab is blocked!');
       }
-    });
+    }, { passive:false });
+
   }
 
   return { init };
