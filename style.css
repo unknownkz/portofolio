@@ -2185,15 +2185,61 @@ body.light-mode .update-toast__btn--dismiss:hover {
 }
 
 /* ── Mobile ───────────────────────────────────────── */
-@media (max-width: 480px) {
-  .update-toast {
-    left: 16px;
-    right: 16px;
-    bottom: 20px;
-    min-width: unset;
-    max-width: unset;
-    gap: 10px;
-    padding: 12px 14px;
+@media (max-width: 480px){
+  .update-toast{
+    left:12px;
+    right:12px;
+    bottom:16px;
+    min-width:auto;
+    max-width:none;
+    padding:14px;
+    gap:12px;
+    align-items:flex-start;
+    border-radius:18px;
+    /* Mobile Performance */
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  /* icon small */
+  .update-toast__icon{
+    width:34px;
+    height:34px;
+    font-size:14px;
+  }
+  /* body flexible */
+  .update-toast__body{
+    gap:4px;
+  }
+  .update-toast__title{
+    font-size:13px;
+    line-height:1.35;
+  }
+  .update-toast__desc{
+    display:block;
+    font-size:11px;
+    line-height:1.45;
+    white-space:normal;
+    overflow:visible;
+    text-overflow:unset;
+    max-width:100%;
+    color:rgba(226,232,240,0.72);
+  }
+  /* Button compact */
+  .update-toast__actions{
+    margin-top:6px;
+    gap:6px;
+  }
+  .update-toast__btn--update{
+    padding:7px 12px;
+    font-size:11px;
+  }
+  .update-toast__btn--dismiss{
+    width:26px;
+    height:26px;
+  }
+  /* 🔥 LIGHT MODE MOBILE */
+  body.light-mode .update-toast__desc{
+    color:rgba(15,23,42,0.68);
   }
 }
 /* ==========================================================================
