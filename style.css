@@ -1755,7 +1755,7 @@ canvas { image-rendering: optimizeSpeed; }
   align-items:center;
   justify-content:center;
   gap:14px;
-  padding:14px 22px;
+  padding:16px 22px;
   /* GLASSMORPHISM DARK */
   background:rgba(15,23,42,0.88);
   backdrop-filter:blur(18px);
@@ -1813,15 +1813,6 @@ canvas { image-rendering: optimizeSpeed; }
   );
   border-radius:20px;
   opacity:.85;
-}
-
-/* ICON */
-.copy-toast::after{
-  content:'⚠';
-  position:absolute;
-  left:18px;
-  font-size:14px;
-  opacity:.9;
 }
 
 /* LIGHT MODE */
