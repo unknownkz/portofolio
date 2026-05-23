@@ -1,13 +1,46 @@
 /* ==========================================================================
    PORTOFOLIO — Axel Alexius Latukolan
-   service-worker.js  |  Production Build  |  v4
+   service-worker.js  |  Production Build  |  v4.1
    Strategy: Cache-First (static) + Network-First (navigation) + Auto Update
    ========================================================================== */
 
 /* ==========================================================================
-   1. CONFIG
+   1. CONFIG — VERSIONING & UPDATE TYPE
+   --------------------------------------------------------------------------
+   Format : axelal-vMAJOR.MINOR
+   Contoh : axelal-v4.1
+
+   KAPAN NAIKKAN VERSI:
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │  MAJOR (angka depan)  → v4 → v5
+   │  Gunakan saat: fitur baru besar, redesign, perubahan struktur HTML
+   │
+   │  MINOR (angka belakang) → v4.1 → v4.2 → v4.3
+   │  Gunakan saat: update teks, ganti foto, fix CSS, tweak warna, dll
+   └─────────────────────────────────────────────────────────────────────┘
+
+   UPDATE_TYPE — Kontrol jenis toast yang muncul di user:
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │  'content'  → Toast biasa: "Perbarui" → reload halaman
+   │  Gunakan saat: update HTML, CSS, JS, teks, foto, konten apapun
+   │          
+   │  'manifest' → Toast khusus: "Reinstall App" + "Perbarui Konten"
+   │  Gunakan saat: ganti icon app, nama app, warna splash screen
+   │  User perlu uninstall → install ulang agar icon/nama berubah
+   └─────────────────────────────────────────────────────────────────────┘
+
+   ATURAN: Setiap deploy ke server = WAJIB naikkan SW_VERSION.
+   Tanpa itu, user tidak akan dapat notifikasi update.
+
+   Contoh alur:
+   v4.1  → update foto profil         → v4.2  UPDATE_TYPE = 'content'
+   v4.2  → ganti icon app             → v4.3  UPDATE_TYPE = 'manifest'
+   v4.3  → tambah section baru        → v5    UPDATE_TYPE = 'content'
+   v5    → ganti nama app             → v5.1  UPDATE_TYPE = 'manifest'
    ========================================================================== */
-const SW_VERSION   = 'axelal-v4.7';
+const SW_VERSION   = 'axelal-v4.8';
+const UPDATE_TYPE  = 'content'; // 'content' | 'manifest'
+
 const CACHE_STATIC = `${SW_VERSION}-static`;
 const CACHE_PAGES  = `${SW_VERSION}-pages`;
 const ALL_CACHES   = [CACHE_STATIC, CACHE_PAGES];
@@ -34,15 +67,14 @@ const OPTIONAL_ASSETS = [
   '/picture/icons/icon-192.png',
   '/picture/icons/icon-512.png',
   '/picture/icons/icon-maskable.png',
-  
 ];
 
 
 /* ==========================================================================
-   2. INSTALL — Pre-cache assets, then notify waiting clients of new version
+   2. INSTALL — Pre-cache assets, broadcast version + update type to clients
    ========================================================================== */
 self.addEventListener('install', event => {
-  // Do NOT skipWaiting here — UpdateManager controls when to activate
+  // Do NOT skipWaiting — UpdateManager controls when to activate
 
   event.waitUntil(
     caches.open(CACHE_STATIC).then(async cache => {
@@ -54,11 +86,14 @@ self.addEventListener('install', event => {
         OPTIONAL_ASSETS.map(url => cache.add(url).catch(() => null))
       );
 
-      // Notify ALL open clients that a new version is waiting
-      // This is how UpdateManager knows the version number BEFORE activation
+      // Notify all open clients: new version waiting + what kind of update
       const clients = await self.clients.matchAll({ type: 'window' });
       clients.forEach(client =>
-        client.postMessage({ type: 'SW_WAITING', version: SW_VERSION })
+        client.postMessage({
+          type:       'SW_WAITING',
+          version:    SW_VERSION,
+          updateType: UPDATE_TYPE,
+        })
       );
     })
   );
@@ -66,7 +101,7 @@ self.addEventListener('install', event => {
 
 
 /* ==========================================================================
-   3. ACTIVATE — Clean old caches, claim clients, broadcast update done
+   3. ACTIVATE — Clean old caches, claim clients, broadcast activation
    ========================================================================== */
 self.addEventListener('activate', event => {
   self.clients.claim();
@@ -81,10 +116,14 @@ self.addEventListener('activate', event => {
             .map(key => caches.delete(key))
         )
       ),
-      // Notify all tabs that this version is now fully active → trigger reload
+      // Notify all tabs: new SW is now active → trigger reload
       self.clients.matchAll({ type: 'window' }).then(clients => {
         clients.forEach(client =>
-          client.postMessage({ type: 'SW_ACTIVATED', version: SW_VERSION })
+          client.postMessage({
+            type:       'SW_ACTIVATED',
+            version:    SW_VERSION,
+            updateType: UPDATE_TYPE,
+          })
         );
       }),
     ])
@@ -115,14 +154,17 @@ self.addEventListener('fetch', event => {
    5. MESSAGE — SKIP_WAITING + GET_VERSION
    ========================================================================== */
 self.addEventListener('message', event => {
-  // UpdateManager user clicks "Update" → activate new SW immediately
+  // User clicked "Update" in UpdateManager → activate new SW immediately
   if (event.data?.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 
-  // UpdateManager queries version on page load (Case 1: SW already waiting)
+  // UpdateManager queries version + updateType on page load (SW already waiting)
   if (event.data?.type === 'GET_VERSION' && event.ports[0]) {
-    event.ports[0].postMessage({ version: SW_VERSION });
+    event.ports[0].postMessage({
+      version:    SW_VERSION,
+      updateType: UPDATE_TYPE,
+    });
   }
 });
 
@@ -190,4 +232,3 @@ async function _offlineFallback(request) {
 /* ==========================================================================
    END OF FILE
    ========================================================================== */
-     
