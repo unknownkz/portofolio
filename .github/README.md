@@ -245,6 +245,6 @@ sebagian/seluruh konten untuk tujuan komersial tanpa izin tertulis.
 
 <div align="center">
 
-Dibuat dengan ❤️ oleh **[Axel Alexius Latukolan](https://www.axelal.my.id)**
+Dibuat dengan passion ⚡ oleh **[Axel Alexius Latukolan](https://www.axelal.my.id)**
 
 </div>
