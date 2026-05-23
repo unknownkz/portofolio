@@ -1,6 +1,6 @@
 /* ==========================================================================
    PORTOFOLIO — Axel Alexius Latukolan
-   service-worker.js  |  Production Build  |  v4.x
+   service-worker.js  |  Production Build  |  v4.1
    Strategy: Cache-First (static) + Network-First (navigation) + Auto Update
    ========================================================================== */
 
@@ -12,21 +12,21 @@
 
    KAPAN NAIKKAN VERSI:
    ┌─────────────────────────────────────────────────────────────────────┐
-   │  MAJOR (angka depan)  → v4 → v5
-   │  Gunakan saat: fitur baru besar, redesign, perubahan struktur HTML
-   │
-   │  MINOR (angka belakang) → v4.1 → v4.2 → v4.3
-   │  Gunakan saat: update teks, ganti foto, fix CSS, tweak warna, dll
+   │  MAJOR (angka depan)  → v4 → v5                                    │
+   │  Gunakan saat: fitur baru besar, redesign, perubahan struktur HTML  │
+   │                                                                     │
+   │  MINOR (angka belakang) → v4.1 → v4.2 → v4.3                      │
+   │  Gunakan saat: update teks, ganti foto, fix CSS, tweak warna, dll  │
    └─────────────────────────────────────────────────────────────────────┘
 
    UPDATE_TYPE — Kontrol jenis toast yang muncul di user:
    ┌─────────────────────────────────────────────────────────────────────┐
-   │  'content'  → Toast biasa: "Perbarui" → reload halaman
-   │  Gunakan saat: update HTML, CSS, JS, teks, foto, konten apapun
-   │          
-   │  'manifest' → Toast khusus: "Reinstall App" + "Perbarui Konten"
-   │  Gunakan saat: ganti icon app, nama app, warna splash screen
-   │  User perlu uninstall → install ulang agar icon/nama berubah
+   │  'content'  → Toast biasa: "Perbarui" → reload halaman             │
+   │  Gunakan saat: update HTML, CSS, JS, teks, foto, konten apapun     │
+   │                                                                     │
+   │  'manifest' → Toast khusus: "Reinstall App" + "Perbarui Konten"   │
+   │  Gunakan saat: ganti icon app, nama app, warna splash screen        │
+   │  User perlu uninstall → install ulang agar icon/nama berubah        │
    └─────────────────────────────────────────────────────────────────────┘
 
    ATURAN: Setiap deploy ke server = WAJIB naikkan SW_VERSION.
@@ -38,8 +38,8 @@
    v4.3  → tambah section baru        → v5    UPDATE_TYPE = 'content'
    v5    → ganti nama app             → v5.1  UPDATE_TYPE = 'manifest'
    ========================================================================== */
-const SW_VERSION   = 'axelal-v4.85';
-const UPDATE_TYPE  = 'manifest'; // 'content' | 'manifest'
+const SW_VERSION   = 'axelal-v4.86';
+const UPDATE_TYPE  = 'content'; // 'content' | 'manifest'
 
 const CACHE_STATIC = `${SW_VERSION}-static`;
 const CACHE_PAGES  = `${SW_VERSION}-pages`;
@@ -151,20 +151,39 @@ self.addEventListener('fetch', event => {
 
 
 /* ==========================================================================
-   5. MESSAGE — SKIP_WAITING + GET_VERSION
+   5. MESSAGE — SKIP_WAITING + GET_VERSION + CLEAR_CACHE
    ========================================================================== */
-self.addEventListener('message', event => {
-  // User clicked "Update" in UpdateManager → activate new SW immediately
-  if (event.data?.type === 'SKIP_WAITING') {
+self.addEventListener('message', async event => {
+  const { type } = event.data ?? {};
+
+  // User clicked "Update" → activate new SW immediately
+  if (type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 
-  // UpdateManager queries version + updateType on page load (SW already waiting)
-  if (event.data?.type === 'GET_VERSION' && event.ports[0]) {
+  // UpdateManager queries version + updateType (SW already waiting on page load)
+  if (type === 'GET_VERSION' && event.ports[0]) {
     event.ports[0].postMessage({
       version:    SW_VERSION,
       updateType: UPDATE_TYPE,
     });
+  }
+
+  // Clear ALL caches before reinstall — prevents stale cache update loop
+  // Called by UpdateManager._triggerInstall() before showing install prompt
+  if (type === 'CLEAR_CACHE') {
+    try {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(key => caches.delete(key)));
+    } catch {
+      // Silent fail — proceed anyway
+    } finally {
+      // Notify UpdateManager cache is cleared, then activate
+      if (event.ports[0]) {
+        event.ports[0].postMessage({ type: 'CACHE_CLEARED' });
+      }
+      self.skipWaiting();
+    }
   }
 });
 
