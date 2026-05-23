@@ -157,10 +157,10 @@ Setiap deploy perubahan konten, naikkan `SW_VERSION` di `service-worker.js`:
 
 ```js
 // Sebelum
-const SW_VERSION = 'axelal-v4';
+const SW_VERSION = 'Axel A. L - v4.1';
 
 // Setelah deploy
-const SW_VERSION = 'axelal-v5';
+const SW_VERSION = 'Axel A. L - v5.1';
 ```
 
 **Alur otomatis:**
