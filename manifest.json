@@ -30,7 +30,7 @@
       "purpose": "maskable"
     },
     {
-      "src": "picture/icons/icon-512.png",
+      "src": "picture/icons/icon-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
