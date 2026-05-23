@@ -824,59 +824,65 @@ const Language = (() => {
 
 
 /* ==========================================================================
-   16. CONTENT PROTECTION ( Protection System + Popup Notification )
+   16. CONTENT PROTECTION & TOAST NOTIFICATION
    ========================================================================== */
 const Protection = (() => {
-  let toastCooldown = false;
-// Custom Toast Notification for Copy Block.
-  function showCopyToast(message = '') {
-    if (toastCooldown) return;
-    toastCooldown = true;
+
+  let _toastCooldown = false;
+
+  /* -----------------------------------------------------------------------
+     Toast notification
+     ----------------------------------------------------------------------- */
+  function _showToast(message = '') {
+    if (_toastCooldown) return;
+    _toastCooldown = true;
 
     let toast = document.querySelector('.copy-toast');
     if (!toast) {
-
       toast = document.createElement('div');
       toast.className = 'copy-toast';
-
       document.body.appendChild(toast);
     }
+
     toast.innerText = message;
     toast.classList.add('show');
-    /* Clear Previous Timeout */
-    if (toast._timeoutId) {
-      clearTimeout(toast._timeoutId);
-    }
+
+    if (toast._timeoutId) clearTimeout(toast._timeoutId);
+
     toast._timeoutId = setTimeout(() => {
       toast.classList.remove('show');
-      toastCooldown = false;
+      _toastCooldown = false;
     }, 2800);
-  }}
-   
+  }
+
+  /* -----------------------------------------------------------------------
+     Init
+     ----------------------------------------------------------------------- */
   function init() {
-    // Block right-click Context Menu
+
+    // Block right-click context menu
     document.addEventListener('contextmenu', e => {
       e.preventDefault();
-      showCopyToast('⚠ Sorry, right-click access has been blocked!');
+      _showToast('⚠ Sorry, right-click access has been blocked!');
     });
 
     // Block DevTools shortcuts
     document.addEventListener('keydown', e => {
-      const isF12 = e.key === 'F12';
-      const isCtrlShiftI = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i';
-      const isCtrlShiftJ = e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j';
-      const isCtrlU      = e.ctrlKey && e.key.toLowerCase() === 'u';
+      const blocked =
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['i', 'j'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.key.toLowerCase() === 'u');
 
-      if (isF12 || isCtrlShiftI || isCtrlShiftJ || isCtrlU) {
+      if (blocked) {
         e.preventDefault();
-        showCopyToast('⚠ Sorry, DevTools access has been blocked!');
+        _showToast('⚠ Sorry, DevTools access has been blocked!');
       }
     });
 
-    // Block copy event (CTRL+C, right-click > Copy, browser menu, etc)
+    // Block copy (Ctrl+C, right-click copy, browser menu)
     document.addEventListener('copy', e => {
       e.preventDefault();
-      showCopyToast('⚠ Sorry, copy access has been blocked!');
+      _showToast('⚠ Sorry, copy access has been blocked!');
     });
 
     // Block image drag
@@ -885,36 +891,31 @@ const Protection = (() => {
       img.addEventListener('dragstart', e => e.preventDefault());
     });
 
-    // Remove target="_blank" (keep navigation in same tab)
-    DOM.allLinks.forEach(link => link.removeAttribute('target'));
-
-    // Block Middle Mouse - Modern Browser (Chrome / Edge / Brave / Opera)
+    // Block middle-click — modern browsers (Chrome/Edge/Brave/Opera)
     document.addEventListener('auxclick', e => {
-      /* Target Link */
       const link = e.target.closest('a');
       if (!link) return;
-   
-      /* Button 1 = Middle Mouse */
       if (e.button === 1) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        showCopyToast('⚠ Sorry, opening a new tab is blocked!');
+        _showToast('⚠ Sorry, opening a new tab is blocked!');
       }
-    }, { passive:false });
+    }, { passive: false });
 
-    // Block Middle Mouse - Fallback Old Browser
+    // Block middle-click — fallback older browsers
     document.addEventListener('mousedown', e => {
       if (e.button === 1) {
         e.preventDefault();
         e.stopPropagation();
-        showCopyToast('⚠ Sorry, opening a new tab is blocked!');
+        _showToast('⚠ Sorry, opening a new tab is blocked!');
       }
-    }, { passive:false });
+    }, { passive: false });
 
   }
 
   return { init };
+
 })();
 
 
