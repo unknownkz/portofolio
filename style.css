@@ -1819,7 +1819,7 @@ canvas { image-rendering: optimizeSpeed; }
 .copy-toast::after{
   content:'⚠';
   position:absolute;
-  left:14px;
+  left:18px;
   font-size:14px;
   opacity:.9;
 }
