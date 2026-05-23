@@ -157,16 +157,16 @@ Setiap deploy perubahan konten, naikkan `SW_VERSION` di `service-worker.js`:
 
 ```js
 // Sebelum
-const SW_VERSION = 'Axel A. L - v4.1';
+const SW_VERSION = 'axelal-v4';
 
 // Setelah deploy
-const SW_VERSION = 'Axel A. L - v5.1';
+const SW_VERSION = 'axelal-v4.1';
 ```
 
 **Alur otomatis:**
 1. User membuka website → Service Worker baru terdeteksi di background
-2. Toast notifikasi muncul: *"Pembaruan Tersedia — Versi baru v5 siap dipasang"*
-3. User klik **Perbarui** → app reload dengan versi terbaru
+2. Toast notifikasi muncul: *"Pembaruan Tersedia — Versi baru v4.x siap dipasang"*
+3. User klik **Perbarui Sekarang** → app reload dengan versi terbaru
 4. Toast mendukung bahasa ID dan EN sesuai preferensi user
 
 ---
