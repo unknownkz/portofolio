@@ -233,7 +233,9 @@ Namun **feedback, saran, atau bug report** sangat diterima melalui [Issues](http
 ## Lisensi
 
 ```
-Copyright © 2026–present  Axel Alexius Latukolan
+MIT License
+
+Copyright © 2026–present  Axel Alexius Latukolan / unknownkz
 All Rights Reserved.
 
 Source code ini dibagikan untuk keperluan referensi dan pembelajaran.
