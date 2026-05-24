@@ -1,8 +1,7 @@
 /* ==========================================================================
-   HEXA AI Assistant — Axel Alexius Latukolan
+   HEXA AI Assistant — OpenRouter Production Backend
    File: /api/chat.js
-   Runtime: Node.js (Vercel Serverless Function)
-   Version: Production Stable
+   Runtime: Node.js (Vercel Serverless)
    ========================================================================== */
 
 
@@ -14,21 +13,18 @@ Kamu adalah HEXA, asisten AI pribadi milik Axel Alexius Latukolan.
 
 TUGAS:
 - Membantu pengunjung website portfolio Axel
-- Jawab ramah, profesional, modern, singkat, jelas
-- Gunakan bahasa yang sama dengan user (Indonesia / English)
-- Jangan terlalu panjang
+- Jawab profesional, modern, singkat, helpful
+- Gunakan bahasa yang sama dengan user
 - Jangan mengarang informasi
 
 INFORMASI AXEL:
-- Nama:
-  Axel Alexius Latukolan
-
+- Nama: Axel Alexius Latukolan
 - Profesi:
   Web3 Analyst,
   Data Processing Specialist,
   Hospitality Professional
 
-- Keahlian:
+- Skills:
   Python,
   PHP,
   SQL,
@@ -55,7 +51,7 @@ INFORMASI AXEL:
   Phone:
   +62 815-1701-8046
 
-- Social Media:
+- Social:
   Github:
   github.com/unknownkz
 
@@ -68,17 +64,19 @@ INFORMASI AXEL:
 
 
 /* ==========================================================================
-   RATE LIMIT CONFIG
+   MODEL CONFIG
+   ========================================================================== */
+const MODEL = 'google/gemma-3-12b-it:free';
+
+
+/* ==========================================================================
+   RATE LIMIT
    ========================================================================== */
 const RATE_LIMIT = 20;
 const RATE_WINDOW = 60 * 1000;
 
 const rateLimitMap = new Map();
 
-
-/* ==========================================================================
-   RATE LIMIT HELPER
-   ========================================================================== */
 function isRateLimited(ip) {
 
   const now = Date.now();
@@ -88,7 +86,6 @@ function isRateLimited(ip) {
     start: now
   };
 
-  // Reset window
   if (now - data.start > RATE_WINDOW) {
 
     rateLimitMap.set(ip, {
@@ -99,12 +96,10 @@ function isRateLimited(ip) {
     return false;
   }
 
-  // Max request reached
   if (data.count >= RATE_LIMIT) {
     return true;
   }
 
-  // Increment
   data.count++;
 
   rateLimitMap.set(ip, data);
@@ -114,7 +109,7 @@ function isRateLimited(ip) {
 
 
 /* ==========================================================================
-   SEND ERROR RESPONSE
+   ERROR RESPONSE
    ========================================================================== */
 function sendError(
   res,
@@ -136,7 +131,7 @@ function sendError(
 
 
 /* ==========================================================================
-   MAIN API HANDLER
+   MAIN HANDLER
    ========================================================================== */
 export default async function handler(req, res) {
 
@@ -197,45 +192,25 @@ export default async function handler(req, res) {
 
     return sendError(
       res,
-      'Terlalu banyak permintaan. Silakan tunggu sebentar.',
-      'Too many requests. Please wait a moment.',
+      'Terlalu banyak permintaan.',
+      'Too many requests.',
       429
     );
   }
 
 
   /* -----------------------------------------------------------------------
-     REQUEST BODY
-     ----------------------------------------------------------------------- */
-  const body = req.body;
-
-  if (!body) {
-
-    return sendError(
-      res,
-      'Body request kosong.',
-      'Request body is empty.',
-      400
-    );
-  }
-
-
-  /* -----------------------------------------------------------------------
-     EXTRACT DATA
+     BODY
      ----------------------------------------------------------------------- */
   const {
     message,
     history = []
-  } = body;
+  } = req.body || {};
 
 
-  /* -----------------------------------------------------------------------
-     VALIDATE MESSAGE
-     ----------------------------------------------------------------------- */
   if (
     !message ||
-    typeof message !== 'string' ||
-    message.trim().length === 0
+    typeof message !== 'string'
   ) {
 
     return sendError(
@@ -248,54 +223,40 @@ export default async function handler(req, res) {
 
 
   /* -----------------------------------------------------------------------
-     GEMINI API KEY
+     API KEY
      ----------------------------------------------------------------------- */
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
 
-    console.error('GEMINI_API_KEY not found');
-
     return sendError(
       res,
-      'API key Gemini tidak ditemukan.',
-      'Gemini API key is missing.',
+      'OPENROUTER_API_KEY tidak ditemukan.',
+      'OPENROUTER_API_KEY missing.',
       500
     );
   }
 
 
   /* -----------------------------------------------------------------------
-     SANITIZE MESSAGE
+     SANITIZE
      ----------------------------------------------------------------------- */
-  const safeMessage = message
-    .trim()
-    .slice(0, 1000);
+  const safeMessage =
+    message
+      .trim()
+      .slice(0, 1000);
 
 
   /* -----------------------------------------------------------------------
-     BUILD CHAT HISTORY
+     BUILD MESSAGES
      ----------------------------------------------------------------------- */
-  const contents = [
+  const messages = [
 
-    // System prompt
     {
-      role: 'user',
-      parts: [{
-        text: SYSTEM_PROMPT
-      }]
+      role: 'system',
+      content: SYSTEM_PROMPT
     },
 
-    // Assistant intro
-    {
-      role: 'model',
-      parts: [{
-        text:
-          'Halo! Saya HEXA, asisten AI Axel Alexius Latukolan. Saya siap membantu.'
-      }]
-    },
-
-    // Previous history
     ...history
       .slice(-10)
       .map(item => ({
@@ -303,118 +264,74 @@ export default async function handler(req, res) {
         role:
           item.role === 'user'
             ? 'user'
-            : 'model',
+            : 'assistant',
 
-        parts: [{
-          text: String(item.content)
+        content:
+          String(item.content)
             .slice(0, 1000)
-        }]
       })),
 
-    // Current message
     {
       role: 'user',
-      parts: [{
-        text: safeMessage
-      }]
+      content: safeMessage
     }
   ];
 
 
   /* -----------------------------------------------------------------------
-     GEMINI REQUEST
+     OPENROUTER REQUEST
      ----------------------------------------------------------------------- */
   try {
 
-    /*
-      MODEL RECOMMENDATION:
-      gemini-2.0-flash
-      - Fast
-      - Stable
-      - FREE BILLING FRIENDLY
-      - Very suitable for AI assistant
-    */
-    const model = 'gemini-2.5-flash';
+    const response = await fetch(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
 
+        method: 'POST',
 
-    const url =
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        headers: {
 
+          'Authorization':
+            `Bearer ${apiKey}`,
 
-    console.log('==============================');
-    console.log('HEXA AI REQUEST');
-    console.log('MODEL:', model);
-    console.log('IP:', ip);
-    console.log('MESSAGE:', safeMessage);
-    console.log('==============================');
+          'Content-Type':
+            'application/json',
 
+          'HTTP-Referer':
+            'https://www.axelal.my.id',
 
-    const geminiRes = await fetch(url, {
+          'X-Title':
+            'HEXA AI Assistant'
+        },
 
-      method: 'POST',
+        body: JSON.stringify({
 
-      headers: {
-        'Content-Type': 'application/json'
-      },
+          model: MODEL,
 
-      body: JSON.stringify({
-
-        contents,
-
-        generationConfig: {
+          messages,
 
           temperature: 0.7,
 
-          topP: 0.9,
-
-          topK: 40,
-
-          maxOutputTokens: 512
-        },
-
-        safetySettings: [
-
-          {
-            category: 'HARM_CATEGORY_HARASSMENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE'
-          },
-
-          {
-            category: 'HARM_CATEGORY_HATE_SPEECH',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE'
-          },
-
-          {
-            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE'
-          },
-
-          {
-            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_MEDIUM_AND_ABOVE'
-          }
-        ]
-      })
-    });
+          max_tokens: 500
+        })
+      }
+    );
 
 
     /* ---------------------------------------------------------------------
-       GEMINI ERROR
+       OPENROUTER ERROR
        --------------------------------------------------------------------- */
-    if (!geminiRes.ok) {
+    if (!response.ok) {
 
-      const errorText = await geminiRes.text();
+      const errorText = await response.text();
 
-      console.error('==============================');
-      console.error('GEMINI API ERROR');
-      console.error('STATUS:', geminiRes.status);
+      console.error('OPENROUTER ERROR:');
       console.error(errorText);
-      console.error('==============================');
 
       return sendError(
         res,
-        'Layanan AI sedang bermasalah.',
-        'AI service is temporarily unavailable.',
+        'AI sedang bermasalah.',
+        'AI service unavailable.',
         502
       );
     }
@@ -423,31 +340,26 @@ export default async function handler(req, res) {
     /* ---------------------------------------------------------------------
        PARSE RESPONSE
        --------------------------------------------------------------------- */
-    const data = await geminiRes.json();
-
-    console.log('GEMINI RESPONSE:', JSON.stringify(data));
+    const data = await response.json();
 
     const reply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text
+      data?.choices?.[0]?.message?.content
       ?? '';
 
 
-    /* ---------------------------------------------------------------------
-       EMPTY RESPONSE
-       --------------------------------------------------------------------- */
     if (!reply) {
 
       return sendError(
         res,
         'AI tidak memberikan respons.',
-        'AI returned an empty response.',
+        'AI returned empty response.',
         502
       );
     }
 
 
     /* ---------------------------------------------------------------------
-       SUCCESS RESPONSE
+       SUCCESS
        --------------------------------------------------------------------- */
     return res.status(200).json({
 
@@ -458,14 +370,12 @@ export default async function handler(req, res) {
 
   } catch (error) {
 
-    console.error('==============================');
-    console.error('INTERNAL SERVER ERROR');
+    console.error('SERVER ERROR:');
     console.error(error);
-    console.error('==============================');
 
     return sendError(
       res,
-      'Terjadi kesalahan pada server.',
+      'Server mengalami kesalahan.',
       'Internal server error.',
       500
     );
