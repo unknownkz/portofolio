@@ -38,7 +38,7 @@
    v4.3  → tambah section baru        → v5    UPDATE_TYPE = 'content'
    v5    → ganti nama app             → v5.1  UPDATE_TYPE = 'manifest'
    ========================================================================== */
-const SW_VERSION   = 'axelal-v4.89';
+const SW_VERSION   = 'axelal-v4.90';
 const UPDATE_TYPE  = 'manifest'; // 'content' | 'manifest'
 
 const CACHE_STATIC = `${SW_VERSION}-static`;
