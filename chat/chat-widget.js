@@ -281,11 +281,25 @@ const ChatWidget = (() => {
 
       const data = await res.json();
 
+      /* Handle API Error Response */
       if (!res.ok) {
-        const errMsg = res.status === 429 ? s.errorLimit : (data.error || s.errorGeneral);
+
+        // Get bilingual error message from backend
+        const errMsg =
+          res.status === 429
+            ? s.errorLimit
+            : (
+                _chatLang() === 'id'
+                  ? data?.error?.id
+                  : data?.error?.en
+              ) || s.errorGeneral;
+
+        // Show error message
         _appendMessage('assistant', errMsg);
-        // Remove last user message from history on error
+
+        // Remove last failed user message from history
         _history.pop();
+
         return;
       }
 
