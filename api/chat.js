@@ -334,7 +334,7 @@ export default async function handler(req, res) {
       - FREE BILLING FRIENDLY
       - Very suitable for AI assistant
     */
-    const model = 'gemini-2.0-flash';
+    const model = 'gemini-2.5-flash';
 
 
     const url =
