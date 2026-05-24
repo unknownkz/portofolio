@@ -55,7 +55,7 @@ const UpdateTranslations = {
     modalTitle:        'How to Reinstall the App',
     modalSubtitle:     'Follow these steps to get the new icon & app name on your home screen.',
     modalStep1Title:   'Uninstall the app',
-    modalStep1Desc:    'Press & hold the Axel AL icon on your home screen → select "Remove" or "Uninstall".',
+    modalStep1Desc:    'Press & hold the Axel A. L icon on your home screen → select "Remove" or "Uninstall".',
     modalStep2Title:   'Reinstall the app',
     modalStep2Desc:    'After uninstalling, tap the button below to install the latest version.',
     modalStep3Title:   'Done',
@@ -287,7 +287,7 @@ const UpdateManager = (() => {
         <div class="reinstall-modal__actions">
           <button class="reinstall-modal__btn reinstall-modal__btn--install" id="modalInstallBtn">
             <i class="fas fa-download" aria-hidden="true"></i>
-            ${s.modalInstallBtn}
+            ${_deferredPrompt ? (s.modalInstallAuto ?? s.modalInstallBtn) : s.modalInstallBtn}
           </button>
           <button class="reinstall-modal__btn reinstall-modal__btn--later" id="modalLaterBtn">
             ${s.modalLaterBtn}
@@ -323,54 +323,78 @@ const UpdateManager = (() => {
     if (e.key === 'Escape') _dismissModal();
   }
 
-  /**
-   * Trigger reinstall flow:
-   * 1. Clear all old caches via SW message
-   * 2. Wait for CACHE_CLEARED confirmation
-   * 3. Trigger browser install prompt (or fallback)
-   * 4. On accept → reload for fresh start
-   */
   async function _triggerInstall() {
     const btn = document.getElementById('modalInstallBtn');
     const s   = _t();
 
     if (btn) { btn.textContent = s.btnLoading; btn.disabled = true; }
 
-    // Step 1: Clear all old caches before installing
+    // Clear cache
     await _clearCachesViaSW();
 
-    // Step 2: Trigger install prompt or fallback
     if (_deferredPrompt) {
-      // Chrome Android / Edge — native install prompt
-      try {
-        await _deferredPrompt.prompt();
-        const { outcome } = await _deferredPrompt.userChoice;
-        _deferredPrompt = null;
-
-        if (outcome === 'accepted') {
-          // User accepted — reload to get fresh clean state
-          _dismissModal();
-          _dismissToast();
-          setTimeout(() => window.location.reload(), 800);
-        } else {
-          // User dismissed — re-enable button
-          if (btn) {
-            btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`;
-            btn.disabled = false;
-          }
-        }
-      } catch {
-        if (btn) {
-          btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`;
-          btn.disabled = false;
-        }
-      }
+      // PATH A
+      await _runNativeInstall(btn, s);
     } else {
-      // Fallback: open in browser tab — user installs from browser menu
-      window.open(window.location.origin, '_blank', 'noopener,noreferrer');
-      _dismissModal();
-      _dismissToast();
+      // PATH B
+      _runManualInstall(btn, s);
     }
+  }
+
+  /** PATH A **/
+  async function _runNativeInstall(btn, s) {
+    try {
+      await _deferredPrompt.prompt();
+      const { outcome } = await _deferredPrompt.userChoice;
+      _deferredPrompt = null;
+
+      if (outcome === 'accepted') {
+        _dismissModal();
+        _dismissToast();
+        setTimeout(() => window.location.reload(), 800);
+      } else {
+        // User cancel — re-enable
+        _resetInstallBtn(btn, s);
+      }
+    } catch {
+      _resetInstallBtn(btn, s);
+    }
+  }
+
+  /** PATH B **/
+  function _runManualInstall(btn, s) {
+    const url = `${window.location.origin}/?source=reinstall`;
+
+    // Open in browser Chrome (not in-app webview / PWA standalone)
+    const opened = window.open(url, '_blank', 'noopener,noreferrer');
+
+    if (!opened) {
+      // Popup blocked (last resort)
+      window.location.href = url;
+    }
+
+    // Update text
+    _updateModalToManualGuide(s);
+
+    // Re-enable button
+    setTimeout(() => _resetInstallBtn(btn, s), 1500);
+  }
+
+  /** Update text **/
+  function _updateModalToManualGuide(s) {
+    const step2Body = _modalEl?.querySelectorAll('.reinstall-modal__step-body')[1];
+    if (!step2Body) return;
+
+    const strong = step2Body.querySelector('strong');
+    const span   = step2Body.querySelector('span');
+    if (strong) strong.textContent = s.modalStep2Title;
+    if (span)   span.textContent   = s.modalStep2Desc;
+  }
+
+  function _resetInstallBtn(btn, s) {
+    if (!btn) return;
+    btn.innerHTML = `<i class="fas fa-download" aria-hidden="true"></i> ${s.modalInstallBtn}`;
+    btn.disabled  = false;
   }
 
   /**
