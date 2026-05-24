@@ -825,14 +825,42 @@ const Language = (() => {
 
 /* ==========================================================================
    16. CONTENT PROTECTION & TOAST NOTIFICATION
+   Bilingual (ID / EN) — synced with Language module in script.js
    ========================================================================== */
 const Protection = (() => {
 
+  /* ========================================================================
+     1. TRANSLATIONS
+     Pattern mirrors Translations module in script.js
+     ======================================================================== */
+  const ProtectionTranslations = {
+    id: {
+      rightClick: '⚠ Maaf, menu konteks tidak dapat diakses demi keamanan!',
+      devTools:   '⚠ Maaf, DevTools tidak dapat diakses demi keamanan!',
+      copy:       '⚠ Maaf, fungsi salin tidak dapat diakses demi keamanan!',
+      newTab:     '⚠ Maaf, akses untuk membuka tab baru diblokir demi keamanan!',
+    },
+    en: {
+      rightClick: '⚠ Sorry, context menu is not accessible for security reasons!',
+      devTools:   '⚠ Sorry, DevTools cannot be accessed for security reasons!',
+      copy:       '⚠ Sorry, copy function cannot be accessed for security reasons!',
+      newTab:     '⚠ Sorry, access to open new tabs is blocked for security reasons!',
+    },
+  };
+
+  /**
+   * Get translation strings for current active language.
+   * Reads same localStorage key & fallback as Language module.
+   */
+  function _t() {
+    const lang = localStorage.getItem('language') || 'id';
+    return ProtectionTranslations[lang] ?? ProtectionTranslations.id;
+  }
+
+
+  /* TOAST */
   let _toastCooldown = false;
 
-  /* -----------------------------------------------------------------------
-     Toast notification
-     ----------------------------------------------------------------------- */
   function _showToast(message = '') {
     if (_toastCooldown) return;
     _toastCooldown = true;
@@ -855,15 +883,14 @@ const Protection = (() => {
     }, 2800);
   }
 
-  /* -----------------------------------------------------------------------
-     Init
-     ----------------------------------------------------------------------- */
+
+  /* INIT */
   function init() {
 
     // Block right-click context menu
     document.addEventListener('contextmenu', e => {
       e.preventDefault();
-      _showToast('⚠ Sorry, right-click access has been blocked!');
+      _showToast(_t().rightClick);
     });
 
     // Block DevTools shortcuts
@@ -875,14 +902,14 @@ const Protection = (() => {
 
       if (blocked) {
         e.preventDefault();
-        _showToast('⚠ Sorry, DevTools access has been blocked!');
+        _showToast(_t().devTools);
       }
     });
 
     // Block copy (Ctrl+C, right-click copy, browser menu)
     document.addEventListener('copy', e => {
       e.preventDefault();
-      _showToast('⚠ Sorry, copy access has been blocked!');
+      _showToast(_t().copy);
     });
 
     // Block image drag
@@ -899,7 +926,7 @@ const Protection = (() => {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        _showToast('⚠ Sorry, opening a new tab is blocked!');
+        _showToast(_t().newTab);
       }
     }, { passive: false });
 
@@ -908,7 +935,7 @@ const Protection = (() => {
       if (e.button === 1) {
         e.preventDefault();
         e.stopPropagation();
-        _showToast('⚠ Sorry, opening a new tab is blocked!');
+        _showToast(_t().newTab);
       }
     }, { passive: false });
 
