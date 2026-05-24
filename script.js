@@ -977,6 +977,7 @@ const Performance = (() => {
   Language.init();
   Protection.init();
   UpdateManager.init();
+  ChatWidget.init()
 })();
 
 /* ==========================================================================
