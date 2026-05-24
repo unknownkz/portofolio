@@ -289,10 +289,10 @@ const ChatWidget = (() => {
           res.status === 429
             ? s.errorLimit
             : (
-                _chatLang() === 'id'
-                  ? data?.error?.id
-                  : data?.error?.en
-              ) || s.errorGeneral;
+                data?.error?.id ||
+                data?.error?.en ||
+                s.errorGeneral
+              );
 
         // Show error message
         _appendMessage('assistant', errMsg);
