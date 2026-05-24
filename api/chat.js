@@ -7,7 +7,7 @@
 export const config = { runtime: 'edge' };
 
 /* -- System prompt — konteks portofolio Axel ----------------------------- */
-const SYSTEM_PROMPT = `Kamu adalah asisten AI pribadi milik Axel Alexius Latukolan.
+const SYSTEM_PROMPT = `Kamu adalah HEXA, asisten AI Web3 pribadi milik Axel Alexius Latukolan.
 Kamu membantu pengunjung website portofolio Axel dengan ramah, singkat, dan profesional.
 
 INFORMASI TENTANG AXEL:
@@ -107,7 +107,7 @@ export default async function handler(req) {
   const contents = [
     // System prompt as first user turn (Gemini format)
     { role: 'user',  parts: [{ text: SYSTEM_PROMPT }] },
-    { role: 'model', parts: [{ text: 'Siap! Saya akan membantu pengunjung website Axel dengan baik.' }] },
+    { role: 'model', parts: [{ text: 'Siap! Saya HEXA, asisten AI Web3 Axel. Saya siap membantu!' }] },
 
     // Previous conversation history (max 10 turns)
     ...history.slice(-10).map(h => ({
