@@ -51,27 +51,105 @@ function _ct() {
 
 
 /* ==========================================================================
-   2. CHAT WIDGET MODULE
+   2. MARKDOWN PARSER
+   Converts Gemini Markdown output → safe HTML
+   Supported: **bold**, *italic*, `code`, ```block```,
+              # headings, - lists, numbered lists, line breaks
+   Security: escapes HTML entities first to prevent XSS
+   ========================================================================== */
+function _parseMarkdown(text) {
+  if (!text) return '';
+
+  // Step 1: Escape HTML entities (XSS prevention — must be first)
+  let html = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  // Step 2: Code blocks (``` ... ```) — before inline code
+  html = html.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, code) =>
+    `<pre class="chat-code-block"><code>${code.trim()}</code></pre>`
+  );
+
+  // Step 3: Inline code (`code`)
+  html = html.replace(/`([^`]+)`/g, '<code class="chat-code-inline">$1</code>');
+
+  // Step 4: Bold+Italic (***text***)
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+
+  // Step 5: Bold (**text**)
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  // Step 6: Italic (*text* or _text_)
+  html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_\n]+)_/g, '<em>$1</em>');
+
+  // Step 7: Strikethrough (~~text~~)
+  html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+  // Step 8: Headings (# ## ###)
+  html = html.replace(/^### (.+)$/gm, '<h4 class="chat-heading">$1</h4>');
+  html = html.replace(/^## (.+)$/gm,  '<h3 class="chat-heading">$1</h3>');
+  html = html.replace(/^# (.+)$/gm,   '<h2 class="chat-heading">$1</h2>');
+
+  // Step 9: Horizontal rule (---)
+  html = html.replace(/^---+$/gm, '<hr class="chat-hr">');
+
+  // Step 10: Unordered lists (- item or * item)
+  html = html.replace(/^[\-\*] (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/s, '<ul class="chat-list">$1</ul>');
+  // Wrap consecutive <li> in <ul>
+  html = html.replace(/(<li>[\s\S]*?<\/li>)(\s*(?!<li>))/g, (match) => {
+    if (match.startsWith('<ul')) return match;
+    return `<ul class="chat-list">${match}</ul>`;
+  });
+
+  // Step 11: Ordered lists (1. item)
+  html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+  // Step 12: Blockquote (> text)
+  html = html.replace(/^&gt; (.+)$/gm, '<blockquote class="chat-blockquote">$1</blockquote>');
+
+  // Step 13: Line breaks — double newline = paragraph, single = <br>
+  const blocks = html.split(/\n{2,}/);
+  html = blocks.map(block => {
+    block = block.trim();
+    if (!block) return '';
+    // Skip wrapping if already a block element
+    if (/^<(pre|ul|ol|h[2-4]|hr|blockquote)/.test(block)) return block;
+    // Convert single newlines to <br>
+    block = block.replace(/\n/g, '<br>');
+    return `<p>${block}</p>`;
+  }).join('');
+
+  return html;
+}
+
+
+/* ==========================================================================
+   3. CHAT WIDGET MODULE
    ========================================================================== */
 const ChatWidget = (() => {
 
   /* -- Config --------------------------------------------------------------- */
-  const API_ENDPOINT   = '/api/chat';
-  const MAX_HISTORY    = 20;       // Max messages kept in memory
-  const STORAGE_KEY    = 'axelal_chat_history';
-  const TYPING_DELAY   = 300;      // ms before showing typing indicator
+  const API_ENDPOINT = '/api/chat';
+  const MAX_HISTORY  = 20;
+  const STORAGE_KEY  = 'axelal_chat_history';
+  const TYPING_DELAY = 300;
 
   /* -- State ---------------------------------------------------------------- */
   let _isOpen     = false;
   let _isLoading  = false;
-  let _history    = [];            // { role: 'user'|'assistant', content: string }[]
+  let _history    = [];
   let _widgetEl   = null;
   let _messagesEl = null;
   let _inputEl    = null;
 
 
   /* ========================================================================
-     3. BUILD UI
+     4. BUILD UI
      ======================================================================== */
 
   function _buildWidget() {
@@ -101,7 +179,7 @@ const ChatWidget = (() => {
         <div class="chat-header">
           <div class="chat-header__info">
             <div class="chat-header__avatar" aria-hidden="true">
-              <img src="/logo-a.png" alt="Axel AI" width="32" height="32">
+              <img src="/logo-a.png" alt="HEXA AI" width="32" height="32">
               <span class="chat-header__status" aria-label="Online"></span>
             </div>
             <div class="chat-header__text">
@@ -151,12 +229,11 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     4. MESSAGES
+     5. MESSAGES
      ======================================================================== */
 
   function _appendMessage(role, content, isTyping = false) {
-    const s      = _ct();
-    const wrap   = document.createElement('div');
+    const wrap = document.createElement('div');
     wrap.className = `chat-message chat-message--${role}${isTyping ? ' chat-message--typing' : ''}`;
     wrap.setAttribute('role', 'article');
 
@@ -169,17 +246,33 @@ const ChatWidget = (() => {
         </div>
       `;
     } else {
-      const time = new Date().toLocaleTimeString(_chatLang() === 'id' ? 'id-ID' : 'en-US', {
-        hour: '2-digit', minute: '2-digit',
-      });
-      wrap.innerHTML = `
-        <div class="chat-bubble">
-          <p class="chat-bubble__text"></p>
-          <span class="chat-bubble__time" aria-hidden="true">${time}</span>
-        </div>
-      `;
-      // Set text safely (no XSS)
-      wrap.querySelector('.chat-bubble__text').textContent = content;
+      const time = new Date().toLocaleTimeString(
+        _chatLang() === 'id' ? 'id-ID' : 'en-US',
+        { hour: '2-digit', minute: '2-digit' }
+      );
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+
+      const textEl = document.createElement('div');
+      textEl.className = 'chat-bubble__text';
+
+      if (role === 'assistant') {
+        // Parse Markdown for assistant messages
+        textEl.innerHTML = _parseMarkdown(content);
+      } else {
+        // Plain text for user messages (already safe)
+        textEl.textContent = content;
+      }
+
+      const timeEl = document.createElement('span');
+      timeEl.className  = 'chat-bubble__time';
+      timeEl.setAttribute('aria-hidden', 'true');
+      timeEl.textContent = time;
+
+      bubble.appendChild(textEl);
+      bubble.appendChild(timeEl);
+      wrap.appendChild(bubble);
     }
 
     _messagesEl.appendChild(wrap);
@@ -205,7 +298,7 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     5. HISTORY (localStorage)
+     6. HISTORY (localStorage)
      ======================================================================== */
 
   function _loadHistory() {
@@ -216,24 +309,19 @@ const ChatWidget = (() => {
       _history = [];
     }
 
-    // Re-render saved messages
     _history.forEach(msg => _appendMessage(msg.role, msg.content));
   }
 
   function _saveHistory() {
     try {
-      // Keep only last MAX_HISTORY messages
-      const trimmed = _history.slice(-MAX_HISTORY);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(_history.slice(-MAX_HISTORY)));
     } catch {
       // localStorage full — silently skip
     }
   }
 
   function _clearHistory() {
-    const s = _ct();
-    if (!window.confirm(s.clearConfirm)) return;
-
+    if (!window.confirm(_ct().clearConfirm)) return;
     _history = [];
     localStorage.removeItem(STORAGE_KEY);
     _messagesEl.innerHTML = '';
@@ -242,7 +330,7 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     6. SEND MESSAGE
+     7. SEND MESSAGE
      ======================================================================== */
 
   async function _sendMessage() {
@@ -253,18 +341,18 @@ const ChatWidget = (() => {
 
     const s = _ct();
 
-    // Clear input
     _inputEl.value = '';
     _inputEl.style.height = 'auto';
     document.getElementById('chatSendBtn').disabled = true;
 
-    // Add user message to UI + history
     _appendMessage('user', text);
     _history.push({ role: 'user', content: text });
 
-    // Show typing indicator after short delay
     _isLoading = true;
-    const typingTimeout = setTimeout(() => _appendMessage('assistant', '', true), TYPING_DELAY);
+    const typingTimeout = setTimeout(
+      () => _appendMessage('assistant', '', true),
+      TYPING_DELAY
+    );
 
     try {
       const res = await fetch(API_ENDPOINT, {
@@ -272,7 +360,7 @@ const ChatWidget = (() => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
-          history: _history.slice(-10), // send last 10 for context
+          history: _history.slice(-10),
         }),
       });
 
@@ -281,32 +369,16 @@ const ChatWidget = (() => {
 
       const data = await res.json();
 
-      /* Handle API Error Response */
       if (!res.ok) {
-
         let errMsg = s.errorGeneral;
-        // Rate limit
-        if (res.status === 429) {
-          errMsg = s.errorLimit;
-        }
-        // Backend custom error
-        else if (data?.error) {
-          errMsg =
-            data.error.id ||
-            data.error.en ||
-            s.errorGeneral;
-        }
+        if (res.status === 429)  errMsg = s.errorLimit;
+        else if (data?.error)    errMsg = data.error.id || data.error.en || s.errorGeneral;
 
-        _appendMessage(
-          'assistant',
-          String(errMsg)
-        );
-        // Remove failed user message
+        _appendMessage('assistant', String(errMsg));
         _history.pop();
-
         return;
       }
-      // Add assistant reply
+
       _appendMessage('assistant', data.reply);
       _history.push({ role: 'assistant', content: data.reply });
       _saveHistory();
@@ -323,14 +395,14 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     7. OPEN / CLOSE
+     8. OPEN / CLOSE
      ======================================================================== */
 
   function _open() {
     _isOpen = true;
-    const panel   = document.getElementById('chatPanel');
+    const panel     = document.getElementById('chatPanel');
     const toggleBtn = document.getElementById('chatToggleBtn');
-    const badge   = document.getElementById('chatBadge');
+    const badge     = document.getElementById('chatBadge');
 
     _widgetEl.classList.add('chat-widget--open');
     panel.setAttribute('aria-hidden', 'false');
@@ -357,7 +429,7 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     8. LANGUAGE SYNC
+     9. LANGUAGE SYNC
      ======================================================================== */
 
   function _syncLanguage() {
@@ -382,19 +454,15 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     9. EVENT WIRING
+     10. EVENT WIRING
      ======================================================================== */
 
   function _wireEvents() {
-    // Toggle open/close
     document.getElementById('chatToggleBtn')?.addEventListener('click', _toggle);
     document.getElementById('chatCloseBtn')?.addEventListener('click',  _close);
     document.getElementById('chatClearBtn')?.addEventListener('click',  _clearHistory);
+    document.getElementById('chatSendBtn')?.addEventListener('click',   _sendMessage);
 
-    // Send on button click
-    document.getElementById('chatSendBtn')?.addEventListener('click', _sendMessage);
-
-    // Send on Enter (Shift+Enter = new line)
     _inputEl?.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -402,22 +470,17 @@ const ChatWidget = (() => {
       }
     });
 
-    // Enable/disable send button + auto-resize textarea
     _inputEl?.addEventListener('input', () => {
       const btn = document.getElementById('chatSendBtn');
       btn.disabled = _inputEl.value.trim().length === 0;
-
-      // Auto-resize
       _inputEl.style.height = 'auto';
       _inputEl.style.height = Math.min(_inputEl.scrollHeight, 120) + 'px';
     });
 
-    // Close on ESC
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && _isOpen) _close();
     });
 
-    // Close on backdrop click (mobile)
     document.addEventListener('click', e => {
       if (_isOpen && _widgetEl && !_widgetEl.contains(e.target)) _close();
     });
@@ -425,7 +488,7 @@ const ChatWidget = (() => {
 
 
   /* ========================================================================
-     10. INIT
+     11. INIT
      ======================================================================== */
 
   function init() {
