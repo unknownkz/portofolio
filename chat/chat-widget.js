@@ -246,6 +246,7 @@ const ChatWidget = (() => {
     temp.innerHTML = _parseMarkdown(markdownText);
 
     const finalHTML = temp.innerHTML;
+    element.classList.add('typing-active');
 
     let current = '';
     let insideTag = false;
@@ -275,7 +276,7 @@ const ChatWidget = (() => {
 
     // Ensure final HTML perfect
     element.innerHTML = finalHTML;
-
+    element.classList.remove('typing-active');
     _scrollToBottom();
   }
 
