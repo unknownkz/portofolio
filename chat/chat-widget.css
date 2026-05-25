@@ -465,5 +465,136 @@ body.light-mode .chat-input-area { border-color: rgba(0,0,0,0.06); background: #
 }
 
 /* ==========================================================================
+   9. MARKDOWN RENDERED CONTENT
+   ========================================================================== */
+/* Reset p margin in bubble */
+.chat-bubble__text p {
+  margin: 0 0 6px 0;
+  line-height: 1.55;
+  white-space: normal;
+}
+
+.chat-bubble__text p:last-child { margin-bottom: 0; }
+
+/* Bold & Italic */
+.chat-bubble__text strong { font-weight: 700; color: #f8fafc; }
+.chat-bubble__text em     { font-style: italic; opacity: 0.9; }
+.chat-bubble__text del    { text-decoration: line-through; opacity: 0.6; }
+
+/* Headings */
+.chat-bubble__text .chat-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: #38bdf8;
+  margin: 8px 0 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+/* Inline code */
+.chat-bubble__text .chat-code-inline {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+/* Code block */
+.chat-bubble__text .chat-code-block {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 11.5px;
+  color: #94d2f5;
+  white-space: pre;
+  line-height: 1.5;
+}
+
+/* Unordered list */
+.chat-bubble__text ul.chat-list {
+  margin: 4px 0 6px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chat-bubble__text ul.chat-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 3px;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.chat-bubble__text ul.chat-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+/* Ordered list */
+.chat-bubble__text ol {
+  margin: 4px 0 6px 16px;
+  padding: 0;
+}
+
+.chat-bubble__text ol li {
+  margin-bottom: 3px;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+/* Blockquote */
+.chat-bubble__text .chat-blockquote {
+  border-left: 3px solid rgba(56, 189, 248, 0.5);
+  margin: 6px 0;
+  padding: 4px 10px;
+  color: rgba(226, 232, 240, 0.7);
+  font-style: italic;
+  font-size: 12.5px;
+  background: rgba(56, 189, 248, 0.05);
+  border-radius: 0 6px 6px 0;
+}
+
+/* HR */
+.chat-bubble__text .chat-hr {
+  border: none;
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  margin: 8px 0;
+}
+
+/* ── Light mode ─────────────────────────────────────────────────────────── */
+body.light-mode .chat-bubble__text strong        { color: #0f172a; }
+body.light-mode .chat-bubble__text .chat-heading {
+  color: #0ea5e9;
+  border-color: rgba(14, 165, 233, 0.2);
+}
+body.light-mode .chat-bubble__text .chat-code-inline {
+  background: rgba(14, 165, 233, 0.08);
+  border-color: rgba(14, 165, 233, 0.2);
+  color: #0ea5e9;
+}
+body.light-mode .chat-bubble__text .chat-code-block {
+  background: #f1f5f9;
+  border-color: rgba(14, 165, 233, 0.15);
+  color: #0369a1;
+}
+body.light-mode .chat-bubble__text ul.chat-list li::before { color: #0ea5e9; }
+body.light-mode .chat-bubble__text .chat-blockquote {
+  border-color: rgba(14, 165, 233, 0.4);
+  color: rgba(15, 23, 42, 0.6);
+  background: rgba(14, 165, 233, 0.04);
+}
+
+/* ==========================================================================
    END OF CHAT WIDGET
    ========================================================================== */
