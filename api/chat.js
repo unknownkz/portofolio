@@ -2,7 +2,7 @@
    HEXA AI Assistant — OpenRouter Backend
    File: /api/chat.js
    Runtime: Node.js (Vercel Serverless)
-   Version: Production Stable v5
+   Version: Production Stable v5.x
    ========================================================================== */
 
 
@@ -78,7 +78,7 @@ INFORMASI AXEL:
   your OpenRouter Workspace screenshot.
 
   Priority:
-  1. Gemma 4 26B A4B
+  1. Gemini 3.5 Flash
   2. DeepSeek V4 Flash
   3. Nemotron 3 Nano Omni
 */
