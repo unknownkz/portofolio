@@ -161,7 +161,7 @@ python3 -m http.server 8080
 
 > ⚠️ **Jangan buka `index.html` langsung via `file://`** — Service Worker tidak akan terdaftar tanpa HTTP server.
 
-> ⚠️ **HEXA AI tidak akan jalan di lokal** tanpa environment variable `GEMINI_API_KEY`. Set via Vercel dashboard untuk production.
+> ⚠️ **HEXA AI tidak akan jalan di lokal** tanpa environment variable `OPENROUTER_API_KEY`. Set via Vercel dashboard untuk production.
 
 ---
 
