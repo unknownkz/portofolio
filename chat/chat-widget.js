@@ -337,10 +337,23 @@ const ChatWidget = (() => {
     });
   }
 
-  function _showWelcome() {
-    if (_messagesEl.children.length === 0) {
-      _appendMessage('assistant', _ct().welcome);
-    }
+  async function _showWelcome() {
+
+    if (_messagesEl.children.length > 0) return;
+
+    // Bubble kosong
+    const welcomeMessage =
+      _appendMessage('assistant', '');
+
+    // Target text
+    const textEl =
+      welcomeMessage.querySelector('.chat-bubble__text');
+
+    // Typing animation
+    await _typeAssistantMessage(
+      textEl,
+      _ct().welcome
+    );
   }
 
 
