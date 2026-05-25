@@ -342,7 +342,7 @@
   word-break: break-word;
 }
 
-.chat-bubble__text::after{
+.chat-bubble__text.typing-active::after{
   content: "";
   display: inline-block;
   width: 2px;
