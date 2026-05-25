@@ -1,7 +1,7 @@
 /* ==========================================================================
    PORTOFOLIO — Axel Alexius Latukolan
    chat-widget.js  |  Production Build
-   AI Chat Widget (Gemini via Edge Function) — bilingual ID/EN
+   AI Chat Widget (Gemini, etc) — bilingual ID/EN
    Synced with: Language module in script.js
    ========================================================================== */
 
