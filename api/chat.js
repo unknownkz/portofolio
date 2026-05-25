@@ -86,20 +86,20 @@ INFORMASI AXEL:
 const MODELS = [
 
   // Main model
-  'google/gemma-4-26b-a4b:free',
+  'google/gemini-3.5-flash',
 
   // Fallback #1
-  'deepseek/deepseek-chat-v4-flash:free',
+  'deepseek/deepseek-chat-v4-flash',
 
   // Fallback #2
-  'nvidia/nemotron-3-Nano-Omni-30B-A3B:free'
+  'nvidia/nemotron-3-Nano-Omni-30B-A3B'
 ];
 
 
 /* ==========================================================================
    RATE LIMIT CONFIG
    ========================================================================== */
-const RATE_LIMIT  = 20;
+const RATE_LIMIT  = 15;
 const RATE_WINDOW = 60 * 1000;
 
 const rateLimitMap = new Map();
