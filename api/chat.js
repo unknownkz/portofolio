@@ -1,8 +1,8 @@
 /* ==========================================================================
-   HEXA AI Assistant — OpenRouter Production Backend
+   HEXA AI Assistant — OpenRouter Backend
    File: /api/chat.js
    Runtime: Node.js (Vercel Serverless)
-   Version: Production Stable v2
+   Version: Production Stable v5
    ========================================================================== */
 
 
@@ -17,6 +17,8 @@ TUGAS:
 - Jawab profesional, modern, singkat, helpful
 - Gunakan bahasa yang sama dengan user
 - Jangan mengarang informasi
+- Jangan terlalu panjang
+- Tetap natural dan ramah
 
 INFORMASI AXEL:
 - Nama:
@@ -67,29 +69,45 @@ INFORMASI AXEL:
 
 
 /* ==========================================================================
-   OPENROUTER MODELS (Fallback System)
+   OPENROUTER MODELS
    ========================================================================== */
+
+/*
+  IMPORTANT:
+  Model IDs below are based on
+  your OpenRouter Workspace screenshot.
+
+  Priority:
+  1. Gemma 4 26B A4B
+  2. DeepSeek V4 Flash
+  3. Nemotron 3 Nano Omni
+*/
+
 const MODELS = [
 
-  // DeepSeek (best free)
-  'deepseek/deepseek-r1-0528:free',
+  // Main model
+  'google/gemma-4-26b-a4b:free',
 
-  // Gemma
-  'google/gemma-2-9b-it:free',
+  // Fallback #1
+  'deepseek/deepseek-chat-v4-flash:free',
 
-  // Mistral
-  'mistralai/mistral-7b-instruct:free'
+  // Fallback #2
+  'nvidia/nemotron-3-Nano-Omni-30B-A3B:free'
 ];
 
 
 /* ==========================================================================
-   RATE LIMIT
+   RATE LIMIT CONFIG
    ========================================================================== */
-const RATE_LIMIT = 20;
+const RATE_LIMIT  = 20;
 const RATE_WINDOW = 60 * 1000;
 
 const rateLimitMap = new Map();
 
+
+/* ==========================================================================
+   RATE LIMIT HELPER
+   ========================================================================== */
 function isRateLimited(ip) {
 
   const now = Date.now();
@@ -99,6 +117,7 @@ function isRateLimited(ip) {
     start: now
   };
 
+  // Reset window
   if (now - data.start > RATE_WINDOW) {
 
     rateLimitMap.set(ip, {
@@ -109,10 +128,12 @@ function isRateLimited(ip) {
     return false;
   }
 
+  // Limit reached
   if (data.count >= RATE_LIMIT) {
     return true;
   }
 
+  // Increment count
   data.count++;
 
   rateLimitMap.set(ip, data);
@@ -122,7 +143,7 @@ function isRateLimited(ip) {
 
 
 /* ==========================================================================
-   SEND ERROR
+   SEND ERROR RESPONSE
    ========================================================================== */
 function sendError(
   res,
@@ -140,6 +161,93 @@ function sendError(
       en: enMessage
     }
   });
+}
+
+
+/* ==========================================================================
+   BUILD CHAT HISTORY
+   ========================================================================== */
+function buildMessages(history, message) {
+
+  return [
+
+    {
+      role: 'system',
+      content: SYSTEM_PROMPT
+    },
+
+    ...history
+      .slice(-10)
+      .map(item => ({
+
+        role:
+          item.role === 'user'
+            ? 'user'
+            : 'assistant',
+
+        content:
+          String(item.content)
+            .slice(0, 1000)
+      })),
+
+    {
+      role: 'user',
+      content: message
+    }
+  ];
+}
+
+
+/* ==========================================================================
+   OPENROUTER REQUEST
+   ========================================================================== */
+async function requestOpenRouter({
+  model,
+  apiKey,
+  messages
+}) {
+
+  const response = await fetch(
+    'https://openrouter.ai/api/v1/chat/completions',
+    {
+
+      method: 'POST',
+
+      headers: {
+
+        'Authorization':
+          `Bearer ${apiKey}`,
+
+        'Content-Type':
+          'application/json',
+
+        'HTTP-Referer':
+          'https://www.axelal.my.id',
+
+        'X-Title':
+          'HEXA AI Assistant'
+      },
+
+      body: JSON.stringify({
+
+        model,
+
+        messages,
+
+        temperature: 0.7,
+
+        max_tokens: 500
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  return {
+    ok: response.ok,
+    status: response.status,
+    data
+  };
 }
 
 
@@ -213,7 +321,7 @@ export default async function handler(req, res) {
 
 
   /* -----------------------------------------------------------------------
-     BODY
+     REQUEST BODY
      ----------------------------------------------------------------------- */
   const {
     message,
@@ -226,7 +334,8 @@ export default async function handler(req, res) {
      ----------------------------------------------------------------------- */
   if (
     !message ||
-    typeof message !== 'string'
+    typeof message !== 'string' ||
+    !message.trim()
   ) {
 
     return sendError(
@@ -239,13 +348,16 @@ export default async function handler(req, res) {
 
 
   /* -----------------------------------------------------------------------
-     OPENROUTER API KEY
+     API KEY
      ----------------------------------------------------------------------- */
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey =
+    process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
 
-    console.error('OPENROUTER_API_KEY missing');
+    console.error(
+      'OPENROUTER_API_KEY missing'
+    );
 
     return sendError(
       res,
@@ -266,38 +378,17 @@ export default async function handler(req, res) {
 
 
   /* -----------------------------------------------------------------------
-     BUILD CHAT HISTORY
+     BUILD MESSAGES
      ----------------------------------------------------------------------- */
-  const messages = [
-
-    {
-      role: 'system',
-      content: SYSTEM_PROMPT
-    },
-
-    ...history
-      .slice(-10)
-      .map(item => ({
-
-        role:
-          item.role === 'user'
-            ? 'user'
-            : 'assistant',
-
-        content:
-          String(item.content)
-            .slice(0, 1000)
-      })),
-
-    {
-      role: 'user',
-      content: safeMessage
-    }
-  ];
+  const messages =
+    buildMessages(
+      history,
+      safeMessage
+    );
 
 
   /* -----------------------------------------------------------------------
-     TRY MODELS (Fallback System)
+     TRY ALL MODELS
      ----------------------------------------------------------------------- */
   try {
 
@@ -314,68 +405,43 @@ export default async function handler(req, res) {
         console.log('MESSAGE:', safeMessage);
         console.log('==============================');
 
-        const response = await fetch(
-          'https://openrouter.ai/api/v1/chat/completions',
-          {
 
-            method: 'POST',
+        const result =
+          await requestOpenRouter({
 
-            headers: {
-
-              'Authorization':
-                `Bearer ${apiKey}`,
-
-              'Content-Type':
-                'application/json',
-
-              'HTTP-Referer':
-                'https://www.axelal.my.id',
-
-              'X-Title':
-                'HEXA AI Assistant'
-            },
-
-            body: JSON.stringify({
-
-              model,
-
-              messages,
-
-              temperature: 0.7,
-
-              max_tokens: 500
-            })
-          }
-        );
+            model,
+            apiKey,
+            messages
+          });
 
 
         /* ---------------------------------------------------------------
            MODEL FAILED
            --------------------------------------------------------------- */
-        if (!response.ok) {
-
-          const errorText = await response.text();
+        if (!result.ok) {
 
           console.error('==============================');
-          console.error('OPENROUTER MODEL FAILED');
+          console.error('MODEL FAILED');
           console.error('MODEL:', model);
-          console.error(errorText);
+          console.error(
+            JSON.stringify(result.data)
+          );
           console.error('==============================');
 
-          lastError = errorText;
+          lastError = result.data;
 
           continue;
         }
 
 
         /* ---------------------------------------------------------------
-           PARSE RESPONSE
+           GET RESPONSE
            --------------------------------------------------------------- */
-        const data = await response.json();
-
         const reply =
-          data?.choices?.[0]?.message?.content
-          ?? '';
+          result?.data
+            ?.choices?.[0]
+            ?.message?.content
+            ?.trim();
 
 
         /* ---------------------------------------------------------------
@@ -383,7 +449,10 @@ export default async function handler(req, res) {
            --------------------------------------------------------------- */
         if (!reply) {
 
-          console.error('EMPTY RESPONSE:', model);
+          console.error(
+            'EMPTY RESPONSE:',
+            model
+          );
 
           continue;
         }
@@ -392,7 +461,9 @@ export default async function handler(req, res) {
         /* ---------------------------------------------------------------
            SUCCESS
            --------------------------------------------------------------- */
+        console.log('==============================');
         console.log('SUCCESS MODEL:', model);
+        console.log('==============================');
 
         return res.status(200).json({
 
@@ -402,15 +473,17 @@ export default async function handler(req, res) {
 
           reply
         });
+      }
 
-      } catch (modelError) {
+      catch (modelError) {
 
-        console.error('MODEL CRASH:', model);
+        console.error('==============================');
+        console.error('MODEL CRASH');
+        console.error('MODEL:', model);
         console.error(modelError);
+        console.error('==============================');
 
         lastError = modelError;
-
-        continue;
       }
     }
 
@@ -418,8 +491,10 @@ export default async function handler(req, res) {
     /* -------------------------------------------------------------------
        ALL MODELS FAILED
        ------------------------------------------------------------------- */
+    console.error('==============================');
     console.error('ALL MODELS FAILED');
     console.error(lastError);
+    console.error('==============================');
 
     return sendError(
       res,
@@ -428,7 +503,9 @@ export default async function handler(req, res) {
       502
     );
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error('==============================');
     console.error('SERVER ERROR');
