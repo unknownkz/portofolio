@@ -337,6 +337,31 @@
   30%            { transform: translateY(-6px); opacity: 1; }
 }
 
+/* Cursor AI (Typing) */
+.chat-bubble__text{
+  word-break: break-word;
+}
+
+.chat-bubble__text::after{
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  animation: blinkCursor 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blinkCursor{
+  0%,50%{
+    opacity:1;
+  }
+  51%,100%{
+    opacity:0;
+  }
+}
+
 
 /* ==========================================================================
    6. INPUT AREA
