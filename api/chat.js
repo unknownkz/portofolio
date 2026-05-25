@@ -1,8 +1,8 @@
 /* ==========================================================================
-   HEXA AI Assistant — OpenRouter Backend
+   HEXA AI Assistant — OpenRouter Production Backend
    File: /api/chat.js
-   Runtime: Node.js (Vercel Serverless Function)
-   Version: Production Stable
+   Runtime: Node.js (Vercel Serverless)
+   Version: Production Stable v2
    ========================================================================== */
 
 
@@ -14,78 +14,82 @@ Kamu adalah HEXA, asisten AI pribadi milik Axel Alexius Latukolan.
 
 TUGAS:
 - Membantu pengunjung website portfolio Axel
-- Jawab profesional, modern, singkat, jelas, helpful
+- Jawab profesional, modern, singkat, helpful
 - Gunakan bahasa yang sama dengan user
 - Jangan mengarang informasi
-- Jawaban jangan terlalu panjang
 
 INFORMASI AXEL:
+- Nama:
+  Axel Alexius Latukolan
 
-Nama:
-Axel Alexius Latukolan
+- Profesi:
+  Web3 Analyst,
+  Data Processing Specialist,
+  Hospitality Professional
 
-Profesi:
-- Web3 Analyst
-- Data Processing Specialist
-- Hospitality Professional
+- Skills:
+  Python,
+  PHP,
+  SQL,
+  Excel,
+  Web Development
 
-Keahlian:
-- Python
-- PHP
-- SQL
-- Excel
-- Web Development
+- Pengalaman:
+  • PT. Mayora Indah Tbk / Jayanti 3
+    Operator Packing (2026–Sekarang)
 
-Pengalaman:
-- PT. Mayora Indah Tbk / Jayanti 3
-  Operator Packing (2026–Sekarang)
+  • Freelance
+    Airdrop Researcher & Web3 Analyst (2022–2025)
 
-- Freelance
-  Airdrop Researcher & Web3 Analyst (2022–2025)
+  • Dapur Ema
+    Waiter (2020–2021)
 
-- Dapur Ema
-  Waiter (2020–2021)
+  • Swissôtel Jakarta PIK Avenue
+    Housekeeping (2018–2019)
 
-- Swissôtel Jakarta PIK Avenue
-  Housekeeping (2018–2019)
-
-Kontak:
-- Email:
+- Kontak:
+  Email:
   axelalexiusl@gmail.com
 
-- Phone:
+  Phone:
   +62 815-1701-8046
 
-Social Media:
-- Github:
+- Social:
+  Github:
   github.com/unknownkz
 
-- Instagram:
+  Instagram:
   instagram.com/xelyours
 
-Website:
-axelal.my.id
+  Website:
+  axelal.my.id
 `;
 
 
 /* ==========================================================================
-   MODEL CONFIG
+   OPENROUTER MODELS (Fallback System)
    ========================================================================== */
-const MODEL = 'deepseek/deepseek-chat-v3-0324:free';
+const MODELS = [
+
+  // DeepSeek (best free)
+  'deepseek/deepseek-r1-0528:free',
+
+  // Gemma
+  'google/gemma-2-9b-it:free',
+
+  // Mistral
+  'mistralai/mistral-7b-instruct:free'
+];
 
 
 /* ==========================================================================
-   RATE LIMIT CONFIG
+   RATE LIMIT
    ========================================================================== */
 const RATE_LIMIT = 20;
 const RATE_WINDOW = 60 * 1000;
 
 const rateLimitMap = new Map();
 
-
-/* ==========================================================================
-   RATE LIMIT HELPER
-   ========================================================================== */
 function isRateLimited(ip) {
 
   const now = Date.now();
@@ -95,7 +99,6 @@ function isRateLimited(ip) {
     start: now
   };
 
-  // Reset window
   if (now - data.start > RATE_WINDOW) {
 
     rateLimitMap.set(ip, {
@@ -106,12 +109,10 @@ function isRateLimited(ip) {
     return false;
   }
 
-  // Limit reached
   if (data.count >= RATE_LIMIT) {
     return true;
   }
 
-  // Increment
   data.count++;
 
   rateLimitMap.set(ip, data);
@@ -121,7 +122,7 @@ function isRateLimited(ip) {
 
 
 /* ==========================================================================
-   SEND ERROR RESPONSE
+   SEND ERROR
    ========================================================================== */
 function sendError(
   res,
@@ -204,15 +205,15 @@ export default async function handler(req, res) {
 
     return sendError(
       res,
-      'Terlalu banyak permintaan. Tunggu sebentar.',
-      'Too many requests. Please wait a moment.',
+      'Terlalu banyak permintaan.',
+      'Too many requests.',
       429
     );
   }
 
 
   /* -----------------------------------------------------------------------
-     REQUEST BODY
+     BODY
      ----------------------------------------------------------------------- */
   const {
     message,
@@ -225,8 +226,7 @@ export default async function handler(req, res) {
      ----------------------------------------------------------------------- */
   if (
     !message ||
-    typeof message !== 'string' ||
-    message.trim().length === 0
+    typeof message !== 'string'
   ) {
 
     return sendError(
@@ -245,12 +245,12 @@ export default async function handler(req, res) {
 
   if (!apiKey) {
 
-    console.error('OPENROUTER_API_KEY not found');
+    console.error('OPENROUTER_API_KEY missing');
 
     return sendError(
       res,
-      'API key OpenRouter tidak ditemukan.',
-      'OpenRouter API key is missing.',
+      'API key tidak ditemukan.',
+      'API key missing.',
       500
     );
   }
@@ -259,13 +259,14 @@ export default async function handler(req, res) {
   /* -----------------------------------------------------------------------
      SANITIZE MESSAGE
      ----------------------------------------------------------------------- */
-  const safeMessage = message
-    .trim()
-    .slice(0, 1000);
+  const safeMessage =
+    message
+      .trim()
+      .slice(0, 1000);
 
 
   /* -----------------------------------------------------------------------
-     BUILD OPENROUTER MESSAGES
+     BUILD CHAT HISTORY
      ----------------------------------------------------------------------- */
   const messages = [
 
@@ -279,9 +280,9 @@ export default async function handler(req, res) {
       .map(item => ({
 
         role:
-          item.role === 'assistant'
-            ? 'assistant'
-            : 'user',
+          item.role === 'user'
+            ? 'user'
+            : 'assistant',
 
         content:
           String(item.content)
@@ -296,126 +297,136 @@ export default async function handler(req, res) {
 
 
   /* -----------------------------------------------------------------------
-     OPENROUTER REQUEST
+     TRY MODELS (Fallback System)
      ----------------------------------------------------------------------- */
   try {
 
-    console.log('==============================');
-    console.log('HEXA AI REQUEST');
-    console.log('MODEL:', MODEL);
-    console.log('IP:', ip);
-    console.log('MESSAGE:', safeMessage);
-    console.log('==============================');
+    let lastError = null;
 
-    const response = await fetch(
-      'https://openrouter.ai/api/v1/chat/completions',
-      {
+    for (const model of MODELS) {
 
-        method: 'POST',
+      try {
 
-        headers: {
+        console.log('==============================');
+        console.log('HEXA AI REQUEST');
+        console.log('MODEL:', model);
+        console.log('IP:', ip);
+        console.log('MESSAGE:', safeMessage);
+        console.log('==============================');
 
-          'Authorization':
-            `Bearer ${apiKey}`,
+        const response = await fetch(
+          'https://openrouter.ai/api/v1/chat/completions',
+          {
 
-          'Content-Type':
-            'application/json',
+            method: 'POST',
 
-          'HTTP-Referer':
-            'https://www.axelal.my.id',
+            headers: {
 
-          'X-Title':
-            'HEXA AI Assistant'
-        },
+              'Authorization':
+                `Bearer ${apiKey}`,
 
-        body: JSON.stringify({
+              'Content-Type':
+                'application/json',
 
-          model: MODEL,
+              'HTTP-Referer':
+                'https://www.axelal.my.id',
 
-          messages,
+              'X-Title':
+                'HEXA AI Assistant'
+            },
 
-          temperature: 0.7,
+            body: JSON.stringify({
 
-          max_tokens: 500
-        })
+              model,
+
+              messages,
+
+              temperature: 0.7,
+
+              max_tokens: 500
+            })
+          }
+        );
+
+
+        /* ---------------------------------------------------------------
+           MODEL FAILED
+           --------------------------------------------------------------- */
+        if (!response.ok) {
+
+          const errorText = await response.text();
+
+          console.error('==============================');
+          console.error('OPENROUTER MODEL FAILED');
+          console.error('MODEL:', model);
+          console.error(errorText);
+          console.error('==============================');
+
+          lastError = errorText;
+
+          continue;
+        }
+
+
+        /* ---------------------------------------------------------------
+           PARSE RESPONSE
+           --------------------------------------------------------------- */
+        const data = await response.json();
+
+        const reply =
+          data?.choices?.[0]?.message?.content
+          ?? '';
+
+
+        /* ---------------------------------------------------------------
+           EMPTY RESPONSE
+           --------------------------------------------------------------- */
+        if (!reply) {
+
+          console.error('EMPTY RESPONSE:', model);
+
+          continue;
+        }
+
+
+        /* ---------------------------------------------------------------
+           SUCCESS
+           --------------------------------------------------------------- */
+        console.log('SUCCESS MODEL:', model);
+
+        return res.status(200).json({
+
+          success: true,
+
+          model,
+
+          reply
+        });
+
+      } catch (modelError) {
+
+        console.error('MODEL CRASH:', model);
+        console.error(modelError);
+
+        lastError = modelError;
+
+        continue;
       }
+    }
+
+
+    /* -------------------------------------------------------------------
+       ALL MODELS FAILED
+       ------------------------------------------------------------------- */
+    console.error('ALL MODELS FAILED');
+    console.error(lastError);
+
+    return sendError(
+      res,
+      'Semua model AI sedang offline.',
+      'All AI models are currently offline.',
+      502
     );
-
-
-    /* ---------------------------------------------------------------------
-       RAW RESPONSE
-       --------------------------------------------------------------------- */
-    const rawText = await response.text();
-
-    console.log('OPENROUTER RAW RESPONSE:');
-    console.log(rawText);
-
-
-    /* ---------------------------------------------------------------------
-       ERROR RESPONSE
-       --------------------------------------------------------------------- */
-    if (!response.ok) {
-
-      return sendError(
-        res,
-        'Layanan AI sedang bermasalah.',
-        'AI service is temporarily unavailable.',
-        502
-      );
-    }
-
-
-    /* ---------------------------------------------------------------------
-       PARSE JSON
-       --------------------------------------------------------------------- */
-    let data;
-
-    try {
-
-      data = JSON.parse(rawText);
-
-    } catch {
-
-      return sendError(
-        res,
-        'Respons AI tidak valid.',
-        'Invalid AI response.',
-        502
-      );
-    }
-
-
-    /* ---------------------------------------------------------------------
-       EXTRACT REPLY
-       --------------------------------------------------------------------- */
-    const reply =
-      data?.choices?.[0]?.message?.content?.trim()
-      ?? '';
-
-
-    /* ---------------------------------------------------------------------
-       EMPTY RESPONSE
-       --------------------------------------------------------------------- */
-    if (!reply) {
-
-      return sendError(
-        res,
-        'AI tidak memberikan respons.',
-        'AI returned empty response.',
-        502
-      );
-    }
-
-
-    /* ---------------------------------------------------------------------
-       SUCCESS RESPONSE
-       --------------------------------------------------------------------- */
-    return res.status(200).json({
-
-      success: true,
-
-      reply
-    });
 
   } catch (error) {
 
@@ -426,7 +437,7 @@ export default async function handler(req, res) {
 
     return sendError(
       res,
-      'Terjadi kesalahan pada server.',
+      'Server mengalami kesalahan.',
       'Internal server error.',
       500
     );
