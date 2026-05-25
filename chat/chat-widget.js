@@ -11,7 +11,7 @@
 const ChatTranslations = {
   id: {
     title:          'HEXA',
-    subtitle:       'Web3 AI Assistant',
+    subtitle:       'AI Assistant',
     placeholder:    'Ketik pesan...',
     send:           'Kirim',
     welcome:        'Halo! 👋 Saya HEXA, asisten AI Axel. Tanya apa saja tentang portofolio, keahlian, atau pengalaman Axel — atau pertanyaan umum lainnya!',
@@ -26,7 +26,7 @@ const ChatTranslations = {
   },
   en: {
     title:          'HEXA',
-    subtitle:       'Web3 AI Assistant',
+    subtitle:       'AI Assistant',
     placeholder:    'Type a message...',
     send:           'Send',
     welcome:        'Hello! 👋 I\'m HEXA, Axel\'s AI assistant. Ask me anything about his portfolio, skills, experience — or any general questions!',
@@ -52,7 +52,7 @@ function _ct() {
 
 /* ==========================================================================
    2. MARKDOWN PARSER
-   Converts Gemini Markdown output → safe HTML
+   Converts Markdown output → safe HTML
    Supported: **bold**, *italic*, `code`, ```block```,
               # headings, - lists, numbered lists, line breaks
    Security: escapes HTML entities first to prevent XSS
@@ -135,7 +135,7 @@ const ChatWidget = (() => {
 
   /* -- Config --------------------------------------------------------------- */
   const API_ENDPOINT = '/api/chat';
-  const MAX_HISTORY  = 20;
+  const MAX_HISTORY  = 15;
   const STORAGE_KEY  = 'axelal_chat_history';
   const TYPING_DELAY = 300;
 
