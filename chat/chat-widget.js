@@ -284,25 +284,28 @@ const ChatWidget = (() => {
       /* Handle API Error Response */
       if (!res.ok) {
 
-        // Get bilingual error message from backend
-        const errMsg =
-          res.status === 429
-            ? s.errorLimit
-            : (
-                data?.error?.id ||
-                data?.error?.en ||
-                s.errorGeneral
-              );
+        let errMsg = s.errorGeneral;
+        // Rate limit
+        if (res.status === 429) {
+          errMsg = s.errorLimit;
+        }
+        // Backend custom error
+        else if (data?.error) {
+          errMsg =
+            data.error.id ||
+            data.error.en ||
+            s.errorGeneral;
+        }
 
-        // Show error message
-        _appendMessage('assistant', errMsg);
-
-        // Remove last failed user message from history
+        _appendMessage(
+          'assistant',
+          String(errMsg)
+        );
+        // Remove failed user message
         _history.pop();
 
         return;
       }
-
       // Add assistant reply
       _appendMessage('assistant', data.reply);
       _history.push({ role: 'assistant', content: data.reply });
