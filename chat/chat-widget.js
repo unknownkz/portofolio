@@ -139,6 +139,9 @@ const ChatWidget = (() => {
   const STORAGE_KEY  = 'axelal_chat_history';
   const TYPING_DELAY = 300;
 
+  /* Typing Animation */
+  const CHARACTER_TYPING_SPEED = 12;
+
   /* -- State ---------------------------------------------------------------- */
   let _isOpen     = false;
   let _isLoading  = false;
@@ -232,6 +235,50 @@ const ChatWidget = (() => {
      5. MESSAGES
      ======================================================================== */
 
+  /* --------------------------------------------------------------------------
+   AI Typing Animation Per Character
+   -------------------------------------------------------------------------- */
+  async function _typeAssistantMessage(element, markdownText) {
+
+    const temp = document.createElement('div');
+
+    // Parse markdown dulu
+    temp.innerHTML = _parseMarkdown(markdownText);
+
+    const finalHTML = temp.innerHTML;
+
+    let current = '';
+    let insideTag = false;
+
+    for (let i = 0; i < finalHTML.length; i++) {
+
+      const char = finalHTML[i];
+
+      // Detect HTML tags
+      if (char === '<') insideTag = true;
+
+      current += char;
+
+      if (char === '>') insideTag = false;
+
+      // Render instantly if HTML tag
+      if (insideTag) continue;
+
+      element.innerHTML = current;
+
+      _scrollToBottom();
+
+      await new Promise(resolve =>
+        setTimeout(resolve, CHARACTER_TYPING_SPEED)
+      );
+    }
+
+    // Ensure final HTML perfect
+    element.innerHTML = finalHTML;
+
+    _scrollToBottom();
+  }
+
   function _appendMessage(role, content, isTyping = false) {
     const wrap = document.createElement('div');
     wrap.className = `chat-message chat-message--${role}${isTyping ? ' chat-message--typing' : ''}`;
@@ -258,10 +305,10 @@ const ChatWidget = (() => {
       textEl.className = 'chat-bubble__text';
 
       if (role === 'assistant') {
-        // Parse Markdown for assistant messages
-        textEl.innerHTML = _parseMarkdown(content);
+        // Typing animation handled separately
+        textEl.innerHTML = '';
       } else {
-        // Plain text for user messages (already safe)
+        // Plain text for user messages
         textEl.textContent = content;
       }
 
@@ -379,8 +426,19 @@ const ChatWidget = (() => {
         return;
       }
 
-      _appendMessage('assistant', data.reply);
-      _history.push({ role: 'assistant', content: data.reply });
+      const assistantMessage = _appendMessage('assistant', '');
+      const textEl = assistantMessage.querySelector('.chat-bubble__text');
+
+      await _typeAssistantMessage(
+        textEl,
+        data.reply
+      );
+
+      _history.push({
+        role: 'assistant',
+        content: data.reply
+      });
+
       _saveHistory();
 
     } catch {
