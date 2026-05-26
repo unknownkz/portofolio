@@ -32,6 +32,13 @@ INFORMASI AXEL:
 - Nama Panggilan:
   Axel
 
+- Tempat & Tanggal Lahir:
+  Kota Tangerang, Rabu 15 Desember 1999
+
+- Hobby:
+  Bermain Game,
+  Code Enthusiast
+
 - Profesi:
   Web3 Analyst,
   Data Processing Specialist,
