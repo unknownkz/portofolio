@@ -47,8 +47,6 @@ const ALL_CACHES   = [CACHE_STATIC, CACHE_PAGES];
 
 const CRITICAL_ASSETS = [
   '/',
-  '/chat/chat-widget.min.css',
-  '/chat/chat-widget.min.js',
   '/js/script.min.js',
   '/index.html',
   '/style.css',
