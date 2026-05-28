@@ -1262,7 +1262,7 @@ body.light-mode .card:hover {
 
 
 /* ==========================================================================
-   SKILLS SECTION
+   16. SKILLS SECTION
    ========================================================================== */
 .skills-category{
   display:flex;
@@ -1476,6 +1476,121 @@ body.light-mode .card:hover {
   line-height:1.7;
   color:
     rgba(226,232,240,0.72);
+}
+
+/* Skills Category wrapper */
+body.light-mode .skills-category {
+  gap: 32px;
+}
+
+/* Skills Group (container card) */
+body.light-mode .skills-group {
+  background: #ffffff;
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.07),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: none;
+}
+
+body.light-mode .skills-group:hover {
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.1),
+    0 0 30px rgba(14, 165, 233, 0.06);
+}
+
+body.light-mode .skills-group::before {
+  background: radial-gradient(
+    circle at top right,
+    rgba(14, 165, 233, 0.05),
+    transparent 45%
+  );
+}
+
+/* Group header badge — tech */
+body.light-mode .skills-group__badge {
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.12),
+    rgba(56, 189, 248, 0.06)
+  );
+  border-color: rgba(14, 165, 233, 0.2);
+}
+
+body.light-mode .skills-group__badge i {
+  color: #0ea5e9;
+}
+
+/* Group header badge — hospitality */
+body.light-mode .skills-group__badge.hospitality {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.12),
+    rgba(251, 191, 36, 0.06)
+  );
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+body.light-mode .skills-group__badge.hospitality i {
+  color: #d97706;
+}
+
+/* Group text */
+body.light-mode .skills-group__text h3 {
+  color: #0f172a;
+}
+
+body.light-mode .skills-group__text p {
+  color: rgba(15, 23, 42, 0.6);
+}
+
+/* Skill Card */
+body.light-mode .skill-card {
+  background: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+body.light-mode .skill-card:hover {
+  background: #ffffff;
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.09),
+    0 0 0 1px rgba(14, 165, 233, 0.1);
+  transform: translateY(-5px);
+}
+
+body.light-mode .skill-card::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(14, 165, 233, 0.7),
+    transparent
+  );
+}
+
+/* Skill icon */
+body.light-mode .skill-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.1),
+    rgba(56, 189, 248, 0.05)
+  );
+  border-color: rgba(14, 165, 233, 0.15);
+}
+
+body.light-mode .skill-icon i {
+  color: #0ea5e9;
+}
+
+/* Skill text */
+body.light-mode .skill-card h4 {
+  color: #0f172a;
+}
+
+body.light-mode .skill-card p {
+  color: rgba(15, 23, 42, 0.58);
 }
 
 /* MOBILE */
