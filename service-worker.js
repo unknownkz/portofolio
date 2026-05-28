@@ -38,7 +38,7 @@
    v4.3  → tambah section baru        → v5    UPDATE_TYPE = 'content'
    v5    → ganti nama app             → v5.1  UPDATE_TYPE = 'manifest'
    ========================================================================== */
-const SW_VERSION   = 'axelal-v5.20';
+const SW_VERSION   = 'axelal-v5.21';
 const UPDATE_TYPE  = 'content'; // 'content' | 'manifest'
 
 const CACHE_STATIC = `${SW_VERSION}-static`;
@@ -48,7 +48,7 @@ const ALL_CACHES   = [CACHE_STATIC, CACHE_PAGES];
 const CRITICAL_ASSETS = [
   '/',
   '/index.html',
-  '/script.min.js',
+  '/js/script.min.js',
   '/style.css',
   '/chat/chat-widget.min.js',
   '/chat/chat-widget.min.css',
