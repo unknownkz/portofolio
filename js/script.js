@@ -718,12 +718,13 @@ const Translations = (() => {
 
       aboutTitle: 'About Me',
       aboutText: `
-        I have professional experience in the hospitality industry as a Housekeeping staff member and restaurant Waiter,
-        which has helped me develop strong discipline, attention to detail, and excellent customer service skills.
-        I am accustomed to working under high standards, managing time effectively, and collaborating efficiently within a team environment.
+        I am a technology enthusiast with professional experience in hospitality and operational services,
+        combined with strong interests in digital systems, web development, and problem solving.
+        I am adaptable, detail-oriented, and capable of working efficiently both independently and within a team environment.
         <br><br>
-        In addition, I have technical expertise in programming languages such as Python and PHP, along with database management using SQL.
-        I am capable of developing and managing web-based systems as well as handling structured and efficient data processing.
+        With skills in Python, PHP, SQL, JavaScript, and modern web technologies,
+        I enjoy building structured digital solutions, improving workflows, and creating efficient user experiences.
+        My background in hospitality has also strengthened my communication, discipline, teamwork, and customer service abilities.
       `,
 
       experienceTitle: 'Experience',
@@ -751,11 +752,11 @@ const Translations = (() => {
       footerBuilt: 'Built with passion ⚡',
 
       typingText: `
-  <span class="highlight">Web3 Enthusiast</span>
+  <span class="highlight">Tech Enthusiast</span>
   •
-  <span class="highlight-green">Digital Analyst</span>
+  <span class="highlight-green">Digital Problem Solver</span>
   •
-  <span class="highlight-white">Future-Driven Hospitality</span>
+  <span class="highlight-white">Hospitality Professional</span>
 `,
     },
 
@@ -771,13 +772,13 @@ const Translations = (() => {
 
       aboutTitle: 'Tentang Saya',
       aboutText: `
-        Saya memiliki pengalaman kerja di bidang perhotelan sebagai Housekeeping dan restoran sebagai Waiter,
-        yang membentuk saya menjadi pribadi yang disiplin, teliti, dan memiliki kemampuan pelayanan yang baik.
-        Terbiasa bekerja dengan standar tinggi, manajemen waktu yang baik, serta mampu bekerja sama dalam tim.
+        Saya adalah seorang antusias teknologi dengan pengalaman profesional di bidang hospitality dan operasional,
+        serta memiliki ketertarikan kuat pada sistem digital, pengembangan web, dan pemecahan masalah.
+        Saya mampu beradaptasi, teliti, dan dapat bekerja secara efektif baik secara individu maupun dalam tim.
         <br><br>
-        Selain itu, saya memiliki keahlian di bidang teknologi dengan penguasaan bahasa pemrograman Python dan PHP,
-        serta pengelolaan database menggunakan SQL.
-        Saya mampu membuat dan mengelola sistem berbasis web maupun pengolahan data secara terstruktur dan efisien.
+        Dengan keahlian di bidang Python, PHP, SQL, JavaScript, dan teknologi web modern,
+        saya senang membangun solusi digital yang terstruktur, meningkatkan efisiensi kerja, serta menciptakan pengalaman pengguna yang optimal.
+        Latar belakang hospitality juga membentuk kemampuan komunikasi, disiplin, kerja sama tim, dan pelayanan pelanggan yang baik.
       `,
 
       experienceTitle: 'Pengalaman',
@@ -806,11 +807,11 @@ const Translations = (() => {
       footerBuilt: 'Dibuat dengan passion ⚡',
 
       typingText: `
-  <span class="highlight">Antusias Web3</span>
+  <span class="highlight">Penggemar Teknologi</span>
   •
-  <span class="highlight-green">Analis Digital</span>
+  <span class="highlight-green">Pemecah Masalah Digital</span>
   •
-  <span class="highlight-white">Hospitality Berorientasi Masa Depan</span>
+  <span class="highlight-white">Profesional Perhotelan</span>
 `,
     },
 
