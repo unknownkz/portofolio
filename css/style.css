@@ -2245,20 +2245,25 @@ body.light-mode .lang-btn {
 }
 
 /* Footer License */
-.footer-license{
-  margin-top:10px;
-  font-size:12px;
-  opacity:0.7;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  color:var(--text);
+.footer-license {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text);
 }
 
-.footer-license i{
-  color:var(--accent);
-  font-size:13px;
+.footer-license svg {
+  color: var(--accent);
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor; /* color: var(--accent) */
 }
 
 .footer-built{
