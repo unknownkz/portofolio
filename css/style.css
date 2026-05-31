@@ -2249,12 +2249,16 @@ body.light-mode .lang-btn {
   margin-top:10px;
   font-size:12px;
   opacity:0.7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
   color:var(--text);
 }
 
 .footer-license i{
-  margin-right:6px;
   color:var(--accent);
+  font-size:13px;
 }
 
 .footer-built{
