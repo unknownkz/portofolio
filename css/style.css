@@ -2244,53 +2244,12 @@ body.light-mode .lang-btn {
   z-index: -1;
 }
 
-/* Footer License */
-.footer-license {
-  margin-top: 10px;
-  font-size: 12px;
+/* ── General footer paragraphs (footerText & footerBuilt) ── */
+.footer p {
   opacity: 0.7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: var(--text);
-  /* Proteksi dari .footer:hover p override */
-  transition: color var(--transition-base);
+  letter-spacing: 0.5px;
+  transition: var(--transition-base);
 }
-
-/* OSI Icon — Dark Mode (default) */
-.osi-icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.osi-icon path {
-  fill: #38bdf8; /* hardcode dark mode accent */
-  transition: fill var(--transition-base);
-}
-
-body.light-mode .osi-icon path {
-  fill: #0ea5e9; /* hardcode light mode accent */
-}
-
-.footer:hover .osi-icon path {
-  fill: #38bdf8;
-}
-
-body.light-mode .footer:hover .osi-icon path {
-  fill: #0ea5e9;
-}
-
-.footer-built{
-  margin-top:18px;
-  font-size:11px;
-  opacity:0.5;
-}
-
-.footer p { opacity: 0.7; letter-spacing: 0.5px; transition: var(--transition-base); }
 
 .footer:hover p {
   opacity: 1;
@@ -2306,7 +2265,50 @@ body.light-mode .footer:hover .osi-icon path {
   animation: blinkFade 2s infinite;
 }
 
-/* Light mode footer */
+/* ── Footer License — override ── */
+.footer p.footer-license {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.7;
+  display: flex !important; /* protect for .footer p override */
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text);
+  text-shadow: none !important;
+  letter-spacing: 0.5px;
+  transition: color var(--transition-base);
+}
+
+.footer:hover p.footer-license {
+  color: var(--text);
+  text-shadow: none !important;
+  opacity: 1;
+}
+
+/* ── OSI Icon ── */
+.osi-icon {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.osi-icon path {
+  fill: #38bdf8;
+  transition: fill var(--transition-base);
+}
+
+/* ── Footer Built ── */
+.footer-built {
+  margin-top: 18px;
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+/* ── Light Mode ── */
 body.light-mode .footer {
   background: linear-gradient(180deg, #ffffff, #f1f5f9);
   border-top: 1px solid rgba(14, 165, 233, 0.3);
@@ -2320,13 +2322,35 @@ body.light-mode .footer::after {
   background: radial-gradient(circle, rgba(14, 165, 233, 0.15), transparent 70%);
 }
 
-body.light-mode .footer p       { color: #0f172a; opacity: 0.85; }
-body.light-mode .footer:hover p { color: #0ea5e9; text-shadow: none; }
+body.light-mode .footer p {
+  color: #0f172a;
+  opacity: 0.85;
+}
+
+body.light-mode .footer:hover p {
+  color: #0ea5e9;
+  text-shadow: none;
+}
+
+body.light-mode .footer p.footer-license {
+  color: #0f172a;
+  text-shadow: none !important;
+}
+
+body.light-mode .footer:hover p.footer-license {
+  color: #0f172a;
+  text-shadow: none !important;
+}
+
+body.light-mode .osi-icon path {
+  fill: #0ea5e9;
+}
 
 @keyframes cryptoLine {
   0%   { transform: translateX(-50%); }
   100% { transform: translateX(0); }
 }
+
 
 /* ==========================================================================
    27. UPDATE TOAST (Popup Notification)
