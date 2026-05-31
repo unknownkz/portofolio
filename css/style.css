@@ -2286,19 +2286,31 @@ body.light-mode .lang-btn {
   opacity: 1;
 }
 
-/* ── OSI Icon ── */
+/* ── OSI Icon - Material Symbols ── */
 .osi-icon {
-  width: 14px !important;
-  height: 14px !important;
-  min-width: 14px;
-  min-height: 14px;
+  font-size: 16px;
+  line-height: 1;
+  vertical-align: middle;
   flex-shrink: 0;
-  display: block;
+  color: #38bdf8;
+  font-variation-settings:
+    'opsz' 20,
+    'wght' 400,
+    'FILL' 1,
+    'GRAD' 0;
+  transition: color var(--transition-base);
 }
 
-.osi-icon path {
-  fill: #38bdf8;
-  transition: fill var(--transition-base);
+body.light-mode .osi-icon {
+  color: #0ea5e9;
+}
+
+.footer:hover .osi-icon {
+  color: #38bdf8;
+}
+
+body.light-mode .footer:hover .osi-icon {
+  color: #0ea5e9;
 }
 
 /* ── Footer Built ── */
@@ -2340,10 +2352,6 @@ body.light-mode .footer p.footer-license {
 body.light-mode .footer:hover p.footer-license {
   color: #0f172a;
   text-shadow: none !important;
-}
-
-body.light-mode .osi-icon path {
-  fill: #0ea5e9;
 }
 
 @keyframes cryptoLine {
