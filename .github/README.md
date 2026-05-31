@@ -105,12 +105,12 @@ Hosting & Security
 /
 ├── index.html              # Halaman utama (semantic HTML5, ARIA)
 ├── css/
-    ├── style.css           # Stylesheet utama (design tokens → components)
-    └── style.min.js        # Minify
+│   ├── style.css           # Stylesheet utama (design tokens → components)
+│   └── style.min.js        # Minify
 │
 ├── js/
-    ├── script.js           # Core JavaScript (module pattern)
-    └── script.min.js       # Minify
+│   ├── script.js           # Core JavaScript (module pattern)
+│   └── script.min.js       # Minify
 │
 ├── update-manager.js       # PWA auto-update + reinstall system (bilingual)
 ├── service-worker.js       # Cache strategy + update/manifest messaging
