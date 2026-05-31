@@ -49,7 +49,7 @@ const CRITICAL_ASSETS = [
   '/',
   '/index.html',
   '/js/script.min.js',
-  '/style.css',
+  '/css/style.min.css',
   '/chat/chat-widget.min.js',
   '/chat/chat-widget.min.css',
   '/manifest.json',
