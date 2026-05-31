@@ -2254,16 +2254,34 @@ body.light-mode .lang-btn {
   justify-content: center;
   gap: 6px;
   color: var(--text);
+  /* Proteksi dari .footer:hover p override */
+  transition: color var(--transition-base);
 }
 
-.footer-license svg {
-  color: var(--accent);
-  width: 13px;
-  height: 13px;
+/* OSI Icon — Dark Mode (default) */
+.osi-icon {
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
   display: inline-block;
   vertical-align: middle;
-  fill: currentColor; /* color: var(--accent) */
+}
+
+.osi-icon path {
+  fill: #38bdf8; /* hardcode dark mode accent */
+  transition: fill var(--transition-base);
+}
+
+body.light-mode .osi-icon path {
+  fill: #0ea5e9; /* hardcode light mode accent */
+}
+
+.footer:hover .osi-icon path {
+  fill: #38bdf8;
+}
+
+body.light-mode .footer:hover .osi-icon path {
+  fill: #0ea5e9;
 }
 
 .footer-built{
