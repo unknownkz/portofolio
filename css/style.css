@@ -2246,19 +2246,21 @@ body.light-mode .lang-btn {
 
 /* Footer License */
 .footer-license{
-  margin-top:8px;
+  margin-top:10px;
   font-size:12px;
-  opacity:.7;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
+  opacity:0.7;
   color:var(--text);
 }
 
 .footer-license i{
-  font-size:12px;
+  margin-right:6px;
   color:var(--accent);
+}
+
+.footer-built{
+  margin-top:18px;
+  font-size:11px;
+  opacity:0.5;
 }
 
 .footer p { opacity: 0.7; letter-spacing: 0.5px; transition: var(--transition-base); }
