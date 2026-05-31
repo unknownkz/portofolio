@@ -2244,6 +2244,23 @@ body.light-mode .lang-btn {
   z-index: -1;
 }
 
+/* Footer License */
+.footer-license{
+  margin-top:8px;
+  font-size:12px;
+  opacity:.7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:var(--text);
+}
+
+.footer-license i{
+  font-size:12px;
+  color:var(--accent);
+}
+
 .footer p { opacity: 0.7; letter-spacing: 0.5px; transition: var(--transition-base); }
 
 .footer:hover p {
