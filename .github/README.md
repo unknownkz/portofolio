@@ -105,6 +105,7 @@ Hosting & Security
 /
 ├── index.html              # Halaman utama (semantic HTML5, ARIA)
 ├── css/
+│   ├── profile.webp        # Hero photo
 │   ├── style.css           # Stylesheet utama (design tokens → components)
 │   └── style.min.js        # Minify
 │
@@ -119,7 +120,6 @@ Hosting & Security
 ├── sitemap.xml             # XML sitemap untuk SEO
 ├── vercel.json             # Deployment config + security headers
 │
-├── profile.webp            # Hero photo
 ├── logo-a.png              # Logo navbar & loader
 ├── preview.png             # OG / Twitter card image (1200×630)
 ├── cv.pdf                  # Curriculum Vitae (downloadable)
