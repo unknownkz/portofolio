@@ -104,8 +104,10 @@ Hosting & Security
 ```
 /
 ├── index.html              # Halaman utama (semantic HTML5, ARIA)
-├── style.css               # Stylesheet utama (design tokens → components)
-├── script.js               # Core JavaScript (module pattern)
+├── css/
+    ├── style.css           # Stylesheet utama (design tokens → components)
+├── js/
+    ├── script.js           # Core JavaScript (module pattern)
 ├── update-manager.js       # PWA auto-update + reinstall system (bilingual)
 ├── service-worker.js       # Cache strategy + update/manifest messaging
 ├── manifest.json           # PWA manifest (multi-size icons, scope)
