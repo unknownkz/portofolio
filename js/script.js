@@ -749,6 +749,7 @@ const Translations = (() => {
       socialTitle:     'Social Media',
 
       footerText:  'Copyright © 2026–present • Axel Alexius Latukolan. All Rights Reserved',
+      footerLicense: 'Licensed under MIT License',
       footerBuilt: 'Built with passion ⚡',
 
       typingText: `
@@ -804,6 +805,7 @@ const Translations = (() => {
       socialTitle:     'Media Sosial',
 
       footerText:  'Hak Cipta © 2026–sekarang • Axel Alexius Latukolan. Seluruh Hak Dilindungi',
+      footerLicense: 'Dilindungi dengan Lisensi MIT',
       footerBuilt: 'Dibuat dengan passion ⚡',
 
       typingText: `
