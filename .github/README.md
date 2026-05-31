@@ -104,8 +104,14 @@ Hosting & Security
 ```
 /
 ├── index.html              # Halaman utama (semantic HTML5, ARIA)
-├── style.css               # Stylesheet utama (design tokens → components)
-├── script.js               # Core JavaScript (module pattern)
+├── css/
+│   ├── style.css           # Stylesheet utama (design tokens → components)
+│   └── style.min.js        # Minify
+│
+├── js/
+│   ├── script.js           # Core JavaScript (module pattern)
+│   └── script.min.js       # Minify
+│
 ├── update-manager.js       # PWA auto-update + reinstall system (bilingual)
 ├── service-worker.js       # Cache strategy + update/manifest messaging
 ├── manifest.json           # PWA manifest (multi-size icons, scope)
@@ -123,7 +129,9 @@ Hosting & Security
 │
 ├── chat/
 │   ├── chat-widget.js      # HEXA AI chat widget + Markdown parser (bilingual)
-│   └── chat-widget.css     # Styling widget + dark/light mode + mobile
+│   ├── chat-widget.css     # Styling widget + dark/light mode + mobile
+│   ├── chat-widget.min.js  # Minify
+│   └── chat-widget.min.css # Minify
 │
 └── picture/
     ├── flag/

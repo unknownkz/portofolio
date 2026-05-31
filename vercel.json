@@ -136,7 +136,7 @@
     },
 
     {
-      "source": "/:file.css",
+      "source": "/css/:file.css",
       "headers": [
         {
           "key": "Cache-Control",
