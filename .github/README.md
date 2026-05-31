@@ -129,7 +129,9 @@ Hosting & Security
 │
 ├── chat/
 │   ├── chat-widget.js      # HEXA AI chat widget + Markdown parser (bilingual)
-│   └── chat-widget.css     # Styling widget + dark/light mode + mobile
+│   ├── chat-widget.css     # Styling widget + dark/light mode + mobile
+│   ├── chat-widget.min.js  # Minify
+│   └── chat-widget.min.css # Minify
 │
 └── picture/
     ├── flag/
