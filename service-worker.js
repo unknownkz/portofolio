@@ -38,7 +38,7 @@
    v4.3  → tambah section baru        → v5    UPDATE_TYPE = 'content'
    v5    → ganti nama app             → v5.1  UPDATE_TYPE = 'manifest'
    ========================================================================== */
-const SW_VERSION   = 'axelal-v5.40';
+const SW_VERSION   = 'axelal-v5.41';
 const UPDATE_TYPE  = 'content'; // 'content' | 'manifest'
 
 const CACHE_STATIC = `${SW_VERSION}-static`;
@@ -56,7 +56,7 @@ const CRITICAL_ASSETS = [
 ];
 
 const OPTIONAL_ASSETS = [
-  '/profile.webp',
+  '/css/profile.webp',
   '/logo-a.png',
   '/preview.png',
   '/cv.pdf',
